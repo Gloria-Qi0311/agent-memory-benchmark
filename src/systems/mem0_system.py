@@ -10,7 +10,15 @@ The embedder downloads ~150MB on first run to ~/.cache/. Subsequent runs are fas
 import os
 import shutil
 import tempfile
+from pathlib import Path
 from .base import MemorySystem
+
+
+_REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+# Pre-downloaded sentence-transformers model (HuggingFace HEAD requests
+# fail under this machine's Python 3.9 + LibreSSL stack, so we ship the
+# model files locally and point at the directory).
+_LOCAL_EMBED_MODEL = str(_REPO_ROOT / "models" / "multi-qa-MiniLM-L6-cos-v1")
 
 
 def _build_config(persist_dir: str) -> dict:
@@ -25,9 +33,7 @@ def _build_config(persist_dir: str) -> dict:
         "embedder": {
             "provider": "huggingface",
             "config": {
-                # sentence-transformers backbone — respects HF_ENDPOINT env var,
-                # so a HuggingFace mirror works for downloads.
-                "model": "sentence-transformers/multi-qa-MiniLM-L6-cos-v1",  # ~90MB, 384-dim
+                "model": _LOCAL_EMBED_MODEL,
             },
         },
         "vector_store": {
@@ -52,14 +58,15 @@ class Mem0System(MemorySystem):
         self._user = "bench-user"
 
     def reset(self) -> None:
-        try: self._mem.delete_all(user_id=self._user)
+        # mem0 2.0+: filters dict instead of top-level user_id kwarg
+        try: self._mem.delete_all(filters={"user_id": self._user})
         except Exception: pass
 
     def write(self, agent_id: str, text: str) -> None:
         self._mem.add(text, user_id=self._user, metadata={"agent_id": agent_id})
 
     def read(self, agent_id: str, query: str) -> str:
-        results = self._mem.search(query, user_id=self._user)
+        results = self._mem.search(query, filters={"user_id": self._user})
         items = results.get("results", []) if isinstance(results, dict) else results
         return "\n".join(item.get("memory", "") for item in items)
 

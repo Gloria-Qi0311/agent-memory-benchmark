@@ -13,3 +13,7 @@ data/results/*
 data/cases/private/
 *.db
 *.sqlite
+
+# Local embedding model files (~90MB) — not committed, fetched manually
+# (see docs/decisions.md for the download procedure)
+models/

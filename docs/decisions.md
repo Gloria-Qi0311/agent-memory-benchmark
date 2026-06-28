@@ -21,9 +21,27 @@ is up for re-discussion when the data starts coming in.
 
 ## mem0 internal stack
 - LLM (used by mem0 internally for fact extraction and conflict resolution): DeepSeek (same key as the agent).
-- Embedder: fastembed running locally (BAAI/bge-small-en-v1.5, 384-dim, ~130MB cached on first run). No extra API key.
+- Embedder: `sentence-transformers/multi-qa-MiniLM-L6-cos-v1` (384-dim, ~90MB), loaded from a local `models/` directory rather than downloaded at runtime.
 - Vector store: qdrant in embedded mode (file-backed under a tempdir, no server).
 - Trade-off: using DeepSeek for both the agent and mem0's internal LLM means the same model decides what to extract AND what to recall — a small additional source of correlated error, but consistent with the single-LLM constraint.
+
+### Setting up the local embedding model
+The `models/` directory is git-ignored. To populate it:
+```bash
+mkdir -p models/multi-qa-MiniLM-L6-cos-v1/1_Pooling
+cd models/multi-qa-MiniLM-L6-cos-v1
+BASE="https://hf-mirror.com/sentence-transformers/multi-qa-MiniLM-L6-cos-v1/resolve/main"
+for f in config.json config_sentence_transformers.json modules.json \
+         sentence_bert_config.json special_tokens_map.json tokenizer.json \
+         tokenizer_config.json vocab.txt model.safetensors; do
+  curl -L -o "$f" "$BASE/$f"
+done
+curl -L -o 1_Pooling/config.json "$BASE/1_Pooling/config.json"
+```
+Why local: this machine's network and Python stack don't play well with `huggingface_hub`'s download path (HEAD requests fail through hf-mirror even when direct `requests.get` works), so we shortcut the loader by pointing sentence-transformers at a local directory.
+
+## Python version
+- Python 3.11 (installed via `brew install python@3.11`). The system Python 3.9 from Xcode CommandLineTools is too old: ships LibreSSL 2.8.3 (breaks modern HF downloads) and lacks PEP 604 `X | None` syntax that mem0 2.0 uses.
 
 ## Case count
 - 100 cases per task is the target. 50 is the smoke threshold.

@@ -2,7 +2,7 @@
 
 A benchmark for evaluating LLM memory systems in **multi-agent shared-memory** scenarios.
 
-> **Headline finding** (to be filled after experiments): TBD
+> **Preliminary finding (n=5, fusion task)**: on cross-agent fusion, the industry-default `mem0` (~0.95 recall) trails a naive shared-markdown baseline (~1.0 recall) — i.e., a 30-line baseline is competitive with a popular OSS memory system. `no_memory` floor is 0.0. Scaling to n=100 is the next step.
 
 ## Why this benchmark exists
 
