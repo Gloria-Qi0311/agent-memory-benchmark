@@ -19,6 +19,12 @@ is up for re-discussion when the data starts coming in.
 - Known self-evaluation bias is acknowledged in the README.
 - Judge is programmatic (fact-list substring matching) wherever possible.
 
+## mem0 internal stack
+- LLM (used by mem0 internally for fact extraction and conflict resolution): DeepSeek (same key as the agent).
+- Embedder: fastembed running locally (BAAI/bge-small-en-v1.5, 384-dim, ~130MB cached on first run). No extra API key.
+- Vector store: qdrant in embedded mode (file-backed under a tempdir, no server).
+- Trade-off: using DeepSeek for both the agent and mem0's internal LLM means the same model decides what to extract AND what to recall — a small additional source of correlated error, but consistent with the single-LLM constraint.
+
 ## Case count
 - 100 cases per task is the target. 50 is the smoke threshold.
 - Generated deterministically by seed; case files are committed.
