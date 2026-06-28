@@ -23,7 +23,7 @@ A living checklist. Keep it short. When something moves to `done`, that's a comm
 ## Next
 
 - **Rewrite-preservation task** (`src/cases/rewrite.py`). Auxiliary signal: when one fact is updated, what fraction of the other N-1 facts survive?
-- **README rewrite**. PM-style framing: lead with the finding, follow with method, finish with implications. (Now is too placeholder.)
+- **README rewrite**. Lead with the finding, follow with method, finish with implications. (Now is too placeholder.)
 - **Add a 4th system**: either `Letta` or `mem0 Platform` (the hosted version) — broadens the comparison. Pick whichever is faster to integrate.
 
 ## Parking lot (don't do yet)

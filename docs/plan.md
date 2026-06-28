@@ -14,40 +14,26 @@ The deliverable is not just a script. It's three things together:
 
 1. **A reusable evaluation harness** — feed in any memory system, get back comparable scores.
 2. **A first set of results** — head-to-head numbers on three reference systems.
-3. **A sharp finding** — one sentence a hiring manager or PM can repeat back. The current candidate: *"the most-funded open-source memory system trails a 30-line baseline on multi-agent fusion."*
+3. **A sharp finding** — one sentence a reader can repeat back. The current candidate: *"the most-funded open-source memory system trails a 30-line baseline on multi-agent fusion."*
 
-The artifact lives on GitHub. The finding lives in a writeup (blog / LinkedIn post / interview talking point). Both are part of the product.
+The artifact lives on GitHub. The finding lives in a writeup. Both are part of the product.
 
 ---
 
 ## 2. Why this exists
 
-### The product reason
+I use several AI agents day to day — Claude, ChatGPT, Codex, Cursor, custom ones — and I keep running into the same pattern: each one has its own memory, none of them share, and when I switch tools I have to re-explain everything. The problem gets worse as more products start sharing memory across agents (Claude Code memory, ChatGPT memory, Mem0, AMH-style memory hubs), because nobody really knows whether these shared-memory systems hold up under multi-agent use.
 
-In 2026 the AI ecosystem is moving fast in two directions that intersect:
-
-- **Multi-agent everything.** MCP servers, A2A protocols, agent marketplaces — products increasingly assume more than one agent is involved in a single user's workflow.
-- **Persistent memory.** ChatGPT memory, Claude projects, Cursor rules, Devin scratchpad — every serious AI product is building some form of long-term memory.
-
-The intersection — **multiple agents reading and writing the same memory** — is where the next wave of products will live (and where the next wave of failures will happen). It is also where existing benchmarks have a blind spot.
-
-### The gap in existing work
+When I went looking for benchmarks that measure this, I couldn't find one. Existing memory benchmarks all assume a single agent:
 
 | Benchmark | What it tests | What it doesn't |
 |---|---|---|
 | LongMemEval (ICLR 2025) | Long-term memory across many sessions of a single chat | Single agent only |
 | LoCoMo | Long conversation coherence | Single agent only |
 | HaluMem | Operation-level hallucination in memory pipelines | Single agent only |
-| GateMem | Access control when *one* agent serves *multiple human users* | The reverse — multiple agents, one user |
+| GateMem | Access control when *one* agent serves *multiple human users* | The reverse — multiple AI agents, one user |
 
 This benchmark targets the gap GateMem leaves open: **one user, many AI agents, shared memory.**
-
-### The career reason (be honest about it)
-
-The project is built as a portfolio piece for AI PM job applications. That shapes some choices:
-- The headline finding matters more than methodological perfection — readability over rigor where they trade off.
-- Visualization, narrative, and a polished writeup are first-class deliverables, not afterthoughts.
-- Scope is bounded to what one person can finish well, not what would impress academics.
 
 ---
 
@@ -74,9 +60,9 @@ Three milestones. Each one is independently shippable — if work stops between 
 - Decide whether the finding holds, evolves, or collapses
 
 ### Milestone 3 — Public artifact
-**Goal:** something a recruiter or PM can find, read, and react to in 60 seconds.
+**Goal:** something a reader can find, read, and react to in 60 seconds.
 
-- README rewritten as a PM-style narrative (finding → method → implication)
+- README rewritten as a narrative (finding → method → implication)
 - One blog post / LinkedIn post with the headline finding + chart
 - A 4th system added (Letta or mem0 Platform — whichever is faster to integrate; broadens the comparison from "mem0 vs naive" to "OSS memory category vs naive")
 - Optional: Streamlit dashboard (defer if time runs short — README + plot is the must-have)
@@ -137,7 +123,7 @@ Three properties make this multi-agent rather than single-agent:
 | Self-eval bias inflates one or more systems. | Medium-low (judge is programmatic, not LLM-based). | Document the bias in README. Optionally re-judge 50 cases with a different model before publishing the result. |
 | The fusion task is too easy. | Medium. naive_markdown hits 1.0 — there may be no headroom for differences to show. | Make it harder: more facts per persona, more filler sessions between writes, ambiguous probe phrasing. |
 | The benchmark gets dismissed as "the author handpicked tasks that favor naive baselines." | Low-medium. Real but mitigable. | Be transparent: case generator is programmatic and seeded; anyone can rerun. Also add the rewrite task, which doesn't a-priori favor either type of system. |
-| Time runs out before Milestone 3. | High (everything always takes longer than planned). | Milestone 2 is already presentable on its own. Milestone 3's blog post is the value-multiplier, but the repo + result + chart alone is portfolio-grade. |
+| Time runs out before Milestone 3. | High (everything always takes longer than planned). | Milestone 2 is already presentable on its own. Milestone 3's blog post amplifies, but the repo + result + chart alone stands. |
 
 ---
 
@@ -147,6 +133,6 @@ Three pieces all exist and are linked together:
 
 1. **GitHub repo** — code, results, READMEs, anyone can reproduce.
 2. **A chart** — one image that says the finding without text.
-3. **A writeup** — 500-word blog post or LinkedIn post with the chart and the one-sentence takeaway, written for an AI PM audience.
+3. **A writeup** — 500-word blog post with the chart and the one-sentence takeaway, written for someone who uses AI tools daily.
 
-When all three are public and a recruiter could find them from your name + the project title in under 30 seconds, this project is done.
+When all three are public and someone could find them from a search of the project title in under 30 seconds, this project is done.
