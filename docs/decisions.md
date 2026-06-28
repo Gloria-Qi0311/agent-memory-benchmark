@@ -61,3 +61,13 @@ Why local: this machine's network and Python stack don't play well with `hugging
 - Conflict resolution / temporal correctness as standalone tasks.
 - Privacy / leakage testing (interesting but separate benchmark).
 - AMH adapter — interesting but not core to v1's question.
+
+## Risks we're tracking
+
+| Risk | How likely | What we'll do |
+|---|---|---|
+| The task is too easy — every system saturates at 1.00 and differences can't show up. | High (already observed at n=5). | Add difficulty: more facts per persona, filler turns between writes, paraphrased probes that don't name categories. |
+| A 5%-ish delta at n=100 turns out to be sampling noise. | Medium. With recall clustered near 1.0, small deltas may be noise. | At n=100, also report a binary metric ("did this system miss ANY fact in this case") — more robust at the ceiling. |
+| Self-eval bias inflates one or more systems. | Medium-low (judge is programmatic, not LLM-based). | Documented in README. If LLM judging gets added later, re-judge a sample with a different model. |
+| Benchmark dismissed as "the author handpicked tasks that favor naive baselines." | Low-medium. | Case generator is programmatic and seeded; anyone can rerun. Adding a second task (rewrite-preservation) that doesn't a-priori favor either type of system also helps. |
+| Time runs out before public artifact (chart + writeup). | High (always). | Milestone 2 — results + plot — is already presentable on its own. The writeup amplifies but isn't a prerequisite. |

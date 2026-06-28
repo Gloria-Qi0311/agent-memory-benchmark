@@ -2,6 +2,14 @@
 
 A living checklist. Keep it short. When something moves to `done`, that's a commit-worthy milestone.
 
+## Definition of done
+
+The project is "done" when these three things are public and findable from one search:
+
+1. **The repo** — code, results, READMEs, anyone can reproduce.
+2. **A chart** — one image that conveys the finding without text.
+3. **A writeup** — 500-word blog post with the chart and the one-sentence takeaway, written for someone who uses AI tools daily.
+
 ## Done
 
 - Scaffold: case generator, judge, runner, three system adapters (`no_memory`, `naive_markdown`, `mem0`).
@@ -36,6 +44,13 @@ A living checklist. Keep it short. When something moves to `done`, that's a comm
 - Conflict resolution as a standalone task. Subsumed for now by the fusion task plus future rewrite task.
 - Anything called "leaderboard". Implies more systems than v1 has — would inflate scope.
 - spaCy install for mem0. Currently noisy warning, but not breaking. Skip until it actually blocks something.
+
+## Anti-goals (we are explicitly NOT doing these)
+
+- Training, fine-tuning, or evaluating any LLM itself. This benchmarks memory *systems*, not models.
+- Building a new memory system. We benchmark existing ones.
+- Reproducing single-agent long-term memory benchmarks. LongMemEval already does that well.
+- Privacy / leakage testing. GateMem already does that well.
 
 ## Open questions
 
