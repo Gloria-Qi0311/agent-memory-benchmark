@@ -58,7 +58,7 @@
     "persona": "Alex",
     "facts_a": {
       "framework": "FastAPI",
-      "language": "Go"
+      "language": "Golang"
     },
     "facts_b": {
       "editor": "JetBrains",
@@ -66,7 +66,7 @@
     },
     "a_utterances": [
       "Alex uses FastAPI as their framework.",
-      "Alex uses Go as their language."
+      "Alex uses Golang as their language."
     ],
     "b_utterances": [
       "Alex uses JetBrains as their editor.",
@@ -75,7 +75,7 @@
     "probe_question": "What does Alex use for framework, language, editor, city? List one item per category.",
     "ground_truth_facts": [
       "FastAPI",
-      "Go",
+      "Golang",
       "JetBrains",
       "Lisbon"
     ]

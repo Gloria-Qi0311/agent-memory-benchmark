@@ -2,7 +2,7 @@
 
 A benchmark for evaluating LLM memory systems in **multi-agent shared-memory** scenarios.
 
-> **Preliminary finding (n=5, fusion task):** on cross-agent fact fusion, the industry-default `mem0` (0.95 recall) trails a 30-line naive shared-markdown baseline (1.00 recall) by 5 points. Scaling to n=100 is in progress.
+> **Preliminary signal (n=5, fusion task):** at this scale, both `naive_markdown` (1.00 recall) and `mem0` (1.00 recall) saturate; only the `no_memory` floor (0.00) separates from them. An earlier 5-point gap between mem0 and naive_markdown turned out to be an artifact of short fact tokens colliding with common English (`Go`, `Render`) in substring matching — fixed in commit `<TBD>`. **n=5 is too small to claim a real finding; scaling to n=100 with harder probes is next.**
 
 ## The question this benchmark exists to answer
 
@@ -15,7 +15,7 @@ This benchmark fills the gap: **when N agents share one memory store, do existin
 | System | Mean recall (n=5) | What it is |
 |---|---|---|
 | `no_memory` | **0.00** | Floor baseline — agent has no context |
-| `mem0` | **0.95** | Industry-default OSS memory system (40k+ stars), configured with DeepSeek LLM + sentence-transformers embeddings + qdrant |
+| `mem0` | **1.00** | Industry-default OSS memory system (40k+ stars), configured with DeepSeek LLM + sentence-transformers embeddings + qdrant |
 | `naive_markdown` | **1.00** | Ceiling baseline — 30 lines of code, every agent appends to one in-memory list |
 
 Each case follows the same shape: Agent A writes half the facts about a persona, Agent B writes the other half, Agent C must answer a question that requires both halves. Scoring is programmatic substring matching against a ground-truth fact list.
@@ -119,7 +119,7 @@ models/                # locally-vendored embedding model (git-ignored)
 
 - **Self-evaluation bias.** Agent and judge share the same model (DeepSeek). Programmatic judging covers most of this, but any future LLM-as-judge augmentation will need cross-model validation.
 - **Single LLM, single-vendor.** Cross-vendor evaluation (Claude writes, GPT reads) is in the parking lot — see `docs/roadmap.md`.
-- **n=5 is a smoke test, not a publishable number.** The 5-point delta between `mem0` and `naive_markdown` should be treated as directional only until n=100 confirms it.
+- **n=5 is a smoke test, not a publishable number.** At this scale `mem0` and `naive_markdown` both saturate at 1.00. The first task version (with bare `Go` / `Render` as fact values and a substring judge) produced an artifactual 5-point gap; tightening both removed it. Real comparisons require harder probes and larger n.
 
 ## Status
 

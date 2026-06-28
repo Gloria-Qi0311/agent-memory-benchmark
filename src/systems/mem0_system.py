@@ -2,10 +2,11 @@
 
 Config choices (per docs/decisions.md, single-LLM constraint):
   - LLM: DeepSeek (reuses DEEPSEEK_API_KEY)
-  - Embedder: fastembed (local ONNX model, no extra API key)
-  - Vector store: qdrant in embedded mode (no server, file-backed)
-
-The embedder downloads ~150MB on first run to ~/.cache/. Subsequent runs are fast.
+  - Embedder: sentence-transformers (huggingface provider), loaded from
+    a locally-vendored model dir under repo/models/ — see docs/decisions.md
+    for why we don't fetch at runtime.
+  - Vector store: qdrant in embedded mode (no server, file-backed under a
+    per-instance tempdir).
 """
 import os
 import shutil
@@ -15,9 +16,6 @@ from .base import MemorySystem
 
 
 _REPO_ROOT = Path(__file__).resolve().parent.parent.parent
-# Pre-downloaded sentence-transformers model (HuggingFace HEAD requests
-# fail under this machine's Python 3.9 + LibreSSL stack, so we ship the
-# model files locally and point at the directory).
 _LOCAL_EMBED_MODEL = str(_REPO_ROOT / "models" / "multi-qa-MiniLM-L6-cos-v1")
 
 
@@ -52,7 +50,6 @@ class Mem0System(MemorySystem):
 
     def __init__(self) -> None:
         from mem0 import Memory
-        self._Memory = Memory
         self._persist_dir = tempfile.mkdtemp(prefix="mem0_bench_")
         self._mem = Memory.from_config(_build_config(self._persist_dir))
         self._user = "bench-user"
