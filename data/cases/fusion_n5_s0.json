@@ -1,0 +1,137 @@
+[
+  {
+    "case_id": "fusion-0000",
+    "persona": "Gabriel",
+    "facts_a": {
+      "test": "playwright",
+      "language": "Rust"
+    },
+    "facts_b": {
+      "editor": "Neovim",
+      "db": "SQLite"
+    },
+    "a_utterances": [
+      "Gabriel uses playwright as their test.",
+      "Gabriel uses Rust as their language."
+    ],
+    "b_utterances": [
+      "Gabriel uses Neovim as their editor.",
+      "Gabriel uses SQLite as their db."
+    ],
+    "probe_question": "What does Gabriel use for test, language, editor, db? List one item per category.",
+    "ground_truth_facts": [
+      "playwright",
+      "Rust",
+      "Neovim",
+      "SQLite"
+    ]
+  },
+  {
+    "case_id": "fusion-0001",
+    "persona": "Chloe",
+    "facts_a": {
+      "framework": "SvelteKit",
+      "editor": "Zed"
+    },
+    "facts_b": {
+      "language": "Rust",
+      "cloud": "GCP"
+    },
+    "a_utterances": [
+      "Chloe uses SvelteKit as their framework.",
+      "Chloe uses Zed as their editor."
+    ],
+    "b_utterances": [
+      "Chloe uses Rust as their language.",
+      "Chloe uses GCP as their cloud."
+    ],
+    "probe_question": "What does Chloe use for framework, editor, language, cloud? List one item per category.",
+    "ground_truth_facts": [
+      "SvelteKit",
+      "Zed",
+      "Rust",
+      "GCP"
+    ]
+  },
+  {
+    "case_id": "fusion-0002",
+    "persona": "Alex",
+    "facts_a": {
+      "framework": "FastAPI",
+      "language": "Go"
+    },
+    "facts_b": {
+      "editor": "JetBrains",
+      "city": "Lisbon"
+    },
+    "a_utterances": [
+      "Alex uses FastAPI as their framework.",
+      "Alex uses Go as their language."
+    ],
+    "b_utterances": [
+      "Alex uses JetBrains as their editor.",
+      "Alex uses Lisbon as their city."
+    ],
+    "probe_question": "What does Alex use for framework, language, editor, city? List one item per category.",
+    "ground_truth_facts": [
+      "FastAPI",
+      "Go",
+      "JetBrains",
+      "Lisbon"
+    ]
+  },
+  {
+    "case_id": "fusion-0003",
+    "persona": "Diego",
+    "facts_a": {
+      "editor": "JetBrains",
+      "city": "Berlin"
+    },
+    "facts_b": {
+      "db": "Supabase",
+      "cloud": "AWS"
+    },
+    "a_utterances": [
+      "Diego uses JetBrains as their editor.",
+      "Diego uses Berlin as their city."
+    ],
+    "b_utterances": [
+      "Diego uses Supabase as their db.",
+      "Diego uses AWS as their cloud."
+    ],
+    "probe_question": "What does Diego use for editor, city, db, cloud? List one item per category.",
+    "ground_truth_facts": [
+      "JetBrains",
+      "Berlin",
+      "Supabase",
+      "AWS"
+    ]
+  },
+  {
+    "case_id": "fusion-0004",
+    "persona": "Diego",
+    "facts_a": {
+      "db": "SQLite",
+      "language": "TypeScript"
+    },
+    "facts_b": {
+      "ci": "GitHub Actions",
+      "cloud": "AWS"
+    },
+    "a_utterances": [
+      "Diego uses SQLite as their db.",
+      "Diego uses TypeScript as their language."
+    ],
+    "b_utterances": [
+      "Diego uses GitHub Actions as their ci.",
+      "Diego uses AWS as their cloud."
+    ],
+    "probe_question": "What does Diego use for db, language, ci, cloud? List one item per category.",
+    "ground_truth_facts": [
+      "SQLite",
+      "TypeScript",
+      "GitHub Actions",
+      "AWS"
+    ]
+  }
+]
