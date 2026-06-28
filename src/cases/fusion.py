@@ -13,13 +13,17 @@ from dataclasses import dataclass, asdict
 
 PERSONA_NAMES = ["Alex", "Bao", "Chloe", "Diego", "Eun", "Farida", "Gabriel", "Hana"]
 
+# Fact values are chosen to be distinctive English tokens (avoiding bare
+# "Go" / "Render" which collide with common verbs and trip up substring
+# matching). The judge already uses word boundaries, but distinctive
+# names make hits and misses unambiguous when reading raw answers.
 FACT_CATEGORIES = {
-    "language": ["Python", "TypeScript", "Go", "Rust", "Swift"],
+    "language": ["Python", "TypeScript", "Golang", "Rust", "Swift"],
     "framework": ["React", "Django", "FastAPI", "SvelteKit", "Rails"],
     "editor": ["VSCode", "Cursor", "Neovim", "Zed", "JetBrains"],
-    "cloud": ["AWS", "GCP", "Cloudflare", "Fly.io", "Render"],
+    "cloud": ["AWS", "GCP", "Cloudflare", "Fly.io", "Render.com"],
     "db": ["Postgres", "MongoDB", "DynamoDB", "SQLite", "Supabase"],
-    "ci": ["GitHub Actions", "CircleCI", "Buildkite", "Drone", "GitLab CI"],
+    "ci": ["GitHub Actions", "CircleCI", "Buildkite", "Drone CI", "GitLab CI"],
     "test": ["pytest", "vitest", "jest", "playwright", "cypress"],
     "city": ["Berlin", "Lisbon", "Taipei", "Toronto", "Bangalore"],
 }

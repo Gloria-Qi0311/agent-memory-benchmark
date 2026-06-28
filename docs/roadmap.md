@@ -15,10 +15,13 @@ A living checklist. Keep it short. When something moves to `done`, that's a comm
 
 ## Now (this is what to pick up next session)
 
-- **Scale fusion to n=100**. `python scripts/generate_cases.py --task fusion --n 100` then re-run the head-to-head. Estimated cost: ~$0.20 in DeepSeek API.
-  - Sanity check: does mem0's 5% deficit hold at n=100, or shrink toward parity, or widen?
-- **Eyeball the failure cases**. Read 5–10 cases where `mem0` missed a fact but `naive_markdown` got it. Look for the pattern. This is the most likely place a sharp finding hides.
-- **First plot**. Matplotlib bar chart of `mean_recall` per system, with error bars. One PNG checked into `docs/`.
+- **Make the fusion task harder so signal can emerge.** At n=5 with current settings, both `naive_markdown` and `mem0` saturate at 1.00. Options to add difficulty:
+  - More facts per persona (currently 4, try 8–12).
+  - Filler turns between agent A's writes and agent B's writes (so memory has to survive noise).
+  - Phrase the probe question without naming categories (forces the system to actually understand, not pattern-match).
+- **Scale to n=100** once the task discriminates. ~$0.20 in DeepSeek API.
+- **Eyeball failure cases.** Once at least one system drops below 1.00, read 5–10 misses by hand to find the qualitative story.
+- **First plot.** Matplotlib bar chart of `mean_recall` per system with per-case dots and error bars. PNG checked into `docs/`.
 
 ## Next
 
