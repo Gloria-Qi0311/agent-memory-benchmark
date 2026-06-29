@@ -7,52 +7,42 @@ A living checklist. Keep it short. When something moves to `done`, that's a comm
 The project is "done" when these three things are public and findable from one search:
 
 1. **The repo** — code, results, READMEs, anyone can reproduce.
-2. **A chart** — one image that conveys the finding without text.
+2. **A chart** — one image that conveys a finding without text.
 3. **A writeup** — 500-word blog post with the chart and the one-sentence takeaway, written for someone who uses AI tools daily.
 
 ## Done
 
-- Scaffold: case generator, judge, runner, three system adapters (`no_memory`, `naive_markdown`, `mem0`).
-- Public GitHub repo, CI-free for now.
-- First head-to-head results on **n=5 fusion cases** with DeepSeek-V3:
-  - `no_memory` 0.00 (floor anchored)
-  - `naive_markdown` 1.00 (ceiling anchored)
-  - `mem0` 0.95 (preliminary signal — industry default trailing the naive baseline)
+- **Project scaffold**: DeepSeek client, runner, judge, mem0 adapter, baseline systems (`no_memory`, `naive_markdown`, `long_context`, `regex_markdown`), per-case error handling and progress logging, test smoke.
+- **v0 atomic-task pass — concluded that atomic memory + atomic update is too trivial to discriminate systems.** With one fact per memory and explicit-style updates ("X switched to Y. They don't use Z anymore."), modern LLMs reason updates out from raw context; the 30-line `naive_markdown` baseline saturates at 100%, and mem0's underperformance reflects its non-deterministic internal extraction, not a meaningful capability gap. This conclusion **is** the v0 takeaway: build harder tasks for v1.
 - Local sentence-transformers model checked in via manual download (HF library path blocked by SSL/HEAD issues on this machine).
 - Python 3.11 baseline established; documented in `docs/decisions.md`.
 
-## Now (this is what to pick up next session)
+## Now
 
-- **Make the fusion task harder so signal can emerge.** At n=5 with current settings, both `naive_markdown` and `mem0` saturate at 1.00. Options to add difficulty:
-  - More facts per persona (currently 4, try 8–12).
-  - Filler turns between agent A's writes and agent B's writes (so memory has to survive noise).
-  - Phrase the probe question without naming categories (forces the system to actually understand, not pattern-match).
-- **Scale to n=100** once the task discriminates. ~$0.20 in DeepSeek API.
-- **Eyeball failure cases.** Once at least one system drops below 1.00, read 5–10 misses by hand to find the qualitative story.
-- **First plot.** Matplotlib bar chart of `mean_recall` per system with per-case dots and error bars. PNG checked into `docs/`.
+- **v1 / T4 — split intake.** Case generator implemented (12-13 details/case + 0-2 noise sentences, programmatic skeleton + LLM rephrase + verify+retry). 10-case eyeball sample is clean. Still to do: runner integration, judge, CLI flag, tests, then n=100 run on five systems.
 
-## Next
+## Next (v1 task pipeline)
 
-- **Rewrite-preservation task** (`src/cases/rewrite.py`). Auxiliary signal: when one fact is updated, what fraction of the other N-1 facts survive?
-- **README rewrite**. Lead with the finding, follow with method, finish with implications. (Now is too placeholder.)
-- **Add a 4th system**: either `Letta` or `mem0 Platform` (the hosted version) — broadens the comparison. Pick whichever is faster to integrate.
+- **T2 — compound update.** One sentence simultaneously updates K facts. Tests "don't conflate, don't drop, don't damage." Reuses runner from T4.
+- **T1 — surgical edit on long memory.** First a richly detailed memory, then a small update that changes one embedded detail. Tests localized edit under conflict.
+- **T3 — cross-memory.** One update touches several past memories scattered across sessions. Tests cross-session consolidation — the place mem0's design promises value.
 
 ## Parking lot (don't do yet)
 
-- Streamlit dashboard. Wait until at least two tasks × four systems × 100 cases exist; before that, a dashboard would have nothing to show.
-- Multi-LLM-vendor experiment (Claude writes, GPT reads). Interesting but expensive. Defer until the single-LLM story is rock solid.
-- Conflict resolution as a standalone task. Subsumed for now by the fusion task plus future rewrite task.
-- Anything called "leaderboard". Implies more systems than v1 has — would inflate scope.
-- spaCy install for mem0. Currently noisy warning, but not breaking. Skip until it actually blocks something.
+- Streamlit dashboard. Defer until at least two tasks × four systems × 100 cases exist.
+- Multi-LLM-vendor experiment (Claude writes, GPT reads). Interesting but expensive.
+- Letta, Zep, mem0 Platform adapters. Each is a multi-day integration; add only after T4 + T2 results justify the breadth.
+- "Implicit-style" updates ("X now uses Y", no explicit retirement signal). v1.5 variant.
+- spaCy install for mem0. Currently noisy warning, not blocking.
 
 ## Anti-goals (we are explicitly NOT doing these)
 
 - Training, fine-tuning, or evaluating any LLM itself. This benchmarks memory *systems*, not models.
 - Building a new memory system. We benchmark existing ones.
-- Reproducing single-agent long-term memory benchmarks. LongMemEval already does that well.
-- Privacy / leakage testing. GateMem already does that well.
+- Reproducing single-agent long-term memory benchmarks. LongMemEval / LoCoMo already do that.
+- Privacy / leakage testing. GateMem already does that.
 
 ## Open questions
 
-- **Self-evaluation bias from DeepSeek-only.** Document this in the README before publishing the n=100 number. Possibly add one robustness check (50 cases re-judged by a different model) before scaling further.
-- **n=100 confidence**. With recall scores tightly clustered around 1.0, a 5% delta might disappear into noise. Consider also reporting per-case "did mem0 miss any facts at all" — a binary metric is more robust at the ceiling.
+- **Decomposition semantics for T4.** If a user statement contains 8 details, is the "correct" memory shape 1 entry or 8? See `docs/v1/README.md` design questions. v1 dodges by scoring on per-detail retrievability, not on storage shape.
+- **Self-evaluation bias from DeepSeek-only.** Document explicitly before publishing any v1 number. Possibly re-judge a sample with a different model as a robustness check.

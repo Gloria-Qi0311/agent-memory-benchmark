@@ -1,17 +1,10 @@
 # v1: Non-trivial memory benchmark
 
-## What v0 measured (and what it didn't)
+## Why v1 exists (what v0 taught us)
 
-v0 used atomic memories: each "memory" was a single fact like `"Alex uses Python as their language."`. Updates were also atomic: `"Alex switched to Rust. They don't use Python anymore."`
+v0 used atomic memories — each "memory" was a single fact like `"Alex uses Python as their language."`, and updates were equally atomic ("X switched to Y. They don't use Z anymore."). At that granularity the tasks turned out trivial: modern LLMs read the raw context and reason out the update without help, so `naive_markdown` (a 30-line shared list) saturates at 100% and mem0's underperformance reflects only the non-determinism of its internal extraction, not any meaningful capability difference. **v0 is a dead-end as a benchmark.**
 
-At this granularity:
-
-- `naive_markdown`, `long_context`, `regex_markdown` all score **100/100/100/100** on fusion and rewrite tasks at n=200.
-- `mem0` scores **52% per_fact_update / 50% preservation** — but the failure is in mem0's *internal extraction*, not in any non-trivial property of the task.
-
-The headline finding from v0 is real but narrow: **on tasks where one memory = one fact, modern LLMs read the raw context and reason out updates trivially; complex memory systems like mem0 have no value-add (and in fact hurt because their internal LLM extraction is non-deterministic).**
-
-The critique that turned v0 → v1: **atomic memory is not what real memory systems handle**. Real memories are structured paragraphs with multiple embedded facts. Real updates touch parts of memories, multiple facts simultaneously, or span across memories. **v0 doesn't measure any of that.**
+The lesson that drove v1: **atomic memory is not what real memory systems handle**. Real memories are structured paragraphs with multiple embedded facts. Real updates touch parts of memories, multiple facts simultaneously, or span across memories. v0 didn't measure any of that — v1 does.
 
 ## v1 task types (4 levels of difficulty)
 
