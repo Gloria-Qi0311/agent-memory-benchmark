@@ -12,18 +12,18 @@ The project is "done" when these three things are public and findable from one s
 
 ## Done
 
-- **Project scaffold**: DeepSeek client, runner, judge, mem0 adapter, baseline systems (`no_memory`, `naive_markdown`, `long_context`, `regex_markdown`), per-case error handling and progress logging, test smoke.
-- **v0 atomic-task pass — concluded that atomic memory + atomic update is too trivial to discriminate systems.** With one fact per memory and explicit-style updates ("X switched to Y. They don't use Z anymore."), modern LLMs reason updates out from raw context; the 30-line `naive_markdown` baseline saturates at 100%, and mem0's underperformance reflects its non-deterministic internal extraction, not a meaningful capability gap. This conclusion **is** the v0 takeaway: build harder tasks for v1.
+- **Project scaffold**: DeepSeek client, runner, judge, mem0 adapter, baseline systems (`no_memory`, `naive_markdown`, `long_context`), per-case error handling and progress logging, test smoke (12 tests).
+- **v0 atomic-task pass — concluded that atomic memory + atomic update is too trivial to discriminate systems.** Code+data removed when v1 superseded; the lesson is the only thing we kept.
+- **v1 / T4 — split intake (n=100)**. mem0 0.555 per-detail recall vs naive_markdown 0.952. 95% CIs do not overlap. Failure-mode analysis: mem0's misses are 67% hallucinated wrong values (vs 38% for naive). See [`docs/v1/t4_findings.md`](./v1/t4_findings.md), [`docs/v1/t4_results.png`](./v1/t4_results.png).
 - Local sentence-transformers model checked in via manual download (HF library path blocked by SSL/HEAD issues on this machine).
 - Python 3.11 baseline established; documented in `docs/decisions.md`.
 
 ## Now
 
-- **v1 / T4 — split intake.** Case generator implemented (12-13 details/case + 0-2 noise sentences, programmatic skeleton + LLM rephrase + verify+retry). 10-case eyeball sample is clean. Still to do: runner integration, judge, CLI flag, tests, then n=100 run on five systems.
+- **v1 / T2 — compound update.** One sentence simultaneously updates K facts. Tests "don't conflate, don't drop, don't damage." Reuses runner / judge primitives from T4.
 
 ## Next (v1 task pipeline)
 
-- **T2 — compound update.** One sentence simultaneously updates K facts. Tests "don't conflate, don't drop, don't damage." Reuses runner from T4.
 - **T1 — surgical edit on long memory.** First a richly detailed memory, then a small update that changes one embedded detail. Tests localized edit under conflict.
 - **T3 — cross-memory.** One update touches several past memories scattered across sessions. Tests cross-session consolidation — the place mem0's design promises value.
 

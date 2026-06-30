@@ -10,7 +10,16 @@ This benchmark fills the gap: **when N agents share one memory store, do existin
 
 ## Status
 
-🚧 **Active development.** The current focus is the v1 task suite — four task types designed to probe non-trivial memory operations (split intake, compound update, surgical edit, cross-memory). See [`docs/v1/`](./docs/v1/README.md) for the design.
+🚧 **Active development.** v1 task suite — four task types probing non-trivial memory operations (T4 split intake, T2 compound update, T1 surgical edit, T3 cross-memory). See [`docs/v1/`](./docs/v1/README.md) for the design.
+
+| Task | Status | Headline |
+|---|---|---|
+| **T4 — split intake** | ✅ done (n=100) | `mem0` **0.555** per-detail recall vs `naive_markdown` **0.952**. [Full writeup](./docs/v1/t4_findings.md). |
+| T2 — compound update | next | |
+| T1 — surgical edit | planned | |
+| T3 — cross-memory | planned | |
+
+![T4 results](./docs/v1/t4_results.png)
 
 An initial atomic-level pass (v0) is in the git history. It tested one-fact-per-memory + explicit-style updates and concluded that **atomic tasks don't discriminate memory systems** — modern LLMs reason out trivial updates from raw context, so a 30-line markdown baseline scores 100% and no headline finding emerges. The v0 scaffolding (agent client, runner, judge, mem0 adapter, baseline systems) is reused by v1; the v0 conclusions are not.
 

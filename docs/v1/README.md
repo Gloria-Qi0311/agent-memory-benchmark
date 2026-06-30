@@ -10,7 +10,9 @@ The lesson that drove v1: **atomic memory is not what real memory systems handle
 
 Each level exposes a different memory-system capability that v0's atomic setup hides.
 
-### T4 — Split intake (Week 1)
+### T4 — Split intake (✅ DONE)
+
+**Headline result (n=100):** `mem0` 0.555 per-detail recall vs `naive_markdown` 0.952. Full writeup: [`t4_findings.md`](./t4_findings.md). Chart: [`t4_results.png`](./t4_results.png).
 
 **What the user does:** Says one long thing containing N independent facts.
 
@@ -24,7 +26,7 @@ Each level exposes a different memory-system capability that v0's atomic setup h
 
 This is also where mem0 has a real chance to beat naive baselines, because a single 200-character user statement may exceed naive_markdown's ability to surface each detail under targeted retrieval (the LLM has to re-extract every read).
 
-### T2 — Compound update (Week 2)
+### T2 — Compound update (next)
 
 **What the user does:** Says a single sentence that simultaneously updates K facts about themselves.
 
@@ -41,7 +43,7 @@ This is also where mem0 has a real chance to beat naive baselines, because a sin
 
 **Why this exists:** Most real "update" events in product use are not single-fact — they're compound (a user reshaping their workflow, moving to a new role, etc.). Single-fact rewrite tests don't surface whether a system can untangle several simultaneous changes.
 
-### T1 — Surgical edit on long memory (Week 3)
+### T1 — Surgical edit on long memory
 
 **What the user does:** First leaves a richly detailed memory (a paragraph with 10+ embedded facts about themselves), then later issues a surgical update that changes just one detail.
 
@@ -59,7 +61,7 @@ This is also where mem0 has a real chance to beat naive baselines, because a sin
 
 `mem0` may shine here if its extraction step correctly decomposes the paragraph into individual facts, then surgically modifies one entry — that's what its design promises.
 
-### T3 — Cross-memory update (Week 4)
+### T3 — Cross-memory update
 
 **What the user does:** Across several past sessions, has scattered memories about a shared entity (e.g. their project "Apollo"). Now issues one update that affects multiple of those memories.
 
