@@ -1,0 +1,1094 @@
+[
+  {
+    "case_id": "T4-0000",
+    "scenario": "travel_plan",
+    "persona": "Gabriel",
+    "ground_truth_details": {
+      "destination": "Reykjavik",
+      "departure_city": "Berlin",
+      "depart_date": "March 14",
+      "return_date": "March 28",
+      "airline": "Qatar Airways",
+      "flight_class": "First",
+      "seat_pref": "aisle",
+      "hotel": "Mandarin Oriental",
+      "hotel_room": "Twin",
+      "purpose": "research trip",
+      "meal_pref": "kosher",
+      "travel_companion": "with family"
+    },
+    "skeleton_statement": "Gabriel is taking a trip — Berlin to Reykjavik, March 14 through March 28, traveling with family. It's a research trip. They're flying Qatar Airways in First with a aisle seat, having requested a kosher meal. Staying at the Mandarin Oriental in a Twin.",
+    "skeleton_with_noise": "Gabriel is taking a trip — Berlin to Reykjavik, March 14 through March 28, traveling with family. It's a research trip. They're flying Qatar Airways in First with a aisle seat, having requested a kosher meal. Staying at the Mandarin Oriental in a Twin.",
+    "user_statement": "Gabriel is heading on a research trip from Berlin to Reykjavik, traveling with family from March 14 through March 28. They’ll be flying Qatar Airways in First, booking an aisle seat and requesting a kosher meal. For accommodations, they’re staying at the Mandarin Oriental in a Twin room.",
+    "noise_sentences": [],
+    "used_fallback": false,
+    "n_rephrase_attempts": 1,
+    "per_detail_probes": [
+      {
+        "key": "destination",
+        "question": "Where is Gabriel traveling to?",
+        "expected": "Reykjavik"
+      },
+      {
+        "key": "departure_city",
+        "question": "Where is Gabriel departing from?",
+        "expected": "Berlin"
+      },
+      {
+        "key": "depart_date",
+        "question": "When does Gabriel depart?",
+        "expected": "March 14"
+      },
+      {
+        "key": "return_date",
+        "question": "When does Gabriel return?",
+        "expected": "March 28"
+      },
+      {
+        "key": "airline",
+        "question": "What airline is Gabriel flying?",
+        "expected": "Qatar Airways"
+      },
+      {
+        "key": "flight_class",
+        "question": "What flight class is Gabriel in?",
+        "expected": "First"
+      },
+      {
+        "key": "seat_pref",
+        "question": "What seat preference does Gabriel have?",
+        "expected": "aisle"
+      },
+      {
+        "key": "hotel",
+        "question": "Where is Gabriel staying?",
+        "expected": "Mandarin Oriental"
+      },
+      {
+        "key": "hotel_room",
+        "question": "What room type is Gabriel booked in?",
+        "expected": "Twin"
+      },
+      {
+        "key": "purpose",
+        "question": "What's the purpose of Gabriel's trip?",
+        "expected": "research trip"
+      },
+      {
+        "key": "meal_pref",
+        "question": "What meal preference did Gabriel request?",
+        "expected": "kosher"
+      },
+      {
+        "key": "travel_companion",
+        "question": "Who is Gabriel traveling with?",
+        "expected": "with family"
+      }
+    ],
+    "aggregate_probe": {
+      "question": "Tell me everything Gabriel mentioned. For each of the following, give the specific value: destination, departure_city, depart_date, return_date, airline, flight_class, seat_pref, hotel, hotel_room, purpose, meal_pref, travel_companion.",
+      "expected_by_key": {
+        "destination": "Reykjavik",
+        "departure_city": "Berlin",
+        "depart_date": "March 14",
+        "return_date": "March 28",
+        "airline": "Qatar Airways",
+        "flight_class": "First",
+        "seat_pref": "aisle",
+        "hotel": "Mandarin Oriental",
+        "hotel_room": "Twin",
+        "purpose": "research trip",
+        "meal_pref": "kosher",
+        "travel_companion": "with family"
+      }
+    }
+  },
+  {
+    "case_id": "T4-0001",
+    "scenario": "dev_setup",
+    "persona": "Bao",
+    "ground_truth_details": {
+      "laptop": "ThinkPad X1 Carbon Gen 12",
+      "ram": "96GB",
+      "storage": "8TB SSD",
+      "display": "LG UltraFine 5K",
+      "keyboard": "Glove80",
+      "os": "Ubuntu 24.04",
+      "shell": "fish",
+      "ide": "Cursor",
+      "terminal": "Kitty",
+      "font": "JetBrains Mono",
+      "theme": "Solarized Dark",
+      "package_mgr": "apt",
+      "git_client": "lazygit"
+    },
+    "skeleton_statement": "Bao just rebuilt their dev setup. The hardware: ThinkPad X1 Carbon Gen 12 with 96GB RAM and 8TB SSD, paired with a LG UltraFine 5K and a Glove80. Software side, they run Ubuntu 24.04 with fish as their shell, Cursor as the primary IDE, and Kitty as the terminal. The look: JetBrains Mono as the coding font, Solarized Dark as the theme. For tooling, they manage packages with apt and use lazygit as their git client.",
+    "skeleton_with_noise": "Bao just rebuilt their dev setup. The hardware: ThinkPad X1 Carbon Gen 12 with 96GB RAM and 8TB SSD, paired with a LG UltraFine 5K and a Glove80. Software side, they run Ubuntu 24.04 with fish as their shell, Cursor as the primary IDE, and Kitty as the terminal. The look: JetBrains Mono as the coding font, Solarized Dark as the theme. For tooling, they manage packages with apt and use lazygit as their git client. By the way, the espresso this morning was great.",
+    "user_statement": "Bao just finished rebuilding their dev setup. It's built around a ThinkPad X1 Carbon Gen 12 with 96GB RAM and an 8TB SSD, paired with an LG UltraFine 5K and a Glove80 keyboard. On the software side, they're running Ubuntu 24.04 with fish as their shell, Cursor as the primary IDE, and Kitty as the terminal. They code in JetBrains Mono with a Solarized Dark theme, manage packages with apt, and use lazygit for version control. Also, the espresso this morning was great.",
+    "noise_sentences": [
+      "By the way, the espresso this morning was great."
+    ],
+    "used_fallback": false,
+    "n_rephrase_attempts": 1,
+    "per_detail_probes": [
+      {
+        "key": "laptop",
+        "question": "What laptop does Bao use?",
+        "expected": "ThinkPad X1 Carbon Gen 12"
+      },
+      {
+        "key": "ram",
+        "question": "How much RAM does Bao's machine have?",
+        "expected": "96GB"
+      },
+      {
+        "key": "storage",
+        "question": "What storage does Bao's machine have?",
+        "expected": "8TB SSD"
+      },
+      {
+        "key": "display",
+        "question": "What display does Bao use?",
+        "expected": "LG UltraFine 5K"
+      },
+      {
+        "key": "keyboard",
+        "question": "What keyboard does Bao use?",
+        "expected": "Glove80"
+      },
+      {
+        "key": "os",
+        "question": "What operating system does Bao run?",
+        "expected": "Ubuntu 24.04"
+      },
+      {
+        "key": "shell",
+        "question": "What shell does Bao use?",
+        "expected": "fish"
+      },
+      {
+        "key": "ide",
+        "question": "What IDE does Bao use?",
+        "expected": "Cursor"
+      },
+      {
+        "key": "terminal",
+        "question": "What terminal does Bao use?",
+        "expected": "Kitty"
+      },
+      {
+        "key": "font",
+        "question": "What coding font does Bao use?",
+        "expected": "JetBrains Mono"
+      },
+      {
+        "key": "theme",
+        "question": "What editor theme does Bao use?",
+        "expected": "Solarized Dark"
+      },
+      {
+        "key": "package_mgr",
+        "question": "What package manager does Bao use?",
+        "expected": "apt"
+      },
+      {
+        "key": "git_client",
+        "question": "What git client does Bao use?",
+        "expected": "lazygit"
+      }
+    ],
+    "aggregate_probe": {
+      "question": "Tell me everything Bao mentioned. For each of the following, give the specific value: laptop, ram, storage, display, keyboard, os, shell, ide, terminal, font, theme, package_mgr, git_client.",
+      "expected_by_key": {
+        "laptop": "ThinkPad X1 Carbon Gen 12",
+        "ram": "96GB",
+        "storage": "8TB SSD",
+        "display": "LG UltraFine 5K",
+        "keyboard": "Glove80",
+        "os": "Ubuntu 24.04",
+        "shell": "fish",
+        "ide": "Cursor",
+        "terminal": "Kitty",
+        "font": "JetBrains Mono",
+        "theme": "Solarized Dark",
+        "package_mgr": "apt",
+        "git_client": "lazygit"
+      }
+    }
+  },
+  {
+    "case_id": "T4-0002",
+    "scenario": "dev_setup",
+    "persona": "Bao",
+    "ground_truth_details": {
+      "laptop": "MacBook Pro M4 Max",
+      "ram": "48GB",
+      "storage": "4TB SSD",
+      "display": "ASUS ProArt PA32UCG",
+      "keyboard": "Moonlander Mark I",
+      "os": "macOS Sonoma",
+      "shell": "fish",
+      "ide": "JetBrains Rider",
+      "terminal": "Ghostty",
+      "font": "Monaspace Argon",
+      "theme": "Tokyo Night",
+      "package_mgr": "apt",
+      "git_client": "Fork"
+    },
+    "skeleton_statement": "Bao just rebuilt their dev setup. The hardware: MacBook Pro M4 Max with 48GB RAM and 4TB SSD, paired with a ASUS ProArt PA32UCG and a Moonlander Mark I. Software side, they run macOS Sonoma with fish as their shell, JetBrains Rider as the primary IDE, and Ghostty as the terminal. The look: Monaspace Argon as the coding font, Tokyo Night as the theme. For tooling, they manage packages with apt and use Fork as their git client.",
+    "skeleton_with_noise": "The kettle is still warm. Bao just rebuilt their dev setup. The hardware: MacBook Pro M4 Max with 48GB RAM and 4TB SSD, paired with a ASUS ProArt PA32UCG and a Moonlander Mark I. Software side, they run macOS Sonoma with fish as their shell, JetBrains Rider as the primary IDE, and Ghostty as the terminal. The look: Monaspace Argon as the coding font, Tokyo Night as the theme. For tooling, they manage packages with apt and use Fork as their git client. Lunch got skipped again today.",
+    "user_statement": "Bao just finished rebuilding their dev setup. On the hardware side, they're running a MacBook Pro M4 Max with 48GB RAM and 4TB SSD, paired with an ASUS ProArt PA32UCG and a Moonlander Mark I. For software, they use macOS Sonoma with fish as their shell, JetBrains Rider as the primary IDE, and Ghostty as the terminal. The coding font is Monaspace Argon, and the theme is Tokyo Night. They manage packages with apt and use Fork as their git client. The kettle is still warm, and lunch got skipped again today.",
+    "noise_sentences": [
+      "The kettle is still warm.",
+      "Lunch got skipped again today."
+    ],
+    "used_fallback": false,
+    "n_rephrase_attempts": 1,
+    "per_detail_probes": [
+      {
+        "key": "laptop",
+        "question": "What laptop does Bao use?",
+        "expected": "MacBook Pro M4 Max"
+      },
+      {
+        "key": "ram",
+        "question": "How much RAM does Bao's machine have?",
+        "expected": "48GB"
+      },
+      {
+        "key": "storage",
+        "question": "What storage does Bao's machine have?",
+        "expected": "4TB SSD"
+      },
+      {
+        "key": "display",
+        "question": "What display does Bao use?",
+        "expected": "ASUS ProArt PA32UCG"
+      },
+      {
+        "key": "keyboard",
+        "question": "What keyboard does Bao use?",
+        "expected": "Moonlander Mark I"
+      },
+      {
+        "key": "os",
+        "question": "What operating system does Bao run?",
+        "expected": "macOS Sonoma"
+      },
+      {
+        "key": "shell",
+        "question": "What shell does Bao use?",
+        "expected": "fish"
+      },
+      {
+        "key": "ide",
+        "question": "What IDE does Bao use?",
+        "expected": "JetBrains Rider"
+      },
+      {
+        "key": "terminal",
+        "question": "What terminal does Bao use?",
+        "expected": "Ghostty"
+      },
+      {
+        "key": "font",
+        "question": "What coding font does Bao use?",
+        "expected": "Monaspace Argon"
+      },
+      {
+        "key": "theme",
+        "question": "What editor theme does Bao use?",
+        "expected": "Tokyo Night"
+      },
+      {
+        "key": "package_mgr",
+        "question": "What package manager does Bao use?",
+        "expected": "apt"
+      },
+      {
+        "key": "git_client",
+        "question": "What git client does Bao use?",
+        "expected": "Fork"
+      }
+    ],
+    "aggregate_probe": {
+      "question": "Tell me everything Bao mentioned. For each of the following, give the specific value: laptop, ram, storage, display, keyboard, os, shell, ide, terminal, font, theme, package_mgr, git_client.",
+      "expected_by_key": {
+        "laptop": "MacBook Pro M4 Max",
+        "ram": "48GB",
+        "storage": "4TB SSD",
+        "display": "ASUS ProArt PA32UCG",
+        "keyboard": "Moonlander Mark I",
+        "os": "macOS Sonoma",
+        "shell": "fish",
+        "ide": "JetBrains Rider",
+        "terminal": "Ghostty",
+        "font": "Monaspace Argon",
+        "theme": "Tokyo Night",
+        "package_mgr": "apt",
+        "git_client": "Fork"
+      }
+    }
+  },
+  {
+    "case_id": "T4-0003",
+    "scenario": "dev_setup",
+    "persona": "Chloe",
+    "ground_truth_details": {
+      "laptop": "ThinkPad X1 Carbon Gen 12",
+      "ram": "96GB",
+      "storage": "1TB SSD",
+      "display": "Dell U4025QW",
+      "keyboard": "Keychron Q3 Pro",
+      "os": "Fedora 41",
+      "shell": "bash",
+      "ide": "Zed",
+      "terminal": "Alacritty",
+      "font": "Berkeley Mono",
+      "theme": "Tokyo Night",
+      "package_mgr": "apt",
+      "git_client": "lazygit"
+    },
+    "skeleton_statement": "Chloe just rebuilt their dev setup. The hardware: ThinkPad X1 Carbon Gen 12 with 96GB RAM and 1TB SSD, paired with a Dell U4025QW and a Keychron Q3 Pro. Software side, they run Fedora 41 with bash as their shell, Zed as the primary IDE, and Alacritty as the terminal. The look: Berkeley Mono as the coding font, Tokyo Night as the theme. For tooling, they manage packages with apt and use lazygit as their git client.",
+    "skeleton_with_noise": "The coffee beans need refilling tomorrow. Chloe just rebuilt their dev setup. The hardware: ThinkPad X1 Carbon Gen 12 with 96GB RAM and 1TB SSD, paired with a Dell U4025QW and a Keychron Q3 Pro. Software side, they run Fedora 41 with bash as their shell, Zed as the primary IDE, and Alacritty as the terminal. The look: Berkeley Mono as the coding font, Tokyo Night as the theme. For tooling, they manage packages with apt and use lazygit as their git client. Spotify keeps recommending the same album lately.",
+    "user_statement": "Chloe just rebuilt their dev setup and will need to refill the coffee beans tomorrow. On the hardware side, they use a ThinkPad X1 Carbon Gen 12 with 96GB RAM and 1TB SSD, paired with a Dell U4025QW and a Keychron Q3 Pro. Their software stack runs on Fedora 41, with bash as the shell, Zed as the primary IDE, and Alacritty as the terminal. For aesthetics, they go with Berkeley Mono as the coding font and Tokyo Night as the theme, while managing packages through apt and using lazygit for git operations. Lately, Spotify keeps recommending the same album to them.",
+    "noise_sentences": [
+      "The coffee beans need refilling tomorrow.",
+      "Spotify keeps recommending the same album lately."
+    ],
+    "used_fallback": false,
+    "n_rephrase_attempts": 1,
+    "per_detail_probes": [
+      {
+        "key": "laptop",
+        "question": "What laptop does Chloe use?",
+        "expected": "ThinkPad X1 Carbon Gen 12"
+      },
+      {
+        "key": "ram",
+        "question": "How much RAM does Chloe's machine have?",
+        "expected": "96GB"
+      },
+      {
+        "key": "storage",
+        "question": "What storage does Chloe's machine have?",
+        "expected": "1TB SSD"
+      },
+      {
+        "key": "display",
+        "question": "What display does Chloe use?",
+        "expected": "Dell U4025QW"
+      },
+      {
+        "key": "keyboard",
+        "question": "What keyboard does Chloe use?",
+        "expected": "Keychron Q3 Pro"
+      },
+      {
+        "key": "os",
+        "question": "What operating system does Chloe run?",
+        "expected": "Fedora 41"
+      },
+      {
+        "key": "shell",
+        "question": "What shell does Chloe use?",
+        "expected": "bash"
+      },
+      {
+        "key": "ide",
+        "question": "What IDE does Chloe use?",
+        "expected": "Zed"
+      },
+      {
+        "key": "terminal",
+        "question": "What terminal does Chloe use?",
+        "expected": "Alacritty"
+      },
+      {
+        "key": "font",
+        "question": "What coding font does Chloe use?",
+        "expected": "Berkeley Mono"
+      },
+      {
+        "key": "theme",
+        "question": "What editor theme does Chloe use?",
+        "expected": "Tokyo Night"
+      },
+      {
+        "key": "package_mgr",
+        "question": "What package manager does Chloe use?",
+        "expected": "apt"
+      },
+      {
+        "key": "git_client",
+        "question": "What git client does Chloe use?",
+        "expected": "lazygit"
+      }
+    ],
+    "aggregate_probe": {
+      "question": "Tell me everything Chloe mentioned. For each of the following, give the specific value: laptop, ram, storage, display, keyboard, os, shell, ide, terminal, font, theme, package_mgr, git_client.",
+      "expected_by_key": {
+        "laptop": "ThinkPad X1 Carbon Gen 12",
+        "ram": "96GB",
+        "storage": "1TB SSD",
+        "display": "Dell U4025QW",
+        "keyboard": "Keychron Q3 Pro",
+        "os": "Fedora 41",
+        "shell": "bash",
+        "ide": "Zed",
+        "terminal": "Alacritty",
+        "font": "Berkeley Mono",
+        "theme": "Tokyo Night",
+        "package_mgr": "apt",
+        "git_client": "lazygit"
+      }
+    }
+  },
+  {
+    "case_id": "T4-0004",
+    "scenario": "dev_setup",
+    "persona": "Eun",
+    "ground_truth_details": {
+      "laptop": "MacBook Pro M4 Max",
+      "ram": "96GB",
+      "storage": "2TB SSD",
+      "display": "Studio Display 5K",
+      "keyboard": "Keychron Q3 Pro",
+      "os": "macOS Sonoma",
+      "shell": "zsh",
+      "ide": "Neovim",
+      "terminal": "Alacritty",
+      "font": "Fira Code",
+      "theme": "Catppuccin Mocha",
+      "package_mgr": "Nix",
+      "git_client": "lazygit"
+    },
+    "skeleton_statement": "Eun just rebuilt their dev setup. The hardware: MacBook Pro M4 Max with 96GB RAM and 2TB SSD, paired with a Studio Display 5K and a Keychron Q3 Pro. Software side, they run macOS Sonoma with zsh as their shell, Neovim as the primary IDE, and Alacritty as the terminal. The look: Fira Code as the coding font, Catppuccin Mocha as the theme. For tooling, they manage packages with Nix and use lazygit as their git client.",
+    "skeleton_with_noise": "Eun just rebuilt their dev setup. The hardware: MacBook Pro M4 Max with 96GB RAM and 2TB SSD, paired with a Studio Display 5K and a Keychron Q3 Pro. Software side, they run macOS Sonoma with zsh as their shell, Neovim as the primary IDE, and Alacritty as the terminal. The look: Fira Code as the coding font, Catppuccin Mocha as the theme. For tooling, they manage packages with Nix and use lazygit as their git client. It's been raining nonstop this week.",
+    "user_statement": "Eun just rebuilt their dev setup with a MacBook Pro M4 Max that has 96GB of RAM and a 2TB SSD, paired with a Studio Display 5K and a Keychron Q3 Pro. They run macOS Sonoma, using zsh as their shell, Neovim as their primary IDE, and Alacritty as their terminal. The aesthetic features Fira Code as the coding font and Catppuccin Mocha as the theme. For tooling, they manage packages with Nix and use lazygit as their git client. It's been raining nonstop this week.",
+    "noise_sentences": [
+      "It's been raining nonstop this week."
+    ],
+    "used_fallback": false,
+    "n_rephrase_attempts": 1,
+    "per_detail_probes": [
+      {
+        "key": "laptop",
+        "question": "What laptop does Eun use?",
+        "expected": "MacBook Pro M4 Max"
+      },
+      {
+        "key": "ram",
+        "question": "How much RAM does Eun's machine have?",
+        "expected": "96GB"
+      },
+      {
+        "key": "storage",
+        "question": "What storage does Eun's machine have?",
+        "expected": "2TB SSD"
+      },
+      {
+        "key": "display",
+        "question": "What display does Eun use?",
+        "expected": "Studio Display 5K"
+      },
+      {
+        "key": "keyboard",
+        "question": "What keyboard does Eun use?",
+        "expected": "Keychron Q3 Pro"
+      },
+      {
+        "key": "os",
+        "question": "What operating system does Eun run?",
+        "expected": "macOS Sonoma"
+      },
+      {
+        "key": "shell",
+        "question": "What shell does Eun use?",
+        "expected": "zsh"
+      },
+      {
+        "key": "ide",
+        "question": "What IDE does Eun use?",
+        "expected": "Neovim"
+      },
+      {
+        "key": "terminal",
+        "question": "What terminal does Eun use?",
+        "expected": "Alacritty"
+      },
+      {
+        "key": "font",
+        "question": "What coding font does Eun use?",
+        "expected": "Fira Code"
+      },
+      {
+        "key": "theme",
+        "question": "What editor theme does Eun use?",
+        "expected": "Catppuccin Mocha"
+      },
+      {
+        "key": "package_mgr",
+        "question": "What package manager does Eun use?",
+        "expected": "Nix"
+      },
+      {
+        "key": "git_client",
+        "question": "What git client does Eun use?",
+        "expected": "lazygit"
+      }
+    ],
+    "aggregate_probe": {
+      "question": "Tell me everything Eun mentioned. For each of the following, give the specific value: laptop, ram, storage, display, keyboard, os, shell, ide, terminal, font, theme, package_mgr, git_client.",
+      "expected_by_key": {
+        "laptop": "MacBook Pro M4 Max",
+        "ram": "96GB",
+        "storage": "2TB SSD",
+        "display": "Studio Display 5K",
+        "keyboard": "Keychron Q3 Pro",
+        "os": "macOS Sonoma",
+        "shell": "zsh",
+        "ide": "Neovim",
+        "terminal": "Alacritty",
+        "font": "Fira Code",
+        "theme": "Catppuccin Mocha",
+        "package_mgr": "Nix",
+        "git_client": "lazygit"
+      }
+    }
+  },
+  {
+    "case_id": "T4-0005",
+    "scenario": "home_office",
+    "persona": "Eun",
+    "ground_truth_details": {
+      "desk": "Fully Cooper",
+      "chair": "Branch Ergonomic",
+      "monitor_mount": "Ergotron LX",
+      "lighting": "Govee Glide",
+      "webcam": "Insta360 Link",
+      "mic": "Shure SM7B",
+      "speakers": "KEF LSX II",
+      "audio_interface": "Focusrite Scarlett 2i2",
+      "headphones": "Sennheiser HD 660S2",
+      "notebook": "Field Notes",
+      "plant": "Pothos",
+      "background": "virtual"
+    },
+    "skeleton_statement": "Eun finally finished their home office. The desk is a Fully Cooper, the chair is a Branch Ergonomic, monitor on a Ergotron LX. For calls: Govee Glide lighting, Insta360 Link webcam, Shure SM7B microphone, KEF LSX II speakers, Focusrite Scarlett 2i2 as the audio interface. Personal touches: Sennheiser HD 660S2 for headphones, a Field Notes notebook on the desk, a Pothos in the corner, and a virtual background.",
+    "skeleton_with_noise": "An old podcast episode is playing in the background. Eun finally finished their home office. The desk is a Fully Cooper, the chair is a Branch Ergonomic, monitor on a Ergotron LX. For calls: Govee Glide lighting, Insta360 Link webcam, Shure SM7B microphone, KEF LSX II speakers, Focusrite Scarlett 2i2 as the audio interface. Personal touches: Sennheiser HD 660S2 for headphones, a Field Notes notebook on the desk, a Pothos in the corner, and a virtual background.",
+    "user_statement": "Eun finally finished their home office, with an old podcast episode playing in the background. The desk is a Fully Cooper, paired with a Branch Ergonomic chair and a monitor on an Ergotron LX. For calls, they use Govee Glide lighting, an Insta360 Link webcam, a Shure SM7B microphone, KEF LSX II speakers, and a Focusrite Scarlett 2i2 as the audio interface. Personal touches include Sennheiser HD 660S2 headphones, a Field Notes notebook on the desk, a Pothos in the corner, and a virtual background.",
+    "noise_sentences": [
+      "An old podcast episode is playing in the background."
+    ],
+    "used_fallback": false,
+    "n_rephrase_attempts": 1,
+    "per_detail_probes": [
+      {
+        "key": "desk",
+        "question": "What desk does Eun have?",
+        "expected": "Fully Cooper"
+      },
+      {
+        "key": "chair",
+        "question": "What chair does Eun use?",
+        "expected": "Branch Ergonomic"
+      },
+      {
+        "key": "monitor_mount",
+        "question": "What monitor mount does Eun have?",
+        "expected": "Ergotron LX"
+      },
+      {
+        "key": "lighting",
+        "question": "What lighting does Eun use?",
+        "expected": "Govee Glide"
+      },
+      {
+        "key": "webcam",
+        "question": "What webcam does Eun use?",
+        "expected": "Insta360 Link"
+      },
+      {
+        "key": "mic",
+        "question": "What microphone does Eun use?",
+        "expected": "Shure SM7B"
+      },
+      {
+        "key": "speakers",
+        "question": "What speakers does Eun use?",
+        "expected": "KEF LSX II"
+      },
+      {
+        "key": "audio_interface",
+        "question": "What audio interface does Eun have?",
+        "expected": "Focusrite Scarlett 2i2"
+      },
+      {
+        "key": "headphones",
+        "question": "What headphones does Eun use?",
+        "expected": "Sennheiser HD 660S2"
+      },
+      {
+        "key": "notebook",
+        "question": "What notebook does Eun carry?",
+        "expected": "Field Notes"
+      },
+      {
+        "key": "plant",
+        "question": "What plant does Eun have in the office?",
+        "expected": "Pothos"
+      },
+      {
+        "key": "background",
+        "question": "What's the background behind Eun on calls?",
+        "expected": "virtual"
+      }
+    ],
+    "aggregate_probe": {
+      "question": "Tell me everything Eun mentioned. For each of the following, give the specific value: desk, chair, monitor_mount, lighting, webcam, mic, speakers, audio_interface, headphones, notebook, plant, background.",
+      "expected_by_key": {
+        "desk": "Fully Cooper",
+        "chair": "Branch Ergonomic",
+        "monitor_mount": "Ergotron LX",
+        "lighting": "Govee Glide",
+        "webcam": "Insta360 Link",
+        "mic": "Shure SM7B",
+        "speakers": "KEF LSX II",
+        "audio_interface": "Focusrite Scarlett 2i2",
+        "headphones": "Sennheiser HD 660S2",
+        "notebook": "Field Notes",
+        "plant": "Pothos",
+        "background": "virtual"
+      }
+    }
+  },
+  {
+    "case_id": "T4-0006",
+    "scenario": "home_office",
+    "persona": "Bao",
+    "ground_truth_details": {
+      "desk": "FlexiSpot E7",
+      "chair": "Embody",
+      "monitor_mount": "Ergotron LX",
+      "lighting": "Elgato Key Light",
+      "webcam": "Insta360 Link",
+      "mic": "Elgato Wave 3",
+      "speakers": "Genelec 8010A",
+      "audio_interface": "Apollo Twin X",
+      "headphones": "Sennheiser HD 660S2",
+      "notebook": "Moleskine",
+      "plant": "Snake Plant",
+      "background": "virtual"
+    },
+    "skeleton_statement": "Bao finally finished their home office. The desk is a FlexiSpot E7, the chair is a Embody, monitor on a Ergotron LX. For calls: Elgato Key Light lighting, Insta360 Link webcam, Elgato Wave 3 microphone, Genelec 8010A speakers, Apollo Twin X as the audio interface. Personal touches: Sennheiser HD 660S2 for headphones, a Moleskine notebook on the desk, a Snake Plant in the corner, and a virtual background.",
+    "skeleton_with_noise": "Spotify keeps recommending the same album lately. Bao finally finished their home office. The desk is a FlexiSpot E7, the chair is a Embody, monitor on a Ergotron LX. For calls: Elgato Key Light lighting, Insta360 Link webcam, Elgato Wave 3 microphone, Genelec 8010A speakers, Apollo Twin X as the audio interface. Personal touches: Sennheiser HD 660S2 for headphones, a Moleskine notebook on the desk, a Snake Plant in the corner, and a virtual background. The kettle is still warm.",
+    "user_statement": "Bao has finally finished setting up their home office. The desk is a FlexiSpot E7, paired with an Embody chair and a monitor on an Ergotron LX. For calls, they use an Elgato Key Light for lighting, an Insta360 Link webcam, an Elgato Wave 3 microphone, Genelec 8010A speakers, and an Apollo Twin X as the audio interface. Personal touches include Sennheiser HD 660S2 headphones, a Moleskine notebook on the desk, a Snake Plant in the corner, and a virtual background. The kettle is still warm.",
+    "noise_sentences": [
+      "Spotify keeps recommending the same album lately.",
+      "The kettle is still warm."
+    ],
+    "used_fallback": false,
+    "n_rephrase_attempts": 1,
+    "per_detail_probes": [
+      {
+        "key": "desk",
+        "question": "What desk does Bao have?",
+        "expected": "FlexiSpot E7"
+      },
+      {
+        "key": "chair",
+        "question": "What chair does Bao use?",
+        "expected": "Embody"
+      },
+      {
+        "key": "monitor_mount",
+        "question": "What monitor mount does Bao have?",
+        "expected": "Ergotron LX"
+      },
+      {
+        "key": "lighting",
+        "question": "What lighting does Bao use?",
+        "expected": "Elgato Key Light"
+      },
+      {
+        "key": "webcam",
+        "question": "What webcam does Bao use?",
+        "expected": "Insta360 Link"
+      },
+      {
+        "key": "mic",
+        "question": "What microphone does Bao use?",
+        "expected": "Elgato Wave 3"
+      },
+      {
+        "key": "speakers",
+        "question": "What speakers does Bao use?",
+        "expected": "Genelec 8010A"
+      },
+      {
+        "key": "audio_interface",
+        "question": "What audio interface does Bao have?",
+        "expected": "Apollo Twin X"
+      },
+      {
+        "key": "headphones",
+        "question": "What headphones does Bao use?",
+        "expected": "Sennheiser HD 660S2"
+      },
+      {
+        "key": "notebook",
+        "question": "What notebook does Bao carry?",
+        "expected": "Moleskine"
+      },
+      {
+        "key": "plant",
+        "question": "What plant does Bao have in the office?",
+        "expected": "Snake Plant"
+      },
+      {
+        "key": "background",
+        "question": "What's the background behind Bao on calls?",
+        "expected": "virtual"
+      }
+    ],
+    "aggregate_probe": {
+      "question": "Tell me everything Bao mentioned. For each of the following, give the specific value: desk, chair, monitor_mount, lighting, webcam, mic, speakers, audio_interface, headphones, notebook, plant, background.",
+      "expected_by_key": {
+        "desk": "FlexiSpot E7",
+        "chair": "Embody",
+        "monitor_mount": "Ergotron LX",
+        "lighting": "Elgato Key Light",
+        "webcam": "Insta360 Link",
+        "mic": "Elgato Wave 3",
+        "speakers": "Genelec 8010A",
+        "audio_interface": "Apollo Twin X",
+        "headphones": "Sennheiser HD 660S2",
+        "notebook": "Moleskine",
+        "plant": "Snake Plant",
+        "background": "virtual"
+      }
+    }
+  },
+  {
+    "case_id": "T4-0007",
+    "scenario": "travel_plan",
+    "persona": "Chloe",
+    "ground_truth_details": {
+      "destination": "Bali",
+      "departure_city": "Seattle",
+      "depart_date": "September 3",
+      "return_date": "September 17",
+      "airline": "ANA",
+      "flight_class": "Economy",
+      "seat_pref": "aisle",
+      "hotel": "Rosewood",
+      "hotel_room": "King Deluxe",
+      "purpose": "research trip",
+      "meal_pref": "kosher",
+      "travel_companion": "solo"
+    },
+    "skeleton_statement": "Chloe is taking a trip — Seattle to Bali, September 3 through September 17, traveling solo. It's a research trip. They're flying ANA in Economy with a aisle seat, having requested a kosher meal. Staying at the Rosewood in a King Deluxe.",
+    "skeleton_with_noise": "Chloe is taking a trip — Seattle to Bali, September 3 through September 17, traveling solo. It's a research trip. They're flying ANA in Economy with a aisle seat, having requested a kosher meal. Staying at the Rosewood in a King Deluxe.",
+    "user_statement": "Chloe is heading solo from Seattle to Bali for a research trip from September 3 to September 17. She’s flying ANA in Economy, booked an aisle seat, and requested a kosher meal. For her stay, she’ll be at the Rosewood in a King Deluxe room.",
+    "noise_sentences": [],
+    "used_fallback": false,
+    "n_rephrase_attempts": 1,
+    "per_detail_probes": [
+      {
+        "key": "destination",
+        "question": "Where is Chloe traveling to?",
+        "expected": "Bali"
+      },
+      {
+        "key": "departure_city",
+        "question": "Where is Chloe departing from?",
+        "expected": "Seattle"
+      },
+      {
+        "key": "depart_date",
+        "question": "When does Chloe depart?",
+        "expected": "September 3"
+      },
+      {
+        "key": "return_date",
+        "question": "When does Chloe return?",
+        "expected": "September 17"
+      },
+      {
+        "key": "airline",
+        "question": "What airline is Chloe flying?",
+        "expected": "ANA"
+      },
+      {
+        "key": "flight_class",
+        "question": "What flight class is Chloe in?",
+        "expected": "Economy"
+      },
+      {
+        "key": "seat_pref",
+        "question": "What seat preference does Chloe have?",
+        "expected": "aisle"
+      },
+      {
+        "key": "hotel",
+        "question": "Where is Chloe staying?",
+        "expected": "Rosewood"
+      },
+      {
+        "key": "hotel_room",
+        "question": "What room type is Chloe booked in?",
+        "expected": "King Deluxe"
+      },
+      {
+        "key": "purpose",
+        "question": "What's the purpose of Chloe's trip?",
+        "expected": "research trip"
+      },
+      {
+        "key": "meal_pref",
+        "question": "What meal preference did Chloe request?",
+        "expected": "kosher"
+      },
+      {
+        "key": "travel_companion",
+        "question": "Who is Chloe traveling with?",
+        "expected": "solo"
+      }
+    ],
+    "aggregate_probe": {
+      "question": "Tell me everything Chloe mentioned. For each of the following, give the specific value: destination, departure_city, depart_date, return_date, airline, flight_class, seat_pref, hotel, hotel_room, purpose, meal_pref, travel_companion.",
+      "expected_by_key": {
+        "destination": "Bali",
+        "departure_city": "Seattle",
+        "depart_date": "September 3",
+        "return_date": "September 17",
+        "airline": "ANA",
+        "flight_class": "Economy",
+        "seat_pref": "aisle",
+        "hotel": "Rosewood",
+        "hotel_room": "King Deluxe",
+        "purpose": "research trip",
+        "meal_pref": "kosher",
+        "travel_companion": "solo"
+      }
+    }
+  },
+  {
+    "case_id": "T4-0008",
+    "scenario": "dev_setup",
+    "persona": "Farida",
+    "ground_truth_details": {
+      "laptop": "Framework 13",
+      "ram": "48GB",
+      "storage": "1TB SSD",
+      "display": "Studio Display 5K",
+      "keyboard": "HHKB Studio",
+      "os": "Ubuntu 24.04",
+      "shell": "fish",
+      "ide": "JetBrains Rider",
+      "terminal": "WezTerm",
+      "font": "Cascadia Code",
+      "theme": "Catppuccin Mocha",
+      "package_mgr": "apt",
+      "git_client": "Fork"
+    },
+    "skeleton_statement": "Farida just rebuilt their dev setup. The hardware: Framework 13 with 48GB RAM and 1TB SSD, paired with a Studio Display 5K and a HHKB Studio. Software side, they run Ubuntu 24.04 with fish as their shell, JetBrains Rider as the primary IDE, and WezTerm as the terminal. The look: Cascadia Code as the coding font, Catppuccin Mocha as the theme. For tooling, they manage packages with apt and use Fork as their git client.",
+    "skeleton_with_noise": "Farida just rebuilt their dev setup. The hardware: Framework 13 with 48GB RAM and 1TB SSD, paired with a Studio Display 5K and a HHKB Studio. Software side, they run Ubuntu 24.04 with fish as their shell, JetBrains Rider as the primary IDE, and WezTerm as the terminal. The look: Cascadia Code as the coding font, Catppuccin Mocha as the theme. For tooling, they manage packages with apt and use Fork as their git client.",
+    "user_statement": "Farida just rebuilt their dev setup. They’re running a Framework 13 with 48GB RAM and a 1TB SSD, paired with a Studio Display 5K and a HHKB Studio. On the software side, it’s Ubuntu 24.04 with fish as the shell, JetBrains Rider as the primary IDE, and WezTerm for the terminal. They’ve set Cascadia Code as their coding font and Catppuccin Mocha as the theme. For tooling, they manage packages with apt and use Fork as their git client.",
+    "noise_sentences": [],
+    "used_fallback": false,
+    "n_rephrase_attempts": 1,
+    "per_detail_probes": [
+      {
+        "key": "laptop",
+        "question": "What laptop does Farida use?",
+        "expected": "Framework 13"
+      },
+      {
+        "key": "ram",
+        "question": "How much RAM does Farida's machine have?",
+        "expected": "48GB"
+      },
+      {
+        "key": "storage",
+        "question": "What storage does Farida's machine have?",
+        "expected": "1TB SSD"
+      },
+      {
+        "key": "display",
+        "question": "What display does Farida use?",
+        "expected": "Studio Display 5K"
+      },
+      {
+        "key": "keyboard",
+        "question": "What keyboard does Farida use?",
+        "expected": "HHKB Studio"
+      },
+      {
+        "key": "os",
+        "question": "What operating system does Farida run?",
+        "expected": "Ubuntu 24.04"
+      },
+      {
+        "key": "shell",
+        "question": "What shell does Farida use?",
+        "expected": "fish"
+      },
+      {
+        "key": "ide",
+        "question": "What IDE does Farida use?",
+        "expected": "JetBrains Rider"
+      },
+      {
+        "key": "terminal",
+        "question": "What terminal does Farida use?",
+        "expected": "WezTerm"
+      },
+      {
+        "key": "font",
+        "question": "What coding font does Farida use?",
+        "expected": "Cascadia Code"
+      },
+      {
+        "key": "theme",
+        "question": "What editor theme does Farida use?",
+        "expected": "Catppuccin Mocha"
+      },
+      {
+        "key": "package_mgr",
+        "question": "What package manager does Farida use?",
+        "expected": "apt"
+      },
+      {
+        "key": "git_client",
+        "question": "What git client does Farida use?",
+        "expected": "Fork"
+      }
+    ],
+    "aggregate_probe": {
+      "question": "Tell me everything Farida mentioned. For each of the following, give the specific value: laptop, ram, storage, display, keyboard, os, shell, ide, terminal, font, theme, package_mgr, git_client.",
+      "expected_by_key": {
+        "laptop": "Framework 13",
+        "ram": "48GB",
+        "storage": "1TB SSD",
+        "display": "Studio Display 5K",
+        "keyboard": "HHKB Studio",
+        "os": "Ubuntu 24.04",
+        "shell": "fish",
+        "ide": "JetBrains Rider",
+        "terminal": "WezTerm",
+        "font": "Cascadia Code",
+        "theme": "Catppuccin Mocha",
+        "package_mgr": "apt",
+        "git_client": "Fork"
+      }
+    }
+  },
+  {
+    "case_id": "T4-0009",
+    "scenario": "travel_plan",
+    "persona": "Farida",
+    "ground_truth_details": {
+      "destination": "Lisbon",
+      "departure_city": "London",
+      "depart_date": "May 8",
+      "return_date": "May 20",
+      "airline": "Air France",
+      "flight_class": "Economy",
+      "seat_pref": "aisle",
+      "hotel": "Rosewood",
+      "hotel_room": "Studio",
+      "purpose": "research trip",
+      "meal_pref": "vegetarian",
+      "travel_companion": "with their partner"
+    },
+    "skeleton_statement": "Farida is taking a trip — London to Lisbon, May 8 through May 20, traveling with their partner. It's a research trip. They're flying Air France in Economy with a aisle seat, having requested a vegetarian meal. Staying at the Rosewood in a Studio.",
+    "skeleton_with_noise": "Farida is taking a trip — London to Lisbon, May 8 through May 20, traveling with their partner. It's a research trip. They're flying Air France in Economy with a aisle seat, having requested a vegetarian meal. Staying at the Rosewood in a Studio. An old podcast episode is playing in the background.",
+    "user_statement": "Farida is taking a research trip with their partner from London to Lisbon, traveling from May 8 through May 20. They're flying Air France in Economy with an aisle seat and have requested a vegetarian meal. At the Rosewood, they'll be staying in a Studio, with an old podcast episode playing in the background.",
+    "noise_sentences": [
+      "An old podcast episode is playing in the background."
+    ],
+    "used_fallback": false,
+    "n_rephrase_attempts": 1,
+    "per_detail_probes": [
+      {
+        "key": "destination",
+        "question": "Where is Farida traveling to?",
+        "expected": "Lisbon"
+      },
+      {
+        "key": "departure_city",
+        "question": "Where is Farida departing from?",
+        "expected": "London"
+      },
+      {
+        "key": "depart_date",
+        "question": "When does Farida depart?",
+        "expected": "May 8"
+      },
+      {
+        "key": "return_date",
+        "question": "When does Farida return?",
+        "expected": "May 20"
+      },
+      {
+        "key": "airline",
+        "question": "What airline is Farida flying?",
+        "expected": "Air France"
+      },
+      {
+        "key": "flight_class",
+        "question": "What flight class is Farida in?",
+        "expected": "Economy"
+      },
+      {
+        "key": "seat_pref",
+        "question": "What seat preference does Farida have?",
+        "expected": "aisle"
+      },
+      {
+        "key": "hotel",
+        "question": "Where is Farida staying?",
+        "expected": "Rosewood"
+      },
+      {
+        "key": "hotel_room",
+        "question": "What room type is Farida booked in?",
+        "expected": "Studio"
+      },
+      {
+        "key": "purpose",
+        "question": "What's the purpose of Farida's trip?",
+        "expected": "research trip"
+      },
+      {
+        "key": "meal_pref",
+        "question": "What meal preference did Farida request?",
+        "expected": "vegetarian"
+      },
+      {
+        "key": "travel_companion",
+        "question": "Who is Farida traveling with?",
+        "expected": "with their partner"
+      }
+    ],
+    "aggregate_probe": {
+      "question": "Tell me everything Farida mentioned. For each of the following, give the specific value: destination, departure_city, depart_date, return_date, airline, flight_class, seat_pref, hotel, hotel_room, purpose, meal_pref, travel_companion.",
+      "expected_by_key": {
+        "destination": "Lisbon",
+        "departure_city": "London",
+        "depart_date": "May 8",
+        "return_date": "May 20",
+        "airline": "Air France",
+        "flight_class": "Economy",
+        "seat_pref": "aisle",
+        "hotel": "Rosewood",
+        "hotel_room": "Studio",
+        "purpose": "research trip",
+        "meal_pref": "vegetarian",
+        "travel_companion": "with their partner"
+      }
+    }
+  }
+]

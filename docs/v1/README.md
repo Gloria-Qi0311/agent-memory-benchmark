@@ -1,23 +1,18 @@
 # v1: Non-trivial memory benchmark
 
-## What v0 measured (and what it didn't)
+## Why v1 exists (what v0 taught us)
 
-v0 used atomic memories: each "memory" was a single fact like `"Alex uses Python as their language."`. Updates were also atomic: `"Alex switched to Rust. They don't use Python anymore."`
+v0 used atomic memories — each "memory" was a single fact like `"Alex uses Python as their language."`, and updates were equally atomic ("X switched to Y. They don't use Z anymore."). At that granularity the tasks turned out trivial: modern LLMs read the raw context and reason out the update without help, so `naive_markdown` (a 30-line shared list) saturates at 100% and mem0's underperformance reflects only the non-determinism of its internal extraction, not any meaningful capability difference. **v0 is a dead-end as a benchmark.**
 
-At this granularity:
-
-- `naive_markdown`, `long_context`, `regex_markdown` all score **100/100/100/100** on fusion and rewrite tasks at n=200.
-- `mem0` scores **52% per_fact_update / 50% preservation** — but the failure is in mem0's *internal extraction*, not in any non-trivial property of the task.
-
-The headline finding from v0 is real but narrow: **on tasks where one memory = one fact, modern LLMs read the raw context and reason out updates trivially; complex memory systems like mem0 have no value-add (and in fact hurt because their internal LLM extraction is non-deterministic).**
-
-The critique that turned v0 → v1: **atomic memory is not what real memory systems handle**. Real memories are structured paragraphs with multiple embedded facts. Real updates touch parts of memories, multiple facts simultaneously, or span across memories. **v0 doesn't measure any of that.**
+The lesson that drove v1: **atomic memory is not what real memory systems handle**. Real memories are structured paragraphs with multiple embedded facts. Real updates touch parts of memories, multiple facts simultaneously, or span across memories. v0 didn't measure any of that — v1 does.
 
 ## v1 task types (4 levels of difficulty)
 
 Each level exposes a different memory-system capability that v0's atomic setup hides.
 
-### T4 — Split intake (Week 1)
+### T4 — Split intake (✅ DONE)
+
+**Headline result (n=100):** `mem0` 0.555 per-detail recall vs `naive_markdown` 0.952. Full writeup: [`t4_findings.md`](./t4_findings.md). Chart: [`t4_results.png`](./t4_results.png).
 
 **What the user does:** Says one long thing containing N independent facts.
 
@@ -31,7 +26,7 @@ Each level exposes a different memory-system capability that v0's atomic setup h
 
 This is also where mem0 has a real chance to beat naive baselines, because a single 200-character user statement may exceed naive_markdown's ability to surface each detail under targeted retrieval (the LLM has to re-extract every read).
 
-### T2 — Compound update (Week 2)
+### T2 — Compound update (next)
 
 **What the user does:** Says a single sentence that simultaneously updates K facts about themselves.
 
@@ -48,7 +43,7 @@ This is also where mem0 has a real chance to beat naive baselines, because a sin
 
 **Why this exists:** Most real "update" events in product use are not single-fact — they're compound (a user reshaping their workflow, moving to a new role, etc.). Single-fact rewrite tests don't surface whether a system can untangle several simultaneous changes.
 
-### T1 — Surgical edit on long memory (Week 3)
+### T1 — Surgical edit on long memory
 
 **What the user does:** First leaves a richly detailed memory (a paragraph with 10+ embedded facts about themselves), then later issues a surgical update that changes just one detail.
 
@@ -66,7 +61,7 @@ This is also where mem0 has a real chance to beat naive baselines, because a sin
 
 `mem0` may shine here if its extraction step correctly decomposes the paragraph into individual facts, then surgically modifies one entry — that's what its design promises.
 
-### T3 — Cross-memory update (Week 4)
+### T3 — Cross-memory update
 
 **What the user does:** Across several past sessions, has scattered memories about a shared entity (e.g. their project "Apollo"). Now issues one update that affects multiple of those memories.
 

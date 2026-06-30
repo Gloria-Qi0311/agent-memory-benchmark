@@ -1,23 +1,19 @@
-# Design decisions (v0)
+# Design decisions
 
-A frozen record of the choices that locked v1's scope. Anything not listed here
-is up for re-discussion when the data starts coming in.
+A frozen record of choices that shape the project. v0 entries are kept for historical context (they explain why v1 looks the way it does); v1 entries are the live design.
 
-## Tasks
-- **Main**: fusion (Agent A writes half, Agent B writes half, Agent C uses both).
-- **Auxiliary**: rewrite-preservation (one update should not damage N-1 unrelated facts).
-- v1 ships fusion only. Rewrite added once fusion is stable.
+## v0 — atomic task pass (concluded, superseded by v1)
 
-## Systems under test (v1)
-- `no_memory` (floor)
-- `naive_markdown` (50-line dumb shared baseline; might surprisingly win)
-- `mem0` (popular OSS representative)
-- Hard cap: 3 systems in v1. Expanding requires explicit decision.
+v0 tested **atomic memory + atomic update**: one fact per memory, explicit-style updates ("X switched to Y. They don't use Z anymore."), n=200, five systems. Conclusion: at this granularity, modern LLMs solve updates trivially from raw context, naive baselines saturate at 100%, and mem0 underperforms only because its internal LLM extraction is non-deterministic. The v0 tasks (fusion, rewrite-preservation) and the supporting baselines (`naive_markdown`, `long_context`, `regex_markdown`) live in `src/` and are kept for code reuse, but their results are not the project's headline. See git history (PR #2) for the data.
+
+## v1 design (active)
+
+Active task suite is specified in [`docs/v1/README.md`](./v1/README.md). Four task types: T4 split intake, T2 compound update, T1 surgical edit, T3 cross-memory. Built and run in that order.
 
 ## Agent + judge LLM
 - DeepSeek-V3 for both.
 - Known self-evaluation bias is acknowledged in the README.
-- Judge is programmatic (fact-list substring matching) wherever possible.
+- Judge is programmatic (word-boundary substring matching against ground-truth values) wherever possible.
 
 ## mem0 internal stack
 - LLM (used by mem0 internally for fact extraction and conflict resolution): DeepSeek (same key as the agent).
@@ -44,30 +40,25 @@ Why local: this machine's network and Python stack don't play well with `hugging
 - Python 3.11 (installed via `brew install python@3.11`). The system Python 3.9 from Xcode CommandLineTools is too old: ships LibreSSL 2.8.3 (breaks modern HF downloads) and lacks PEP 604 `X | None` syntax that mem0 2.0 uses.
 
 ## Case count
-- 100 cases per task is the target. 50 is the smoke threshold.
-- Generated deterministically by seed; case files are committed.
+- Target n per v1 task: 100 (10 for smoke).
+- Generated deterministically by seed; case JSONs committed for reproducibility.
 
 ## Storage
 - Cases: JSON in `data/cases/`.
-- Results: JSON in `data/results/`, one file per experiment run.
-- SQLite added only if/when the dashboard needs it.
-
-## Frontend
-- Streamlit dashboard, deferred to v2.
-- v1 ships with matplotlib static plots in a notebook.
+- Results: JSON in `data/results/`, one file per experiment run. Git-ignored.
+- SQLite added only if/when a dashboard needs it.
 
 ## Out of scope (v1)
-- Multi-LLM-vendor (Claude + GPT + Llama) testing.
-- Conflict resolution / temporal correctness as standalone tasks.
-- Privacy / leakage testing (interesting but separate benchmark).
-- AMH adapter — interesting but not core to v1's question.
+- Multi-LLM-vendor (Claude + GPT + Llama) writers and readers. Worth doing but out of scope for v1.
+- Privacy / leakage testing. GateMem already does that.
+- AMH adapter and other commercial memory products.
+- Training, fine-tuning, or evaluating any LLM itself.
 
 ## Risks we're tracking
 
 | Risk | How likely | What we'll do |
 |---|---|---|
-| The task is too easy — every system saturates at 1.00 and differences can't show up. | High (already observed at n=5). | Add difficulty: more facts per persona, filler turns between writes, paraphrased probes that don't name categories. |
-| A 5%-ish delta at n=100 turns out to be sampling noise. | Medium. With recall clustered near 1.0, small deltas may be noise. | At n=100, also report a binary metric ("did this system miss ANY fact in this case") — more robust at the ceiling. |
-| Self-eval bias inflates one or more systems. | Medium-low (judge is programmatic, not LLM-based). | Documented in README. If LLM judging gets added later, re-judge a sample with a different model. |
-| Benchmark dismissed as "the author handpicked tasks that favor naive baselines." | Low-medium. | Case generator is programmatic and seeded; anyone can rerun. Adding a second task (rewrite-preservation) that doesn't a-priori favor either type of system also helps. |
-| Time runs out before public artifact (chart + writeup). | High (always). | Milestone 2 — results + plot — is already presentable on its own. The writeup amplifies but isn't a prerequisite. |
+| A v1 task doesn't discriminate systems (saturation at 100% or floor at 0%). | Medium. Already burned by this in v0. | Each task ships with a smoke run; if smoke saturates or floors across systems, redesign before scaling to n=100. |
+| Self-eval bias inflates a system. | Medium-low (judge stays programmatic). | Document in README. If LLM judging gets added, re-judge a sample with a different model. |
+| Benchmark dismissed as "handpicked tasks favor naive baselines." | Low-medium. | Case generators are programmatic and seeded; anyone can rerun. v1's four tasks deliberately stress different memory capabilities so no single class of system can win on all four. |
+| Time runs out before public artifact (chart + writeup). | High. | Each v1 task is independently presentable. Even one task at n=100 with a clear chart is shippable. |

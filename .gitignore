@@ -7,9 +7,11 @@ venv/
 *.egg-info/
 .DS_Store
 
-# experiment outputs — keep generators in repo, not raw data
+# experiment outputs — keep generators in repo, not raw data,
+# EXCEPT for published v1 production runs (committed for reproducibility).
 data/results/*
 !data/results/.gitkeep
+!data/results/t4-prod-n100.json
 data/cases/private/
 *.db
 *.sqlite
