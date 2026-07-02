@@ -25,17 +25,19 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 
-SYSTEM_ORDER = ["no_memory", "naive_markdown", "long_context", "mem0"]
+SYSTEM_ORDER = ["no_memory", "naive_markdown", "pure_vector", "amh", "mem0"]
 SYSTEM_COLORS = {
     "no_memory":      "#9CA3AF",   # neutral grey — floor
-    "naive_markdown": "#3B82F6",   # blue — baseline
-    "long_context":   "#06B6D4",   # cyan — baseline variant
-    "mem0":           "#EF4444",   # red — system under stress
+    "naive_markdown": "#3B82F6",   # blue — engineer's DIY
+    "pure_vector":    "#06B6D4",   # cyan — vector-only, no LLM extraction
+    "amh":            "#8B5CF6",   # violet — multi-agent-native
+    "mem0":           "#EF4444",   # red — single-agent system repurposed
 }
 SYSTEM_LABELS = {
     "no_memory":      "no_memory\n(floor)",
     "naive_markdown": "naive_markdown",
-    "long_context":   "long_context",
+    "pure_vector":    "pure_vector",
+    "amh":            "AMH",
     "mem0":           "mem0",
 }
 

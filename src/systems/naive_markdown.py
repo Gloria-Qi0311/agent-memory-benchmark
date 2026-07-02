@@ -1,6 +1,6 @@
 """Simplest possible shared memory: all agents append to one in-memory list.
 Read returns the whole thing. ~30 lines. Serves as the "naive baseline that
-might surprisingly win" in multi-agent fusion."""
+might surprisingly win" against the more complex memory systems."""
 from .base import MemorySystem
 
 

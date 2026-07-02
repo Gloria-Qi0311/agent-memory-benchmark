@@ -10,7 +10,7 @@ sys.path.insert(0, str(ROOT))
 from src.judge import _match, split_intake_score_per_detail, split_intake_score_aggregate
 from src.systems.no_memory import NoMemory
 from src.systems.naive_markdown import NaiveMarkdown
-from src.systems.long_context import LongContext
+from src.systems.amh_system import AMHSystem
 
 
 # ---------------------------------------------------------------------------
@@ -39,15 +39,16 @@ def test_naive_markdown_roundtrip():
     assert "Python" in ctx and "Berlin" in ctx
 
 
-def test_long_context_strips_agent_tag():
-    m = LongContext()
-    m.write("agent_a", "Alex uses Python.")
-    m.write("agent_b", "Alex switched to Rust.")
-    ctx = m.read("agent_c", "?")
-    assert "Alex uses Python." in ctx
-    assert "Alex switched to Rust." in ctx
-    assert "agent_a" not in ctx
-    assert "agent_b" not in ctx
+def test_amh_write_read_roundtrip():
+    """AMH is Markdown+FS-backed. Verify write -> read surfaces content
+    for a keyword query, and reset wipes the store."""
+    m = AMHSystem()
+    m.write("agent_a", "Alex uses Python as their language.")
+    m.write("agent_a", "Alex uses VSCode as their editor.")
+    ctx = m.read("agent_c", "what language does Alex use")
+    assert "Python" in ctx
+    m.reset()
+    assert m.read("agent_c", "what language does Alex use") == ""
 
 
 # ---------------------------------------------------------------------------
