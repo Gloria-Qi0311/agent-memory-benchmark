@@ -2,9 +2,9 @@
 
 Usage:
     python scripts/run_split_intake.py \\
-        --cases data/cases/split_intake_n10_s0.json \\
-        --systems no_memory naive_markdown long_context mem0 \\
-        --tag t4-smoke-n10
+        --cases data/cases/split_intake_n100_s100.json \\
+        --systems no_memory naive_markdown pure_vector amh mem0 \\
+        --tag t4-prod-n100
 """
 import argparse
 import json

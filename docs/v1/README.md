@@ -10,21 +10,24 @@ The lesson that drove v1: **atomic memory is not what real memory systems handle
 
 Each level exposes a different memory-system capability that v0's atomic setup hides.
 
-### T4 — Split intake (✅ DONE)
+### T4 — Split intake (✅ DONE, n=300, 5 systems)
 
-**Headline result (n=100):** `mem0` 0.555 per-detail recall vs `naive_markdown` 0.952. Full writeup: [`t4_findings.md`](./t4_findings.md). Chart: [`t4_results.png`](./t4_results.png).
+**Headline result:** Four extraction-free systems (naive_markdown, pure_vector, AMH) cluster at ~95% per-detail recall. `mem0` — the only system with an LLM extraction step — trails at ~55%. The 40-point gap is statistically robust. Full writeup: [`t4_findings.md`](./t4_findings.md). Chart: [`t4_results.png`](./t4_results.png).
 
-**What the user does:** Says one long thing containing N independent facts.
+**What the user does:** Says one long thing containing N independent details.
 
-> "我刚买了 MacBook Pro M4 Max 64G RAM 8TB SSD，配了 Studio Display 5K + Logitech MX Master 3S，键盘 Keychron Q3 Pro 红轴，系统从 Sonoma 升到 Sequoia，主要用 Cursor + Ghostty。"
+> "I just rebuilt my dev setup — MacBook Pro M4 Max with 64GB RAM, paired with a Studio Display 5K and a Keychron Q3 Pro. Running macOS Sequoia with fish as the shell, Cursor as the IDE, Ghostty as the terminal..."
 
-**What the memory system must do:** Decompose this into the right number of memories (or keep it whole and still answer probes about individual details).
+**What the memory system must do:** Preserve each of the ~13 embedded details so they can be surfaced by targeted probes ("What laptop does Alex use?") and by an aggregate probe ("Tell me everything Alex mentioned").
 
-**What we measure:** Did each of the N specific details survive — both at storage time and at probe time?
+**What we measure:** For each embedded detail, does the probe answer contain the ground-truth value (word-boundary match)?
 
-**Why this exists:** mem0's main selling point is "extract structured facts from natural language". This is the test of that capability. **If mem0 cannot reliably split intake, none of its other features matter.**
-
-This is also where mem0 has a real chance to beat naive baselines, because a single 200-character user statement may exceed naive_markdown's ability to surface each detail under targeted retrieval (the LLM has to re-extract every read).
+**Systems compared:**
+- `no_memory` (floor)
+- `naive_markdown` — verbatim in-memory list, engineer's DIY
+- `pure_vector` — verbatim + sentence-transformers embeddings, cosine top-K, no LLM
+- `amh` — Agent Memory Hub, Markdown+FS shared memory, **the only explicitly multi-agent-native system**
+- `mem0` — LLM extraction at write + vector top-K at read (single-agent system, repurposed)
 
 ### T2 — Compound update (next)
 

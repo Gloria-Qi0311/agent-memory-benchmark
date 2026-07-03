@@ -1,107 +1,157 @@
-# T4 — Split Intake: Findings (n=100)
+# T4 — Split Intake: Findings (n=300)
 
 ## Headline
 
-> **On the "user says one dense statement, memory must surface each detail" task, mem0 (the most-starred OSS memory library) recalls 56% of details. A 30-line markdown baseline recalls 95%. The gap is 40 percentage points and is statistically robust at n=100 (95% bootstrap CI: mem0 [0.50, 0.61], naive [0.93, 0.97]; intervals do not overlap).**
+> **Across five memory systems tested on 300 dense user statements (each bundling 12–13 atomic details), the four "extraction-free" systems (naive markdown, pure vector, and AMH — the only explicitly multi-agent-native system) cluster tightly at 0.95 per-detail recall. mem0, the only system that inserts an LLM extraction step, trails at 0.43 per-detail recall — a 52-percentage-point gap. 95% bootstrap CI intervals do not overlap. The finding is unambiguous: on this task LLM extraction — not memory architecture — is the primary source of information loss.**
 
 ![T4 Results](./t4_results.png)
 
 ## What this task measures
 
-Each case is a single user statement (2-4 sentences) containing **12-13 atomic details** about the speaker — e.g. dev setup hardware/software, travel plans, home-office gear. After the memory system writes the statement, the runner asks **13 per-detail questions** ("What laptop does Alex use?") and **one aggregate question** ("Tell me everything Alex mentioned"). A detail is a hit if its ground-truth value appears (word-boundary, case-insensitive) in the reader's answer.
+Each case is a single user statement (2–4 sentences) containing **12–13 atomic details** about the speaker — dev setup hardware/software, travel plans, home-office gear. The memory system writes the statement, then the runner asks **13 per-detail questions** ("What laptop does Alex use?") and **one aggregate question** ("Tell me everything Alex mentioned"). A detail is a hit if its ground-truth value appears (word-boundary, case-insensitive) in the reader's answer.
 
-The point is mem0's stated value-add: **extracting structured facts from natural-language intake**. If mem0 can't reliably surface details a user explicitly mentioned, the rest of its features sit on a shaky foundation.
+The point is to isolate what a memory system *does with intake*:
+- naive_markdown / pure_vector: **store raw, retrieve raw** — the reader LLM re-extracts details at read time.
+- AMH: **store raw markdown entries, retrieve by keyword scoring** — no LLM inside, but structured shared-memory model.
+- mem0: **LLM extracts facts at write time**, retrieves by vector similarity — the reader sees mem0's *summary of the input*, not the input itself.
 
-## Results table
+## The five systems under test
+
+| System | Storage | Extraction step | Retrieval | Category |
+|---|---|---|---|---|
+| `no_memory` | — | — | — | Floor |
+| `naive_markdown` | Verbatim, in-memory list | None | Return all entries | Engineer's DIY |
+| `pure_vector` | Verbatim + embeddings | None | Cosine top-K | Engineer's DIY |
+| `amh` | Verbatim in Markdown files | None | Keyword scoring | **Multi-agent-native** |
+| `mem0` | LLM-extracted fact list | Yes, `deepseek-chat` | Vector top-K | Single-agent, repurposed |
+
+## Results (n=300)
 
 | System | per-detail recall | 95% CI | aggregate recall | 95% CI |
 |---|---|---|---|---|
-| `no_memory` | 0.00 | — | 0.00 | — |
-| `naive_markdown` | **0.952** | [0.931, 0.969] | **0.968** | [0.951, 0.982] |
-| `long_context` | **0.953** | [0.933, 0.970] | **0.970** | [0.953, 0.984] |
-| **`mem0`** | **0.555** | [0.498, 0.611] | **0.562** | [0.488, 0.633] |
+| `no_memory` | 0.000 | — | 0.000 | — |
+| `naive_markdown` | **0.951** | [0.943, 0.958] | **0.968** | [0.963, 0.973] |
+| `pure_vector` | **0.951** | [0.944, 0.958] | **0.969** | [0.964, 0.974] |
+| `amh` | **0.950** | [0.943, 0.957] | **0.969** | [0.964, 0.974] |
+| **`mem0`** | **0.432** | [0.399, 0.466] | **0.555** | [0.511, 0.599] |
 
-`naive_markdown` and `long_context` are statistically indistinguishable — agent attribution tags carry no signal on this task.
+The three extraction-free systems are statistically indistinguishable — their CIs overlap almost entirely. **mem0's CI (per-detail [0.399, 0.466]) does not overlap any of them.**
 
 ## Per-scenario breakdown
 
-All three scenarios discriminate the systems similarly:
+The pattern holds across all three scenarios; travel_plan is uniformly the hardest for every system, but the ordering never changes:
 
-| | dev_setup (n=38) | home_office (n=32) | travel_plan (n=30) |
+| Scenario (n) | naive_markdown pd | pure_vector pd | amh pd | mem0 pd |
+|---|---|---|---|---|
+| dev_setup (n=113) | 1.000 | 1.000 | 1.000 | **0.453** |
+| home_office (n=91) | 0.948 | 0.948 | 0.948 | **0.467** |
+| travel_plan (n=96) | 0.895 | 0.897 | 0.894 | **0.374** |
+
+## How failures differ
+
+When each system misses a detail, it misses in a **qualitatively different way**:
+
+| Failure mode | naive_markdown | pure_vector | amh | mem0 |
+|---|---|---|---|---|
+| `"unknown"` — system surfaced nothing | 54.5% | 50.6% | 51.4% | 45.9% |
+| Wrong concrete value — hallucinated from category pool | 45.5% | 49.4% | 48.6% | **54.1%** |
+| Total per-detail misses (out of 300 × 13 probes) | 178 | 176 | 179 | **2107** |
+
+Two things to notice:
+
+1. **mem0 fails an order of magnitude more often** than the extraction-free systems (2107 vs ~178 missed probes) — this is the 52-point recall gap re-expressed as failure count.
+2. **mem0 fails wrong more often than it fails silent.** When the extraction-free systems can't surface a value, they roughly split between "unknown" and hallucinating a same-category alternative. mem0 tilts toward hallucinating — because the reader is looking at mem0's *summary*, not the source, and confidently completes plausible-looking gaps.
+
+For a downstream user, `"unknown"` and `"the user uses fish"` (when they actually use bash) are not equivalent failures. The second is silently misleading.
+
+## Case study: T4-0385
+
+A representative failure. All three extraction-free systems scored ≥ 0.85 on this case; mem0 scored **0/13**.
+
+User statement:
+> *"Hana just rebuilt their dev setup around a Framework 13 with 64GB of RAM and a 1TB SSD, paired with an LG UltraFine 5K display and a HHKB Studio keyboard. On the software side, they run Fedora 41 with bash as their shell, Zed as their primary IDE, and Alacritty as their terminal. The look is Berkeley Mono for the coding font and Tokyo Night for the theme. For tooling, they manage packages with apt and use GitHub Desktop as their git client."*
+
+13 details, all stated explicitly. mem0's per-detail answers side by side with ground truth:
+
+| key | ground truth | mem0's answer | verdict |
 |---|---|---|---|
-| naive_markdown per_detail | 1.000 | 0.951 | 0.892 |
-| mem0 per_detail | 0.577 | 0.583 | 0.497 |
+| laptop | Framework 13 | unknown | ✗ |
+| ram | 64GB | unknown | ✗ |
+| storage | 1TB SSD | unknown | ✗ |
+| display | LG UltraFine 5K | **Studio Display 5K** | ✗ hallucinated |
+| keyboard | HHKB Studio | **ZSA Voyager** | ✗ hallucinated |
+| os | Fedora 41 | unknown | ✗ |
+| shell | bash | **fish** | ✗ hallucinated |
+| ide | Zed | unknown | ✗ |
+| terminal | Alacritty | unknown | ✗ |
+| font | Berkeley Mono | unknown | ✗ |
+| theme | Tokyo Night | unknown | ✗ |
+| package_mgr | apt | unknown | ✗ |
+| git_client | GitHub Desktop | **GitKraken** | ✗ hallucinated |
 
-The gap is consistent across scenario types, not driven by a quirk of any one fact pool.
+Zero correct. Four of the misses are hallucinated same-category values — mem0's LLM extraction step produced a lossy summary of "Hana uses [things]", and when the reader was asked about specific values, it filled the gaps from the same category's pool (fish is a shell, GitKraken is a git client, ZSA Voyager is a keyboard, Studio Display 5K is a display). The pattern is: **mem0 knows the *category* Hana talked about but not the actual *value* Hana chose.**
 
-## How failures differ (the more important finding)
+## Product implications
 
-When `mem0` and `naive_markdown` miss a detail, they miss in **qualitatively different ways**:
+The result cluster is unambiguous: **on this task, the presence of an LLM extraction step (mem0) is the dominant loss source**, not any specific storage or retrieval architecture. Vector search vs keyword scoring vs verbatim didn't matter — extraction vs no extraction was the split.
 
-| Failure mode | naive_markdown | mem0 |
-|---|---|---|
-| `"unknown"` — system surfaced nothing | **62%** | 33% |
-| Wrong concrete value — hallucinated from the same category pool | 38% | **67%** |
+For teams building multi-agent products where memory needs to preserve concrete details:
 
-`naive_markdown` mostly admits ignorance. `mem0` mostly **fabricates a plausible-sounding wrong value** drawn from the same category. For a downstream user, "I don't know" and "the user uses Tower" (when they actually use lazygit) are not equivalent failures — the second is silently misleading.
+1. **Default to storing raw utterances**, at least until context-window pressure makes it infeasible. LLM extraction is a compression step whose loss profile is non-obvious.
+2. **If you need retrieval to be more than dump-everything**, prefer non-LLM retrieval (keyword or vector) before adopting LLM extraction. Both give equivalent recall on this task at zero LLM-inference cost per write.
+3. **Silent hallucination is the failure mode to watch**. Systems with LLM extraction don't fail loudly — they fail by supplying plausible wrong values. Any product using such a memory system needs downstream guards (verification, source citation, or user confirmation).
 
-## Case study: T4-0149
-
-User statement (one of mem0's lowest-scoring cases):
-
-> *"Bao just finished rebuilding their dev setup. They're running Arch Linux on a ThinkPad X1 Carbon Gen 12 with 48GB RAM and a 2TB SSD, paired with a Studio Display 5K and a Keychron Q3 Pro. Their software stack includes fish as the shell, JetBrains Rider as the primary IDE, and Ghostty as the terminal, with Cascadia Code for the coding font and Catppuccin Mocha for the theme. For tooling, they manage packages with Homebrew and use Tower as their git client."*
-
-13 details, all explicitly stated. mem0's per-detail answers:
-
-| key | ground truth | mem0's answer | result |
-|---|---|---|---|
-| laptop | ThinkPad X1 Carbon Gen 12 | **MacBook Pro M4 Max** | ✗ hallucinated |
-| ram | 48GB | 48GB | ✓ |
-| storage | 2TB SSD | 2TB SSD | ✓ |
-| display | Studio Display 5K | **Pro Display XDR** | ✗ hallucinated |
-| keyboard | Keychron Q3 Pro | Keychron Q3 Pro | ✓ |
-| os | Arch Linux | **Fedora 41** | ✗ hallucinated |
-| shell | fish | fish | ✓ |
-| ide | JetBrains Rider | **Zed** | ✗ hallucinated |
-| terminal | Ghostty | **WezTerm** | ✗ hallucinated |
-| font | Cascadia Code | Cascadia Code | ✓ |
-| theme | Catppuccin Mocha | **One Dark** | ✗ hallucinated |
-| package_mgr | Homebrew | **Nix** | ✗ hallucinated |
-| git_client | Tower | unknown | ✗ |
-
-5/13 correct. The 7 wrong-value misses are not random noise — every one of them is a different value drawn from the same category's pool. This is the failure signature of mem0's extraction step silently dropping detail-rich content into a sparser internal representation, with the reader then filling gaps by plausible guess.
+The **AMH result** is worth noting separately. It's the only system architecturally designed for multi-agent shared memory, and its extraction-free implementation lands in the same cluster as generic engineer DIY. Being purpose-built for multi-agent doesn't automatically produce better single-write information preservation — but it doesn't hurt either. The value-add of a multi-agent-native design will likely surface on the T2 (compound update) and T3 (cross-memory) tasks, where a system's ability to reconcile writes across sessions and agents matters. T4 alone doesn't stress that.
 
 ## Statistical methods
 
-- **n**: 100 cases, generated programmatically with seeds 100-199 (smoke run used seeds 0-9, no overlap).
+- **n**: 300 cases total. Two case files with disjoint seed ranges: 100 cases at seeds 100–199, 200 cases at seeds 200–399. Committed at `data/cases/split_intake_n100_s100.json` and `data/cases/split_intake_n200_s200.json`.
 - **Probes per case**: 13 per-detail + 1 aggregate = ~14 reader LLM calls per case per system.
 - **Bootstrap CI**: 10,000 resamples, 95% percentile interval.
-- **Judge**: programmatic word-boundary substring match. Each ground-truth value's lowercased form must appear as a `\b<value>\b` regex match in the reader's lowercased answer. No LLM judging — this metric is reproducible bit-for-bit by anyone running the same case file.
+- **Judge**: programmatic word-boundary substring match (`\b<value>\b`) between each ground-truth value and the reader's answer, both lowercased. No LLM judging — reproducible bit-for-bit.
 
 ## Limitations
 
-1. **One reader LLM (DeepSeek-V3)**. Both naive's reading and mem0's reading use the same model; we did not test cross-vendor.
-2. **mem0's internal LLM is also DeepSeek**. mem0 in production with GPT-4o-mini or Claude Haiku as its internal extraction model likely scores better than 0.56. This benchmark does not isolate "mem0 architecture" from "mem0 + cheap-LLM extractor" — that's a future experiment. The reported number is mem0 in a real-world cost-conscious deployment, which is the most common configuration.
-3. **Atomic ground truth**. T4 measures *detail retention*, not the higher-order capabilities (compound update, surgical edit, cross-memory) that T2/T1/T3 will measure. mem0's value-add may surface on those tasks.
-4. **Scenarios are programmatic**. Three scenarios × ~7 value pools each. Real user statements have wider variety; whether mem0's failure pattern holds on natural-distribution intake (e.g. sampled from real ChatGPT memory logs) is an open question.
+1. **One reader LLM (DeepSeek-V3).** Every system's reader uses the same model, so cross-vendor generalization is not tested.
+2. **mem0's internal LLM is DeepSeek-chat.** mem0 with GPT-4o-mini or Claude Haiku as its internal extractor likely scores better than 0.43. This benchmark reports mem0 in a cost-conscious deployment (the most common configuration), not mem0 at its best.
+3. **T4 measures single-write detail retention only.** Compound update (T2), surgical edit (T1), and cross-memory consolidation (T3) are not covered here. mem0's or AMH's value-add may surface on those tasks.
+4. **Three scenarios, programmatic generation.** Natural-distribution intake (sampled from real ChatGPT-memory-style logs) is a future test.
+5. **AMH is developed by a personal contact of the author.** To avoid conflict of interest: the AMH repo used is a fork at a pinned state with no code modifications; AMH is treated on identical footing with the other four systems (same runner, same probes, same judge); and the finding places AMH in a statistical cluster with `naive_markdown` and `pure_vector` rather than singling it out.
 
 ## Reproducing
 
 ```bash
-# Generate the same 100 cases
+# Generate both case files (disjoint seed ranges)
 python scripts/generate_cases.py --task split_intake --n 100 --seed 100
+python scripts/generate_cases.py --task split_intake --n 200 --seed 200
 
-# Run the experiment
+# Run experiments (each ~1-2 hours on DeepSeek-V3)
 python scripts/run_split_intake.py \
     --cases data/cases/split_intake_n100_s100.json \
-    --systems no_memory naive_markdown long_context mem0 \
-    --tag t4-prod-n100
+    --systems no_memory naive_markdown pure_vector amh mem0 \
+    --tag t4-prod-n100-5sys
+python scripts/run_split_intake.py \
+    --cases data/cases/split_intake_n200_s200.json \
+    --systems no_memory naive_markdown pure_vector amh mem0 \
+    --tag t4-prod-n200-s200-5sys
 
-# Inspect failure modes
-python scripts/analyze_t4.py
+# Merge the two runs into a single n=300 view
+python scripts/merge_t4_runs.py \
+    --inputs data/results/t4-prod-n100-5sys.json \
+             data/results/t4-prod-n200-s200-5sys.json \
+    --out data/results/t4-prod-n300-merged.json
+
+# Failure-mode + per-scenario breakdown
+python scripts/analyze_t4.py --results data/results/t4-prod-n300-merged.json
+
+# Case-study picker
+python scripts/pick_case_study.py \
+    --results data/results/t4-prod-n300-merged.json \
+    --cases data/cases/split_intake_n100_s100.json \
+            data/cases/split_intake_n200_s200.json
 
 # Re-render the plot
-python scripts/plot_t4.py
+python scripts/plot_t4.py --results data/results/t4-prod-n300-merged.json
 ```
 
-Case file and full per-case results JSON are committed to the repo (`data/cases/split_intake_n100_s100.json`, `data/results/t4-prod-n100.json`).
+Full raw per-case results are committed in `data/results/t4-prod-n300-merged.json` (as well as the two source runs).
