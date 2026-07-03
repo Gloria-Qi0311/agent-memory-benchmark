@@ -1,7 +1,7 @@
 """Inspect T4 results — per-scenario breakdown + failure-mode classification.
 
 Usage:
-    python scripts/analyze_t4.py [--results data/results/t4-prod-n100.json]
+    python scripts/analyze_t4.py [--results data/results/t4-prod-n300-merged.json]
 """
 import argparse
 import json
@@ -11,7 +11,7 @@ from pathlib import Path
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--results", default="data/results/t4-prod-n100.json")
+    ap.add_argument("--results", default="data/results/t4-prod-n300-merged.json")
     ap.add_argument("--show-failures", type=int, default=4,
                     help="how many sample failure cases to print per category")
     args = ap.parse_args()

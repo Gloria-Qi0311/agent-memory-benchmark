@@ -9,7 +9,7 @@ and aggregate recall), each showing:
 Output: docs/v1/t4_results.png
 
 Usage:
-    python scripts/plot_t4.py [--results data/results/t4-prod-n100.json]
+    python scripts/plot_t4.py [--results data/results/t4-prod-n300-merged.json]
                               [--out docs/v1/t4_results.png]
 """
 import argparse
@@ -114,7 +114,7 @@ def panel(ax, rows, metric_key, title):
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--results", default="data/results/t4-prod-n100.json")
+    ap.add_argument("--results", default="data/results/t4-prod-n300-merged.json")
     ap.add_argument("--out", default="docs/v1/t4_results.png")
     args = ap.parse_args()
 
