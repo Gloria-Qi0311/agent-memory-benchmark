@@ -14,7 +14,7 @@ This benchmark fills the gap: **when N agents share one memory store, do existin
 
 | Task | Status | Headline |
 |---|---|---|
-| **T4 — split intake** | ✅ done (n=100) | `mem0` **0.555** per-detail recall vs `naive_markdown` **0.952**. [Full writeup](./docs/v1/t4_findings.md). |
+| **T4 — split intake** | ✅ done (n=300, 5 systems) | `mem0` **0.432** per-detail recall vs three extraction-free systems (`naive_markdown` / `pure_vector` / `AMH`) at **0.95**. [Full writeup](./docs/v1/t4_findings.md). |
 | T2 — compound update | next | |
 | T1 — surgical edit | planned | |
 | T3 — cross-memory | planned | |
