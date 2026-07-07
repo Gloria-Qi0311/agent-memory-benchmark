@@ -7,7 +7,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from src.judge import _match, split_intake_score_per_detail, split_intake_score_aggregate
+from src.judge import (
+    _match,
+    split_intake_score_per_detail,
+    split_intake_score_aggregate,
+    compound_update_score,
+)
 from src.systems.no_memory import NoMemory
 from src.systems.naive_markdown import NaiveMarkdown
 from src.systems.amh_system import AMHSystem
@@ -142,3 +147,107 @@ def test_split_intake_score_aggregate_word_boundary():
     s = split_intake_score_aggregate(answer, expected)
     assert s["recall"] == 0.0
     assert s["misses"] == ["language"]
+
+
+# ---------------------------------------------------------------------------
+# T2 case generator
+# ---------------------------------------------------------------------------
+
+def test_compound_update_generator_deterministic():
+    from src.cases import compound_update
+    a = compound_update.make_case(seed=42, scenario_name="home_office")
+    b = compound_update.make_case(seed=42, scenario_name="home_office")
+    assert a.case_id == b.case_id
+    assert a.initial_facts == b.initial_facts
+    assert a.updated_facts == b.updated_facts
+    assert a.update_utterance == b.update_utterance
+
+
+def test_compound_update_case_shape():
+    from src.cases import compound_update
+    c = compound_update.make_case(seed=7, n=10, k=4)
+    assert len(c.initial_facts) == 10
+    assert len(c.updated_facts) == 4
+    assert len(c.initial_utterances) == 10
+    assert len(c.probes) == 10
+    # 4 updated + 6 preserved probes
+    updated = [p for p in c.probes if p["kind"] == "updated"]
+    preserved = [p for p in c.probes if p["kind"] == "preserved"]
+    assert len(updated) == 4
+    assert len(preserved) == 6
+    # Updated probes' expected is the NEW value; preserved probes' expected
+    # is the initial value.
+    for p in updated:
+        assert p["expected"] == c.updated_facts[p["key"]]
+        assert p["expected"] != c.initial_facts[p["key"]]
+    for p in preserved:
+        assert p["expected"] == c.initial_facts[p["key"]]
+
+
+def test_compound_update_travel_dates_stay_paired():
+    """If both depart_date and return_date are updated, the new pair must be a
+    valid pre-vetted chronologically-sane pair (not two random dates)."""
+    from src.cases import compound_update
+    from src.cases.split_intake import _TRAVEL_DATE_PAIRS
+    # Force travel_plan and iterate to find a case where both dates got picked
+    # for update. Not every seed will do it; that's fine — we just need at
+    # least one to hit and verify the constraint.
+    saw_paired_update = False
+    for s in range(200):
+        c = compound_update.make_case(seed=s, scenario_name="travel_plan")
+        if "depart_date" in c.updated_facts and "return_date" in c.updated_facts:
+            saw_paired_update = True
+            depart = c.updated_facts["depart_date"]
+            ret = c.updated_facts["return_date"]
+            assert (depart, ret) in _TRAVEL_DATE_PAIRS, \
+                f"seed={s}: got invalid new date pair ({depart}, {ret})"
+    assert saw_paired_update, "no seed in 0..199 produced a paired-date update; loosen or expand"
+
+
+# ---------------------------------------------------------------------------
+# T2 judge
+# ---------------------------------------------------------------------------
+
+def test_compound_update_score_perfect_update_and_preservation():
+    """All updated probes hit new values, no old values leak, all preserved
+    probes hit initial values -> all three metrics = 1.0."""
+    initial = {"language": "Python", "framework": "Django", "db": "Postgres"}
+    probes = [
+        {"key": "language", "kind": "updated",  "expected": "TypeScript",
+         "answer": "TypeScript"},
+        {"key": "framework", "kind": "updated", "expected": "Next.js",
+         "answer": "Next.js"},
+        {"key": "db",  "kind": "preserved", "expected": "Postgres",
+         "answer": "Postgres"},
+    ]
+    s = compound_update_score(probes, initial)
+    assert s["update_recall"] == 1.0
+    assert s["no_confusion"] == 1.0
+    assert s["no_collateral"] == 1.0
+
+
+def test_compound_update_score_old_value_leaks_hurts_no_confusion():
+    """Answer mentions BOTH new and old value for an updated probe -> hit
+    counts, but no_confusion is dinged."""
+    initial = {"language": "Python"}
+    probes = [
+        {"key": "language", "kind": "updated", "expected": "TypeScript",
+         "answer": "Used to be Python but now TypeScript"},
+    ]
+    s = compound_update_score(probes, initial)
+    assert s["update_recall"] == 1.0  # new value present
+    assert s["no_confusion"] == 0.0   # old value also present -> confusion
+
+
+def test_compound_update_score_collateral_damage():
+    """A preserved probe answered with the wrong value -> no_collateral drops."""
+    initial = {"language": "Python", "db": "Postgres"}
+    probes = [
+        {"key": "language", "kind": "updated",   "expected": "TypeScript",
+         "answer": "TypeScript"},
+        {"key": "db",       "kind": "preserved", "expected": "Postgres",
+         "answer": "MongoDB"},
+    ]
+    s = compound_update_score(probes, initial)
+    assert s["update_recall"] == 1.0
+    assert s["no_collateral"] == 0.0

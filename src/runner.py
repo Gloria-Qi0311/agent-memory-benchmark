@@ -10,7 +10,11 @@ import traceback
 from pathlib import Path
 
 from .agent import chat
-from .judge import split_intake_score_per_detail, split_intake_score_aggregate
+from .judge import (
+    split_intake_score_per_detail,
+    split_intake_score_aggregate,
+    compound_update_score,
+)
 from .systems import REGISTRY
 
 
@@ -135,6 +139,118 @@ def run_split_intake_experiment(
             "n_errors": errors,
             "per_detail_recall": _mean(per_detail_recalls),
             "aggregate_recall": _mean(agg_recalls),
+        }
+
+    out_path.write_text(json.dumps({"summary": summary, "rows": all_rows}, indent=2))
+    return summary
+
+
+# ---------------------------------------------------------------------------
+# T2 — compound update
+# ---------------------------------------------------------------------------
+
+COMPOUND_UPDATE_PROBE_SYSTEM = (
+    "You are an assistant answering a single question about a person. Use "
+    "ONLY the memory context provided. If the context is unclear about the "
+    "answer, say 'unknown'. If the context contains multiple values for the "
+    "same category (e.g. an old value and a newer one), pick the most recent "
+    "one. Be concise: one short phrase, no extra commentary."
+)
+
+
+def _run_compound_update_one(case: dict, system) -> dict:
+    """Run one T2 case end-to-end.
+
+    Flow:
+      Phase 1: agent_a writes each of the N initial_utterances individually
+      Phase 2: agent_b writes the single compound update_utterance
+      Phase 3: agent_c asks each probe question and answers via reader LLM
+    """
+    system.reset()
+    # Phase 1
+    for utt in case["initial_utterances"]:
+        system.write("agent_a", utt)
+    # Phase 2
+    system.write("agent_b", case["update_utterance"])
+
+    # Phase 3
+    probe_answers = []
+    for probe in case["probes"]:
+        ctx = system.read("agent_c", probe["question"])
+        user_msg = (
+            f"Memory context:\n{ctx if ctx else '(empty)'}\n\n"
+            f"Question: {probe['question']}"
+        )
+        ans = chat(COMPOUND_UPDATE_PROBE_SYSTEM, user_msg)
+        probe_answers.append({
+            "key": probe["key"],
+            "kind": probe["kind"],
+            "expected": probe["expected"],
+            "answer": ans,
+            "context_len_chars": len(ctx),
+        })
+
+    score = compound_update_score(probe_answers, case["initial_facts"])
+
+    return {
+        "case_id": case["case_id"],
+        "scenario": case.get("scenario"),
+        "score": score,
+    }
+
+
+def run_compound_update_experiment(
+    cases_path: Path,
+    system_names: list[str],
+    out_path: Path,
+) -> dict:
+    cases = json.loads(cases_path.read_text())
+    summary = {}
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    all_rows = []
+
+    for sys_name in system_names:
+        _log(f"\n=== {sys_name} ({len(cases)} cases) ===")
+        system = REGISTRY[sys_name]()
+        update_recalls = []
+        no_confusions = []
+        no_collaterals = []
+        errors = 0
+
+        for i, case in enumerate(cases, 1):
+            try:
+                row = _run_compound_update_one(case, system)
+                row["system"] = sys_name
+                row["error"] = None
+                s = row["score"]
+                update_recalls.append(s["update_recall"])
+                no_confusions.append(s["no_confusion"])
+                no_collaterals.append(s["no_collateral"])
+                _log(
+                    f"  [{sys_name} {i}/{len(cases)}] {case['case_id']} "
+                    f"upd_recall={s['update_recall']:.2f} "
+                    f"no_conf={s['no_confusion']:.2f} "
+                    f"no_coll={s['no_collateral']:.2f}"
+                )
+            except Exception as e:
+                errors += 1
+                row = {
+                    "case_id": case["case_id"],
+                    "system": sys_name,
+                    "error": f"{type(e).__name__}: {e}",
+                    "traceback": traceback.format_exc(),
+                }
+                _log(f"  [{sys_name} {i}/{len(cases)}] {case['case_id']} ERROR: {type(e).__name__}: {e}")
+            all_rows.append(row)
+
+        def _mean(xs): return sum(xs) / len(xs) if xs else 0.0
+        summary[sys_name] = {
+            "n_total": len(cases),
+            "n_scored": len(update_recalls),
+            "n_errors": errors,
+            "update_recall": _mean(update_recalls),
+            "no_confusion": _mean(no_confusions),
+            "no_collateral": _mean(no_collaterals),
         }
 
     out_path.write_text(json.dumps({"summary": summary, "rows": all_rows}, indent=2))

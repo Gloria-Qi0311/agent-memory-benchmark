@@ -1,0 +1,982 @@
+[
+  {
+    "case_id": "T2-0000",
+    "scenario": "travel_plan",
+    "persona": "Gabriel",
+    "initial_facts": {
+      "destination": "Cape Town",
+      "airline": "Lufthansa",
+      "hotel_room": "Twin",
+      "hotel": "Aman",
+      "seat_pref": "window",
+      "purpose": "research trip",
+      "depart_date": "April 22",
+      "return_date": "May 6",
+      "flight_class": "Business",
+      "meal_pref": "kosher"
+    },
+    "updated_facts": {
+      "seat_pref": "bulkhead",
+      "airline": "Emirates",
+      "flight_class": "First",
+      "depart_date": "March 14"
+    },
+    "initial_utterances": [
+      "Gabriel is traveling to Cape Town.",
+      "Gabriel is flying Lufthansa.",
+      "Gabriel is in a Twin room.",
+      "Gabriel is staying at the Aman.",
+      "Gabriel has a window seat.",
+      "Gabriel's trip is a research trip.",
+      "Gabriel departs on April 22.",
+      "Gabriel returns on May 6.",
+      "Gabriel is in Business class.",
+      "Gabriel requested a kosher meal."
+    ],
+    "update_utterance": "Gabriel switched their seat preference from window to bulkhead, their airline from Lufthansa to Emirates, their flight class from Business to First, and their departure date from April 22 to March 14.",
+    "probes": [
+      {
+        "key": "destination",
+        "kind": "preserved",
+        "expected": "Cape Town",
+        "question": "Where is Gabriel traveling to?"
+      },
+      {
+        "key": "airline",
+        "kind": "updated",
+        "expected": "Emirates",
+        "question": "What airline is Gabriel flying?"
+      },
+      {
+        "key": "hotel_room",
+        "kind": "preserved",
+        "expected": "Twin",
+        "question": "What room type is Gabriel booked in?"
+      },
+      {
+        "key": "hotel",
+        "kind": "preserved",
+        "expected": "Aman",
+        "question": "Where is Gabriel staying?"
+      },
+      {
+        "key": "seat_pref",
+        "kind": "updated",
+        "expected": "bulkhead",
+        "question": "What seat preference does Gabriel have?"
+      },
+      {
+        "key": "purpose",
+        "kind": "preserved",
+        "expected": "research trip",
+        "question": "What's the purpose of Gabriel's trip?"
+      },
+      {
+        "key": "depart_date",
+        "kind": "updated",
+        "expected": "March 14",
+        "question": "When does Gabriel depart?"
+      },
+      {
+        "key": "return_date",
+        "kind": "preserved",
+        "expected": "May 6",
+        "question": "When does Gabriel return?"
+      },
+      {
+        "key": "flight_class",
+        "kind": "updated",
+        "expected": "First",
+        "question": "What flight class is Gabriel in?"
+      },
+      {
+        "key": "meal_pref",
+        "kind": "preserved",
+        "expected": "kosher",
+        "question": "What meal preference did Gabriel request?"
+      }
+    ]
+  },
+  {
+    "case_id": "T2-0001",
+    "scenario": "dev_setup",
+    "persona": "Bao",
+    "initial_facts": {
+      "keyboard": "Keychron Q3 Pro",
+      "ram": "96GB",
+      "ide": "Neovim",
+      "theme": "Rose Pine",
+      "font": "JetBrains Mono",
+      "shell": "bash",
+      "terminal": "iTerm2",
+      "package_mgr": "Nix",
+      "laptop": "Surface Laptop 6",
+      "display": "Studio Display 5K"
+    },
+    "updated_facts": {
+      "shell": "nushell",
+      "keyboard": "HHKB Studio",
+      "laptop": "Framework 13",
+      "package_mgr": "pacman"
+    },
+    "initial_utterances": [
+      "Bao's keyboard is a Keychron Q3 Pro.",
+      "Bao's machine has 96GB of RAM.",
+      "Bao uses Neovim as their primary IDE.",
+      "Bao's editor theme is Rose Pine.",
+      "Bao's coding font is JetBrains Mono.",
+      "Bao uses bash as their shell.",
+      "Bao's terminal is iTerm2.",
+      "Bao manages packages with Nix.",
+      "Bao's laptop is a Surface Laptop 6.",
+      "Bao's display is a Studio Display 5K."
+    ],
+    "update_utterance": "Bao switched their shell from bash to nushell, their keyboard from Keychron Q3 Pro to HHKB Studio, their laptop from Surface Laptop 6 to Framework 13, and their package manager from Nix to pacman.",
+    "probes": [
+      {
+        "key": "keyboard",
+        "kind": "updated",
+        "expected": "HHKB Studio",
+        "question": "What keyboard does Bao use?"
+      },
+      {
+        "key": "ram",
+        "kind": "preserved",
+        "expected": "96GB",
+        "question": "How much RAM does Bao's machine have?"
+      },
+      {
+        "key": "ide",
+        "kind": "preserved",
+        "expected": "Neovim",
+        "question": "What IDE does Bao use?"
+      },
+      {
+        "key": "theme",
+        "kind": "preserved",
+        "expected": "Rose Pine",
+        "question": "What editor theme does Bao use?"
+      },
+      {
+        "key": "font",
+        "kind": "preserved",
+        "expected": "JetBrains Mono",
+        "question": "What coding font does Bao use?"
+      },
+      {
+        "key": "shell",
+        "kind": "updated",
+        "expected": "nushell",
+        "question": "What shell does Bao use?"
+      },
+      {
+        "key": "terminal",
+        "kind": "preserved",
+        "expected": "iTerm2",
+        "question": "What terminal does Bao use?"
+      },
+      {
+        "key": "package_mgr",
+        "kind": "updated",
+        "expected": "pacman",
+        "question": "What package manager does Bao use?"
+      },
+      {
+        "key": "laptop",
+        "kind": "updated",
+        "expected": "Framework 13",
+        "question": "What laptop does Bao use?"
+      },
+      {
+        "key": "display",
+        "kind": "preserved",
+        "expected": "Studio Display 5K",
+        "question": "What display does Bao use?"
+      }
+    ]
+  },
+  {
+    "case_id": "T2-0002",
+    "scenario": "dev_setup",
+    "persona": "Bao",
+    "initial_facts": {
+      "ram": "96GB",
+      "os": "macOS Sonoma",
+      "storage": "4TB SSD",
+      "keyboard": "Moonlander Mark I",
+      "font": "Cascadia Code",
+      "display": "Dell U4025QW",
+      "terminal": "iTerm2",
+      "laptop": "MacBook Pro M4 Max",
+      "shell": "zsh",
+      "git_client": "Tower"
+    },
+    "updated_facts": {
+      "display": "Pro Display XDR",
+      "terminal": "WezTerm",
+      "shell": "fish",
+      "font": "Berkeley Mono"
+    },
+    "initial_utterances": [
+      "Bao's machine has 96GB of RAM.",
+      "Bao runs macOS Sonoma.",
+      "Bao has 4TB SSD of storage.",
+      "Bao's keyboard is a Moonlander Mark I.",
+      "Bao's coding font is Cascadia Code.",
+      "Bao's display is a Dell U4025QW.",
+      "Bao's terminal is iTerm2.",
+      "Bao's laptop is a MacBook Pro M4 Max.",
+      "Bao uses zsh as their shell.",
+      "Bao's git client is Tower."
+    ],
+    "update_utterance": "Bao switched their display from Dell U4025QW to Pro Display XDR, their terminal from iTerm2 to WezTerm, their shell from zsh to fish, and their coding font from Cascadia Code to Berkeley Mono.",
+    "probes": [
+      {
+        "key": "ram",
+        "kind": "preserved",
+        "expected": "96GB",
+        "question": "How much RAM does Bao's machine have?"
+      },
+      {
+        "key": "os",
+        "kind": "preserved",
+        "expected": "macOS Sonoma",
+        "question": "What operating system does Bao run?"
+      },
+      {
+        "key": "storage",
+        "kind": "preserved",
+        "expected": "4TB SSD",
+        "question": "How much storage does Bao's machine have?"
+      },
+      {
+        "key": "keyboard",
+        "kind": "preserved",
+        "expected": "Moonlander Mark I",
+        "question": "What keyboard does Bao use?"
+      },
+      {
+        "key": "font",
+        "kind": "updated",
+        "expected": "Berkeley Mono",
+        "question": "What coding font does Bao use?"
+      },
+      {
+        "key": "display",
+        "kind": "updated",
+        "expected": "Pro Display XDR",
+        "question": "What display does Bao use?"
+      },
+      {
+        "key": "terminal",
+        "kind": "updated",
+        "expected": "WezTerm",
+        "question": "What terminal does Bao use?"
+      },
+      {
+        "key": "laptop",
+        "kind": "preserved",
+        "expected": "MacBook Pro M4 Max",
+        "question": "What laptop does Bao use?"
+      },
+      {
+        "key": "shell",
+        "kind": "updated",
+        "expected": "fish",
+        "question": "What shell does Bao use?"
+      },
+      {
+        "key": "git_client",
+        "kind": "preserved",
+        "expected": "Tower",
+        "question": "What git client does Bao use?"
+      }
+    ]
+  },
+  {
+    "case_id": "T2-0003",
+    "scenario": "dev_setup",
+    "persona": "Chloe",
+    "initial_facts": {
+      "os": "Arch Linux",
+      "font": "Cascadia Code",
+      "ide": "JetBrains Rider",
+      "package_mgr": "dnf",
+      "ram": "96GB",
+      "laptop": "Framework 13",
+      "shell": "fish",
+      "display": "Pro Display XDR",
+      "storage": "2TB SSD",
+      "terminal": "Alacritty"
+    },
+    "updated_facts": {
+      "os": "macOS Sequoia",
+      "font": "Fira Code",
+      "ide": "Cursor",
+      "shell": "nushell"
+    },
+    "initial_utterances": [
+      "Chloe runs Arch Linux.",
+      "Chloe's coding font is Cascadia Code.",
+      "Chloe uses JetBrains Rider as their primary IDE.",
+      "Chloe manages packages with dnf.",
+      "Chloe's machine has 96GB of RAM.",
+      "Chloe's laptop is a Framework 13.",
+      "Chloe uses fish as their shell.",
+      "Chloe's display is a Pro Display XDR.",
+      "Chloe has 2TB SSD of storage.",
+      "Chloe's terminal is Alacritty."
+    ],
+    "update_utterance": "Chloe switched their operating system from Arch Linux to macOS Sequoia, their coding font from Cascadia Code to Fira Code, their IDE from JetBrains Rider to Cursor, and their shell from fish to nushell.",
+    "probes": [
+      {
+        "key": "os",
+        "kind": "updated",
+        "expected": "macOS Sequoia",
+        "question": "What operating system does Chloe run?"
+      },
+      {
+        "key": "font",
+        "kind": "updated",
+        "expected": "Fira Code",
+        "question": "What coding font does Chloe use?"
+      },
+      {
+        "key": "ide",
+        "kind": "updated",
+        "expected": "Cursor",
+        "question": "What IDE does Chloe use?"
+      },
+      {
+        "key": "package_mgr",
+        "kind": "preserved",
+        "expected": "dnf",
+        "question": "What package manager does Chloe use?"
+      },
+      {
+        "key": "ram",
+        "kind": "preserved",
+        "expected": "96GB",
+        "question": "How much RAM does Chloe's machine have?"
+      },
+      {
+        "key": "laptop",
+        "kind": "preserved",
+        "expected": "Framework 13",
+        "question": "What laptop does Chloe use?"
+      },
+      {
+        "key": "shell",
+        "kind": "updated",
+        "expected": "nushell",
+        "question": "What shell does Chloe use?"
+      },
+      {
+        "key": "display",
+        "kind": "preserved",
+        "expected": "Pro Display XDR",
+        "question": "What display does Chloe use?"
+      },
+      {
+        "key": "storage",
+        "kind": "preserved",
+        "expected": "2TB SSD",
+        "question": "How much storage does Chloe's machine have?"
+      },
+      {
+        "key": "terminal",
+        "kind": "preserved",
+        "expected": "Alacritty",
+        "question": "What terminal does Chloe use?"
+      }
+    ]
+  },
+  {
+    "case_id": "T2-0004",
+    "scenario": "dev_setup",
+    "persona": "Eun",
+    "initial_facts": {
+      "ram": "32GB",
+      "package_mgr": "Nix",
+      "shell": "nushell",
+      "ide": "Zed",
+      "storage": "2TB SSD",
+      "git_client": "GitHub Desktop",
+      "laptop": "ThinkPad X1 Carbon Gen 12",
+      "theme": "Tokyo Night",
+      "display": "Studio Display 5K",
+      "terminal": "iTerm2"
+    },
+    "updated_facts": {
+      "storage": "4TB SSD",
+      "ide": "Neovim",
+      "shell": "zsh",
+      "theme": "Solarized Dark"
+    },
+    "initial_utterances": [
+      "Eun's machine has 32GB of RAM.",
+      "Eun manages packages with Nix.",
+      "Eun uses nushell as their shell.",
+      "Eun uses Zed as their primary IDE.",
+      "Eun has 2TB SSD of storage.",
+      "Eun's git client is GitHub Desktop.",
+      "Eun's laptop is a ThinkPad X1 Carbon Gen 12.",
+      "Eun's editor theme is Tokyo Night.",
+      "Eun's display is a Studio Display 5K.",
+      "Eun's terminal is iTerm2."
+    ],
+    "update_utterance": "Eun switched their storage from 2TB SSD to 4TB SSD, their IDE from Zed to Neovim, their shell from nushell to zsh, and their editor theme from Tokyo Night to Solarized Dark.",
+    "probes": [
+      {
+        "key": "ram",
+        "kind": "preserved",
+        "expected": "32GB",
+        "question": "How much RAM does Eun's machine have?"
+      },
+      {
+        "key": "package_mgr",
+        "kind": "preserved",
+        "expected": "Nix",
+        "question": "What package manager does Eun use?"
+      },
+      {
+        "key": "shell",
+        "kind": "updated",
+        "expected": "zsh",
+        "question": "What shell does Eun use?"
+      },
+      {
+        "key": "ide",
+        "kind": "updated",
+        "expected": "Neovim",
+        "question": "What IDE does Eun use?"
+      },
+      {
+        "key": "storage",
+        "kind": "updated",
+        "expected": "4TB SSD",
+        "question": "How much storage does Eun's machine have?"
+      },
+      {
+        "key": "git_client",
+        "kind": "preserved",
+        "expected": "GitHub Desktop",
+        "question": "What git client does Eun use?"
+      },
+      {
+        "key": "laptop",
+        "kind": "preserved",
+        "expected": "ThinkPad X1 Carbon Gen 12",
+        "question": "What laptop does Eun use?"
+      },
+      {
+        "key": "theme",
+        "kind": "updated",
+        "expected": "Solarized Dark",
+        "question": "What editor theme does Eun use?"
+      },
+      {
+        "key": "display",
+        "kind": "preserved",
+        "expected": "Studio Display 5K",
+        "question": "What display does Eun use?"
+      },
+      {
+        "key": "terminal",
+        "kind": "preserved",
+        "expected": "iTerm2",
+        "question": "What terminal does Eun use?"
+      }
+    ]
+  },
+  {
+    "case_id": "T2-0005",
+    "scenario": "home_office",
+    "persona": "Eun",
+    "initial_facts": {
+      "background": "acoustic panel",
+      "mic": "Audio-Technica AT2020",
+      "headphones": "AirPods Max",
+      "desk": "FlexiSpot E7",
+      "audio_interface": "SSL 2+",
+      "speakers": "Audioengine A2+",
+      "chair": "Branch Ergonomic",
+      "notebook": "Leuchtturm1917",
+      "plant": "Monstera",
+      "webcam": "Insta360 Link"
+    },
+    "updated_facts": {
+      "chair": "Secretlab Titan",
+      "audio_interface": "RME Babyface Pro",
+      "headphones": "Sony WH-1000XM5",
+      "webcam": "Opal Tadpole"
+    },
+    "initial_utterances": [
+      "Eun's call background is a acoustic panel.",
+      "Eun's microphone is a Audio-Technica AT2020.",
+      "Eun's headphones are AirPods Max.",
+      "Eun's desk is a FlexiSpot E7.",
+      "Eun's audio interface is a SSL 2+.",
+      "Eun's speakers are Audioengine A2+.",
+      "Eun's chair is a Branch Ergonomic.",
+      "Eun's notebook is a Leuchtturm1917.",
+      "Eun's office plant is a Monstera.",
+      "Eun's webcam is a Insta360 Link."
+    ],
+    "update_utterance": "Eun switched their chair from Branch Ergonomic to Secretlab Titan, their audio interface from SSL 2+ to RME Babyface Pro, their headphones from AirPods Max to Sony WH-1000XM5, and their webcam from Insta360 Link to Opal Tadpole.",
+    "probes": [
+      {
+        "key": "background",
+        "kind": "preserved",
+        "expected": "acoustic panel",
+        "question": "What's the background behind Eun on calls?"
+      },
+      {
+        "key": "mic",
+        "kind": "preserved",
+        "expected": "Audio-Technica AT2020",
+        "question": "What microphone does Eun use?"
+      },
+      {
+        "key": "headphones",
+        "kind": "updated",
+        "expected": "Sony WH-1000XM5",
+        "question": "What headphones does Eun use?"
+      },
+      {
+        "key": "desk",
+        "kind": "preserved",
+        "expected": "FlexiSpot E7",
+        "question": "What desk does Eun have?"
+      },
+      {
+        "key": "audio_interface",
+        "kind": "updated",
+        "expected": "RME Babyface Pro",
+        "question": "What audio interface does Eun have?"
+      },
+      {
+        "key": "speakers",
+        "kind": "preserved",
+        "expected": "Audioengine A2+",
+        "question": "What speakers does Eun use?"
+      },
+      {
+        "key": "chair",
+        "kind": "updated",
+        "expected": "Secretlab Titan",
+        "question": "What chair does Eun use?"
+      },
+      {
+        "key": "notebook",
+        "kind": "preserved",
+        "expected": "Leuchtturm1917",
+        "question": "What notebook does Eun carry?"
+      },
+      {
+        "key": "plant",
+        "kind": "preserved",
+        "expected": "Monstera",
+        "question": "What plant does Eun have in the office?"
+      },
+      {
+        "key": "webcam",
+        "kind": "updated",
+        "expected": "Opal Tadpole",
+        "question": "What webcam does Eun use?"
+      }
+    ]
+  },
+  {
+    "case_id": "T2-0006",
+    "scenario": "home_office",
+    "persona": "Bao",
+    "initial_facts": {
+      "audio_interface": "Focusrite Scarlett 2i2",
+      "webcam": "Opal Tadpole",
+      "desk": "FlexiSpot E7",
+      "notebook": "Leuchtturm1917",
+      "monitor_mount": "Fully Jarvis",
+      "mic": "Elgato Wave 3",
+      "plant": "ZZ Plant",
+      "lighting": "Elgato Key Light",
+      "background": "brick wall",
+      "chair": "Branch Ergonomic"
+    },
+    "updated_facts": {
+      "background": "acoustic panel",
+      "monitor_mount": "Humanscale M2.1",
+      "webcam": "Logitech Brio 4K",
+      "plant": "Snake Plant"
+    },
+    "initial_utterances": [
+      "Bao's audio interface is a Focusrite Scarlett 2i2.",
+      "Bao's webcam is a Opal Tadpole.",
+      "Bao's desk is a FlexiSpot E7.",
+      "Bao's notebook is a Leuchtturm1917.",
+      "Bao's monitor mount is a Fully Jarvis.",
+      "Bao's microphone is a Elgato Wave 3.",
+      "Bao's office plant is a ZZ Plant.",
+      "Bao's call lighting is Elgato Key Light.",
+      "Bao's call background is a brick wall.",
+      "Bao's chair is a Branch Ergonomic."
+    ],
+    "update_utterance": "Bao switched their call background from brick wall to acoustic panel, their monitor mount from Fully Jarvis to Humanscale M2.1, their webcam from Opal Tadpole to Logitech Brio 4K, and their office plant from ZZ Plant to Snake Plant.",
+    "probes": [
+      {
+        "key": "audio_interface",
+        "kind": "preserved",
+        "expected": "Focusrite Scarlett 2i2",
+        "question": "What audio interface does Bao have?"
+      },
+      {
+        "key": "webcam",
+        "kind": "updated",
+        "expected": "Logitech Brio 4K",
+        "question": "What webcam does Bao use?"
+      },
+      {
+        "key": "desk",
+        "kind": "preserved",
+        "expected": "FlexiSpot E7",
+        "question": "What desk does Bao have?"
+      },
+      {
+        "key": "notebook",
+        "kind": "preserved",
+        "expected": "Leuchtturm1917",
+        "question": "What notebook does Bao carry?"
+      },
+      {
+        "key": "monitor_mount",
+        "kind": "updated",
+        "expected": "Humanscale M2.1",
+        "question": "What monitor mount does Bao have?"
+      },
+      {
+        "key": "mic",
+        "kind": "preserved",
+        "expected": "Elgato Wave 3",
+        "question": "What microphone does Bao use?"
+      },
+      {
+        "key": "plant",
+        "kind": "updated",
+        "expected": "Snake Plant",
+        "question": "What plant does Bao have in the office?"
+      },
+      {
+        "key": "lighting",
+        "kind": "preserved",
+        "expected": "Elgato Key Light",
+        "question": "What lighting does Bao use?"
+      },
+      {
+        "key": "background",
+        "kind": "updated",
+        "expected": "acoustic panel",
+        "question": "What's the background behind Bao on calls?"
+      },
+      {
+        "key": "chair",
+        "kind": "preserved",
+        "expected": "Branch Ergonomic",
+        "question": "What chair does Bao use?"
+      }
+    ]
+  },
+  {
+    "case_id": "T2-0007",
+    "scenario": "travel_plan",
+    "persona": "Chloe",
+    "initial_facts": {
+      "seat_pref": "aisle",
+      "meal_pref": "no special meal",
+      "destination": "Tokyo",
+      "departure_city": "London",
+      "hotel_room": "King Deluxe",
+      "depart_date": "March 14",
+      "airline": "Emirates",
+      "purpose": "wedding",
+      "hotel": "Park Hyatt",
+      "flight_class": "Economy"
+    },
+    "updated_facts": {
+      "departure_city": "Toronto",
+      "seat_pref": "window",
+      "airline": "Air France",
+      "hotel": "Ritz-Carlton"
+    },
+    "initial_utterances": [
+      "Chloe has a aisle seat.",
+      "Chloe requested a no special meal meal.",
+      "Chloe is traveling to Tokyo.",
+      "Chloe is departing from London.",
+      "Chloe is in a King Deluxe room.",
+      "Chloe departs on March 14.",
+      "Chloe is flying Emirates.",
+      "Chloe's trip is a wedding.",
+      "Chloe is staying at the Park Hyatt.",
+      "Chloe is in Economy class."
+    ],
+    "update_utterance": "Chloe switched their departure city from London to Toronto, their seat preference from aisle to window, their airline from Emirates to Air France, and their hotel from Park Hyatt to Ritz-Carlton.",
+    "probes": [
+      {
+        "key": "seat_pref",
+        "kind": "updated",
+        "expected": "window",
+        "question": "What seat preference does Chloe have?"
+      },
+      {
+        "key": "meal_pref",
+        "kind": "preserved",
+        "expected": "no special meal",
+        "question": "What meal preference did Chloe request?"
+      },
+      {
+        "key": "destination",
+        "kind": "preserved",
+        "expected": "Tokyo",
+        "question": "Where is Chloe traveling to?"
+      },
+      {
+        "key": "departure_city",
+        "kind": "updated",
+        "expected": "Toronto",
+        "question": "Where is Chloe departing from?"
+      },
+      {
+        "key": "hotel_room",
+        "kind": "preserved",
+        "expected": "King Deluxe",
+        "question": "What room type is Chloe booked in?"
+      },
+      {
+        "key": "depart_date",
+        "kind": "preserved",
+        "expected": "March 14",
+        "question": "When does Chloe depart?"
+      },
+      {
+        "key": "airline",
+        "kind": "updated",
+        "expected": "Air France",
+        "question": "What airline is Chloe flying?"
+      },
+      {
+        "key": "purpose",
+        "kind": "preserved",
+        "expected": "wedding",
+        "question": "What's the purpose of Chloe's trip?"
+      },
+      {
+        "key": "hotel",
+        "kind": "updated",
+        "expected": "Ritz-Carlton",
+        "question": "Where is Chloe staying?"
+      },
+      {
+        "key": "flight_class",
+        "kind": "preserved",
+        "expected": "Economy",
+        "question": "What flight class is Chloe in?"
+      }
+    ]
+  },
+  {
+    "case_id": "T2-0008",
+    "scenario": "dev_setup",
+    "persona": "Farida",
+    "initial_facts": {
+      "shell": "zsh",
+      "storage": "8TB SSD",
+      "display": "LG UltraFine 5K",
+      "laptop": "Framework 13",
+      "ram": "96GB",
+      "package_mgr": "apt",
+      "terminal": "Alacritty",
+      "keyboard": "HHKB Studio",
+      "git_client": "Fork",
+      "theme": "Catppuccin Mocha"
+    },
+    "updated_facts": {
+      "keyboard": "Glove80",
+      "laptop": "Surface Laptop 6",
+      "shell": "nushell",
+      "package_mgr": "dnf"
+    },
+    "initial_utterances": [
+      "Farida uses zsh as their shell.",
+      "Farida has 8TB SSD of storage.",
+      "Farida's display is a LG UltraFine 5K.",
+      "Farida's laptop is a Framework 13.",
+      "Farida's machine has 96GB of RAM.",
+      "Farida manages packages with apt.",
+      "Farida's terminal is Alacritty.",
+      "Farida's keyboard is a HHKB Studio.",
+      "Farida's git client is Fork.",
+      "Farida's editor theme is Catppuccin Mocha."
+    ],
+    "update_utterance": "Farida switched their keyboard from HHKB Studio to Glove80, their laptop from Framework 13 to Surface Laptop 6, their shell from zsh to nushell, and their package manager from apt to dnf.",
+    "probes": [
+      {
+        "key": "shell",
+        "kind": "updated",
+        "expected": "nushell",
+        "question": "What shell does Farida use?"
+      },
+      {
+        "key": "storage",
+        "kind": "preserved",
+        "expected": "8TB SSD",
+        "question": "How much storage does Farida's machine have?"
+      },
+      {
+        "key": "display",
+        "kind": "preserved",
+        "expected": "LG UltraFine 5K",
+        "question": "What display does Farida use?"
+      },
+      {
+        "key": "laptop",
+        "kind": "updated",
+        "expected": "Surface Laptop 6",
+        "question": "What laptop does Farida use?"
+      },
+      {
+        "key": "ram",
+        "kind": "preserved",
+        "expected": "96GB",
+        "question": "How much RAM does Farida's machine have?"
+      },
+      {
+        "key": "package_mgr",
+        "kind": "updated",
+        "expected": "dnf",
+        "question": "What package manager does Farida use?"
+      },
+      {
+        "key": "terminal",
+        "kind": "preserved",
+        "expected": "Alacritty",
+        "question": "What terminal does Farida use?"
+      },
+      {
+        "key": "keyboard",
+        "kind": "updated",
+        "expected": "Glove80",
+        "question": "What keyboard does Farida use?"
+      },
+      {
+        "key": "git_client",
+        "kind": "preserved",
+        "expected": "Fork",
+        "question": "What git client does Farida use?"
+      },
+      {
+        "key": "theme",
+        "kind": "preserved",
+        "expected": "Catppuccin Mocha",
+        "question": "What editor theme does Farida use?"
+      }
+    ]
+  },
+  {
+    "case_id": "T2-0009",
+    "scenario": "travel_plan",
+    "persona": "Farida",
+    "initial_facts": {
+      "airline": "Emirates",
+      "depart_date": "November 19",
+      "meal_pref": "vegetarian",
+      "destination": "Bali",
+      "flight_class": "First",
+      "travel_companion": "solo",
+      "return_date": "December 3",
+      "seat_pref": "bulkhead",
+      "hotel_room": "Studio",
+      "departure_city": "Dubai"
+    },
+    "updated_facts": {
+      "return_date": "May 6",
+      "meal_pref": "kosher",
+      "hotel_room": "King Deluxe",
+      "depart_date": "April 22"
+    },
+    "initial_utterances": [
+      "Farida is flying Emirates.",
+      "Farida departs on November 19.",
+      "Farida requested a vegetarian meal.",
+      "Farida is traveling to Bali.",
+      "Farida is in First class.",
+      "Farida is traveling solo.",
+      "Farida returns on December 3.",
+      "Farida has a bulkhead seat.",
+      "Farida is in a Studio room.",
+      "Farida is departing from Dubai."
+    ],
+    "update_utterance": "Farida switched their return date from December 3 to May 6, their meal preference from vegetarian to kosher, their hotel room type from Studio to King Deluxe, and their departure date from November 19 to April 22.",
+    "probes": [
+      {
+        "key": "airline",
+        "kind": "preserved",
+        "expected": "Emirates",
+        "question": "What airline is Farida flying?"
+      },
+      {
+        "key": "depart_date",
+        "kind": "updated",
+        "expected": "April 22",
+        "question": "When does Farida depart?"
+      },
+      {
+        "key": "meal_pref",
+        "kind": "updated",
+        "expected": "kosher",
+        "question": "What meal preference did Farida request?"
+      },
+      {
+        "key": "destination",
+        "kind": "preserved",
+        "expected": "Bali",
+        "question": "Where is Farida traveling to?"
+      },
+      {
+        "key": "flight_class",
+        "kind": "preserved",
+        "expected": "First",
+        "question": "What flight class is Farida in?"
+      },
+      {
+        "key": "travel_companion",
+        "kind": "preserved",
+        "expected": "solo",
+        "question": "Who is Farida traveling with?"
+      },
+      {
+        "key": "return_date",
+        "kind": "updated",
+        "expected": "May 6",
+        "question": "When does Farida return?"
+      },
+      {
+        "key": "seat_pref",
+        "kind": "preserved",
+        "expected": "bulkhead",
+        "question": "What seat preference does Farida have?"
+      },
+      {
+        "key": "hotel_room",
+        "kind": "updated",
+        "expected": "King Deluxe",
+        "question": "What room type is Farida booked in?"
+      },
+      {
+        "key": "departure_city",
+        "kind": "preserved",
+        "expected": "Dubai",
+        "question": "Where is Farida departing from?"
+      }
+    ]
+  }
+]

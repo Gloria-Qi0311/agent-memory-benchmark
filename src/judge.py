@@ -19,6 +19,78 @@ def _match(value: str, text_lower: str) -> bool:
 
 
 # ---------------------------------------------------------------------------
+# T2 — compound update scoring
+# ---------------------------------------------------------------------------
+
+def compound_update_score(probe_answers: list[dict], initial_facts: dict) -> dict:
+    """Score a T2 case's probes.
+
+    probe_answers: [{"key", "kind", "expected", "answer"}, ...]
+      - kind is "updated" or "preserved"
+      - for "updated" probes, expected is the NEW value (post-update)
+      - for "preserved" probes, expected is the initial value
+    initial_facts: full initial state (key -> initial value) — used for
+      the confusion metric (did the answer for an updated key accidentally
+      contain a DIFFERENT updated value?)
+
+    Returns:
+      update_recall:     fraction of "updated" probes where the new value
+                         appeared in the answer
+      no_confusion:      fraction of "updated" probes where the answer did
+                         NOT accidentally contain the initial (old) value
+                         for that key. If the answer contains BOTH old and
+                         new, that's a partial confusion — counts as fail.
+      no_collateral:     fraction of "preserved" probes where the initial
+                         value still appeared (i.e. wasn't dropped)
+      per_probe:         detailed hit/miss per probe for inspection
+    """
+    per_probe = []
+    update_hits = 0
+    update_total = 0
+    no_confusion_hits = 0
+    preserve_hits = 0
+    preserve_total = 0
+
+    for p in probe_answers:
+        ans_lower = p["answer"].lower()
+        expected_hit = _match(p["expected"], ans_lower)
+
+        if p["kind"] == "updated":
+            update_total += 1
+            if expected_hit:
+                update_hits += 1
+            # confusion: did the answer surface the OLD (initial) value?
+            old_val = initial_facts[p["key"]]
+            old_value_present = _match(old_val, ans_lower)
+            if not old_value_present:
+                no_confusion_hits += 1
+            per_probe.append({
+                **p,
+                "hit": expected_hit,
+                "old_value_leaked": old_value_present,
+            })
+        else:  # preserved
+            preserve_total += 1
+            if expected_hit:
+                preserve_hits += 1
+            per_probe.append({
+                **p,
+                "hit": expected_hit,
+            })
+
+    return {
+        "update_recall":     update_hits / update_total if update_total else 0.0,
+        "no_confusion":      no_confusion_hits / update_total if update_total else 0.0,
+        "no_collateral":     preserve_hits / preserve_total if preserve_total else 0.0,
+        "update_hits":       update_hits,
+        "update_total":      update_total,
+        "preserve_hits":     preserve_hits,
+        "preserve_total":    preserve_total,
+        "per_probe":         per_probe,
+    }
+
+
+# ---------------------------------------------------------------------------
 # T4 — split intake scoring
 # ---------------------------------------------------------------------------
 
