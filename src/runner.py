@@ -22,6 +22,8 @@ from .judge import (
 )
 from .systems import REGISTRY
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
 
 def _log(msg: str) -> None:
     print(msg, file=sys.stderr, flush=True)
@@ -453,6 +455,10 @@ def run_preference_experiment(
     out_path: Path,
 ) -> dict:
     cases = json.loads(cases_path.read_text(encoding="utf-8"))
+    try:
+        published_cases_path = str(cases_path.resolve().relative_to(PROJECT_ROOT))
+    except ValueError:
+        published_cases_path = str(cases_path)
     unknown = [name for name in system_names if name not in REGISTRY]
     if unknown:
         raise ValueError(f"unknown memory systems: {unknown}; available={sorted(REGISTRY)}")
@@ -488,9 +494,11 @@ def run_preference_experiment(
             # Keep a recoverable checkpoint even if a later API call fails.
             checkpoint = {
                 "metadata": {
-                    "task": "preference_smoke",
+                    "task": "preference",
                     "created_at": datetime.now(timezone.utc).isoformat(),
-                    "cases_path": str(cases_path),
+                    "cases_path": published_cases_path,
+                    "case_set": cases_path.stem,
+                    "case_count": len(cases),
                     "systems": system_names,
                     "model": os.environ.get("DEEPSEEK_MODEL", "deepseek-chat"),
                     "temperature": 0.0,

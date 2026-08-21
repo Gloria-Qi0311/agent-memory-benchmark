@@ -4,11 +4,22 @@ A frozen record of choices that shape the project. v0 entries are kept for histo
 
 ## v0 — atomic task pass (concluded, superseded by v1)
 
-v0 tested **atomic memory + atomic update**: one fact per memory, explicit-style updates ("X switched to Y. They don't use Z anymore."), n=200, five systems. Conclusion: at this granularity, modern LLMs solve updates trivially from raw context, naive baselines saturate at 100%, and mem0 underperforms only because its internal LLM extraction is non-deterministic. The v0 tasks (fusion, rewrite-preservation) and the supporting baselines (`naive_markdown`, `long_context`, `regex_markdown`) live in `src/` and are kept for code reuse, but their results are not the project's headline. See git history (PR #2) for the data.
+v0 tested **atomic memory + atomic update**: one fact per memory, explicit-style updates ("X switched to Y. They don't use Z anymore."), n=200, five systems. Conclusion: at this granularity, modern LLMs solve updates trivially from raw context, naive baselines saturate at 100%, and mem0 underperforms only because its internal LLM extraction is non-deterministic. The superseded v0-only tasks and baselines are available in git history (PR #2); they are not part of the current source tree or headline results.
 
-## v1 design (active)
+## Active benchmark structure
 
-Active task suite is specified in [`docs/v1/README.md`](./v1/README.md). Four task types: T4 split intake, T2 compound update, T1 surgical edit, T3 cross-memory. Built and run in that order.
+The project has two complementary tracks:
+
+- **Factual Memory:** T4 Split Intake and T2 Compound Update. These compare
+  `no_memory`, `naive_markdown`, `pure_vector`, `AMH`, and `mem0`.
+- **User Preference Memory:** cross-agent preference merge, preference update,
+  temporary-vs-durable boundaries, and composite decisions. This track compares
+  only `naive_markdown`, `AMH`, and `mem0`.
+
+The tracks keep separate metrics and results. A system may be suitable for one
+memory use case and weak on another, so the project does not collapse them into
+one leaderboard score. T1 surgical edit and T3 cross-memory remain possible
+future factual-memory tasks, not completed active results.
 
 ## Agent + judge LLM
 - DeepSeek-V3 for both.
@@ -45,13 +56,29 @@ Why local: this machine's network and Python stack don't play well with `hugging
 
 ## Storage
 - Cases: JSON in `data/cases/`.
-- Results: JSON in `data/results/`, one file per experiment run. Git-ignored.
+- Results: JSON in `data/results/`, one file per experiment run. Published
+  production runs are explicitly committed; smoke, ablation, failed, and local
+  intermediate runs remain git-ignored.
 - SQLite added only if/when a dashboard needs it.
+
+## Preference Track decisions
+
+- Benchmark-facing utterances, questions, tasks, and candidates are all English.
+  This avoids turning an English-focused embedding model's cross-language
+  limitations into an apparent memory-system failure.
+- The frozen pilot contains 30 cases: 12 diagnostic cases and 18 composite
+  cases arranged as nine counterfactual pairs.
+- The official comparison is `naive_markdown`, `AMH`, and `mem0`. `no_memory`
+  and `pure_vector` remain useful factual-track baselines but are not part of
+  the Preference product comparison.
+- Every case must use isolated storage. For mem0 this means both an independent
+  Qdrant directory and an independent history SQLite path; telemetry is disabled
+  so a case cannot leak state into another case through global files.
 
 ## Out of scope (v1)
 - Multi-LLM-vendor (Claude + GPT + Llama) writers and readers. Worth doing but out of scope for v1.
 - Privacy / leakage testing. GateMem already does that.
-- AMH adapter and other commercial memory products.
+- Additional hosted/commercial memory products beyond the current AMH adapter.
 - Training, fine-tuning, or evaluating any LLM itself.
 
 ## Risks we're tracking

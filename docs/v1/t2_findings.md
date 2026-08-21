@@ -1,10 +1,21 @@
-# T2 — Compound Update: Findings (n≈300)
+# T2 — Compound Update: Findings (draft, n≈300)
+
+> Status: the n=100 and n=200 experiment data are complete, but the tables,
+> confidence intervals, failure analysis, and case study marked `{TBD}` below
+> have not yet been finalized. Treat this as a working analysis, not a
+> publication-ready result.
 
 ## Headline
 
-> **When a user changes several facts in one statement, mem0 silently damages ~44% of the unrelated facts they didn't mention.** On 300 compound-update cases (~10 initial facts, one explicit multi-clause update touching 4 of them), naive_markdown and AMH preserve ~96% of the unchanged facts. mem0 preserves only **~56%**. The failure mode is invisible to users — they see the intended updates land, but stale/wrong values for other facts silently appear in future retrievals.
+Preliminary merged scores show `no_collateral=0.482` for mem0 versus about
+`0.96` for naive_markdown and AMH. This is a strong candidate finding, but the
+exact gap and its split between missing and wrong answers must be recomputed
+after the judge edge cases are fixed. It is intentionally not presented as a
+final headline yet.
 
-![T2 Results](./t2_results.png)
+The final chart will be added after the judge edge cases and statistical tables
+are validated; the current repository does not treat a draft chart as a
+published artifact.
 
 ## What this task measures
 
@@ -27,7 +38,9 @@ Three independent metrics measure different failure modes:
 
 {TBD table with means, CIs, all 5 systems}
 
-The three extraction-free systems (naive_markdown, pure_vector, AMH) cluster on `update_recall` and `no_collateral`. **mem0 is a clear outlier on `no_collateral` in particular** — a metric where no system's design is obviously advantaged, yet mem0 alone lands ~40 points below the pack.
+The preliminary merged file places mem0 well below the other memory systems on
+`no_collateral`. Pure vector has only n=100 while the other systems have n=300,
+so final comparisons must show per-system sample sizes and confidence intervals.
 
 ## Per-scenario breakdown
 
@@ -61,7 +74,9 @@ Preserved-probe misses come in two flavors:
 
 T4's headline was **"mem0 loses ~52pt on initial detail retrieval vs simpler systems"**. That's bad, but users can observe it — they say "I use a Framework 13" and later notice the agent thinks they use a MacBook.
 
-T2 exposes a **worse class of failure**: mem0 loses ~40pt on `no_collateral`, meaning **updates silently damage unrelated memory**. The user never mentioned the collaterally-damaged facts. They won't notice until, say, three months later a new agent session confidently insists they use Lufthansa (they use ANA and always have — but they once mentioned rebuilding their tech stack, and in that same update mem0 also churned their travel preferences).
+T2 is designed to expose a potentially worse class of failure: updates that
+damage unrelated memory. Whether each miss is an honest `unknown` or a confident
+wrong value is part of the unfinished failure-mode analysis.
 
 ## Product implications
 
@@ -75,8 +90,8 @@ Every implication from T4 still holds; T2 adds:
 
 | | T4 (single-write intake) | T2 (compound update) |
 |---|---|---|
-| mem0's headline recall | 0.43 | 0.68 (update) / 0.56 (collateral) |
-| Gap to extraction-free trio | ~52pt on recall | ~30pt on update, ~40pt on collateral |
+| mem0's headline recall | 0.43 | preliminary: 0.576 (update) / 0.482 (collateral) |
+| Gap to extraction-free trio | ~52pt on recall | pending validated analysis |
 | User can observe the failure | Yes | **No — silent** |
 | Failure trigger | Every intake | Every update |
 

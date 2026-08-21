@@ -168,7 +168,7 @@ def run(cases_path: Path, out_path: Path, repeats: int = 3) -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--cases", default=str(ROOT / "data" / "cases" / "preference_smoke_n12.json")
+        "--cases", default=str(ROOT / "data" / "cases" / "preference_pilot_n30.json")
     )
     parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--tag", default=None)

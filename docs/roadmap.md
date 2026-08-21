@@ -12,17 +12,24 @@ The project is "done" when these three things are public and findable from one s
 
 ## Done
 
-- **Project scaffold**: DeepSeek client, runner, judge, mem0 adapter, baseline systems (`no_memory`, `naive_markdown`, `long_context`), per-case error handling and progress logging, test smoke (12 tests).
+- **Project scaffold**: DeepSeek client, runner, judge, memory adapters, per-case error handling and progress logging, and automated tests.
 - **v0 atomic-task pass — concluded that atomic memory + atomic update is too trivial to discriminate systems.** Code+data removed when v1 superseded; the lesson is the only thing we kept.
 - **v1 / T4 — split intake (n=100)**. mem0 0.555 per-detail recall vs naive_markdown 0.952. 95% CIs do not overlap. Failure-mode analysis: mem0's misses are 67% hallucinated wrong values (vs 38% for naive). See [`docs/v1/t4_findings.md`](./v1/t4_findings.md), [`docs/v1/t4_results.png`](./v1/t4_results.png).
+- **v1 / T2 — compound update experiment data (n=300)**. The n=100 and n=200 runs are merged and reproducible. The findings document remains a draft until judge edge cases, tables, confidence intervals, and the case study are finalized.
+- **Preference Track pilot (n=30, one run)**. English-only benchmark inputs; `naive_markdown` 30/30, `mem0` 30/30, `AMH` 28/30. This validates the track but is not a final ranking.
 - Local sentence-transformers model checked in via manual download (HF library path blocked by SSL/HEAD issues on this machine).
 - Python 3.11 baseline established; documented in `docs/decisions.md`.
 
 ## Now
 
-- **v1 / T2 — compound update.** One sentence simultaneously updates K facts. Tests "don't conflate, don't drop, don't damage." Reuses runner / judge primitives from T4.
+- Consolidate the two active tracks into one reproducible public artifact: retain only published result files, finish T2 analysis, and keep Preference pilot findings clearly separated from factual-memory findings.
 
-## Next (v1 task pipeline)
+## Next
+
+- Fix and revalidate T2 judge edge cases (for example values containing `+` and harmless punctuation), then regenerate the T2 analysis and chart.
+- Decide whether to scale the Preference Track beyond the 30-case pilot after reviewing its current saturation.
+
+## Later factual-memory tasks
 
 - **T1 — surgical edit on long memory.** First a richly detailed memory, then a small update that changes one embedded detail. Tests localized edit under conflict.
 - **T3 — cross-memory.** One update touches several past memories scattered across sessions. Tests cross-session consolidation — the place mem0's design promises value.

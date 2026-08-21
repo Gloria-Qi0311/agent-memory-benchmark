@@ -14,8 +14,8 @@
 
 完整原始结果：
 
-- [`data/results/preference-smoke-once-naive-amh.json`](../../data/results/preference-smoke-once-naive-amh.json)
-- [`data/results/preference-smoke-once-mem0.json`](../../data/results/preference-smoke-once-mem0.json)
+- `data/results/preference-smoke-once-naive-amh.json`（历史中间结果，已清理）
+- `data/results/preference-smoke-once-mem0.json`（历史中间结果，已清理）
 
 ## 如何理解结果
 

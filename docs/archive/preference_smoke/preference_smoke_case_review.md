@@ -13,7 +13,8 @@ Preference Track 的 12 个 smoke case 已统一改为英文。三个系统将�
 
 之前的中文单次运行因 mem0 的英文 memory 与中文 query 存在 embedding 语言错配，已经标记为不可横向比较。英文版需要三个系统全部重新运行。
 
-机器可执行的完整内容见 [`data/cases/preference_smoke_n12.json`](../../data/cases/preference_smoke_n12.json)。
+当时机器可执行的完整内容位于 `data/cases/preference_smoke_n12.json`；该 smoke
+数据集后来被 30-case pilot 取代，不再作为正式数据保留。
 
 ## 12 个 case
 

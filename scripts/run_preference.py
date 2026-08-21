@@ -15,7 +15,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--cases",
-        default=str(ROOT / "data" / "cases" / "preference_smoke_n12.json"),
+        default=str(ROOT / "data" / "cases" / "preference_pilot_n30.json"),
     )
     parser.add_argument(
         "--systems",
@@ -25,7 +25,7 @@ def main() -> None:
     parser.add_argument("--tag", default=None)
     args = parser.parse_args()
 
-    tag = args.tag or f"preference-smoke-{time.strftime('%Y%m%d-%H%M%S')}"
+    tag = args.tag or f"preference-pilot-{time.strftime('%Y%m%d-%H%M%S')}"
     out = ROOT / "data" / "results" / f"{tag}.json"
     summary = run_preference_experiment(Path(args.cases), args.systems, out)
     print(json.dumps(summary, ensure_ascii=False, indent=2))

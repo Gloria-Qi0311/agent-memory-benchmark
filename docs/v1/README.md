@@ -6,11 +6,20 @@ v0 used atomic memories — each "memory" was a single fact like `"Alex uses Pyt
 
 The lesson that drove v1: **atomic memory is not what real memory systems handle**. Real memories are structured paragraphs with multiple embedded facts. Real updates touch parts of memories, multiple facts simultaneously, or span across memories. v0 didn't measure any of that — v1 does.
 
-## Preference Track — English smoke (✅ DONE, n=12, 3 systems)
+## Preference Track (✅ pilot complete, n=30, 3 systems)
 
-The product-oriented multi-agent preference track compares `naive_markdown`, `AMH`, and `mem0` on cross-agent merge, preference updates, temporary-vs-durable boundaries, and composite counterfactual decisions. All benchmark-facing inputs are English to avoid conflating memory quality with cross-language embedding quality. After excluding one case whose authored answer proved ambiguous, the one-run smoke result is naive 11/11, mem0 11/11, and AMH 9/11. This is an engineering smoke, not a final ranking. Full writeup: [`preference_smoke_english_once_findings.md`](./preference_smoke_english_once_findings.md).
+The product-oriented multi-agent preference track compares `naive_markdown`,
+`AMH`, and `mem0` on cross-agent merge, preference updates,
+temporary-vs-durable boundaries, and composite counterfactual decisions. All
+benchmark-facing inputs are English to avoid conflating memory quality with
+cross-language embedding quality.
 
-The frozen 30-case pilot is also complete: `naive_markdown` 30/30, `mem0` 30/30, and `AMH` 28/30 in one run. Full writeup: [`preference_pilot_n30_once_findings.md`](./preference_pilot_n30_once_findings.md). Product-readable cases: [`preference_pilot_case_review.md`](./preference_pilot_case_review.md).
+The frozen one-run pilot result is `naive_markdown` 30/30, `mem0` 30/30, and
+`AMH` 28/30. This shows how the systems behaved on this pilot; the small sample
+and saturation mean it is not a definitive ranking. See the
+[`findings`](./preference_pilot_n30_once_findings.md),
+[`case review`](./preference_pilot_case_review.md), and
+[`benchmark design`](./multi_agent_preference_benchmark.md).
 
 ## v1 task types (4 levels of difficulty)
 
@@ -35,9 +44,11 @@ Each level exposes a different memory-system capability that v0's atomic setup h
 - `amh` — Agent Memory Hub, Markdown+FS shared memory, **the only explicitly multi-agent-native system**
 - `mem0` — LLM extraction at write + vector top-K at read (single-agent system, repurposed)
 
-### T2 — Compound update (in progress, n=100 done; n=200 extension running)
+### T2 — Compound update (✅ n=300 data; findings draft)
 
-**Headline (n=100 preview):** mem0 preserves only **~56% of unrelated facts** when a compound update lands, vs ~96% for naive_markdown / AMH. The failure is **silent** — the intended updates land correctly, but unrelated facts get silently damaged. See [`t2_findings.md`](./t2_findings.md).
+The n=100 and n=200 result files have been merged. The findings document is
+still a draft because judge edge cases, confidence intervals, and failure-mode
+tables require final validation. See [`t2_findings.md`](./t2_findings.md).
 
 **Case shape:** three phases, three agents.
 - Phase 1 (`agent_a`): writes N=10 initial facts one-per-call
@@ -102,8 +113,8 @@ Each level exposes a different memory-system capability that v0's atomic setup h
 | **Reader LLM** | DeepSeek-chat (same as v0) |
 | **Writer LLMs (multi-agent)** | DeepSeek + GLM (already configured for T4/T3; T1/T2 may stay single-LLM) |
 | **Judge** | Programmatic substring + word-boundary, same as v0. May add an aggregate "answer consistency" judge for T1's paragraph-level coherence checks. |
-| **Case storage** | `data/cases/v1/<task>/...json` |
-| **Result storage** | `data/results/v1/<task>/...json` |
+| **Case storage** | `data/cases/<task-and-run>.json` |
+| **Result storage** | `data/results/<task-and-run>.json` |
 | **n per task** | Target n=100 minimum per task per system (so n=400 total per system across all 4 tasks). |
 
 ## Sequencing logic

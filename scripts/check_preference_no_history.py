@@ -263,7 +263,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--cases",
-        default=str(ROOT / "data" / "cases" / "preference_smoke_n12.json"),
+        default=str(ROOT / "data" / "cases" / "preference_pilot_n30.json"),
     )
     parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--tag", default=None)
