@@ -225,8 +225,17 @@ def _pick_update_targets(r: random.Random, initial_facts: dict, scenario: dict,
 
     # travel_plan: any date key being updated triggers a fresh pair.
     if "depart_date" in new_vals or "return_date" in new_vals:
-        current_pair = (initial_facts.get("depart_date"), initial_facts.get("return_date"))
-        candidate_pairs = [p for p in _TRAVEL_DATE_PAIRS if p != current_pair]
+        # Every field labeled as updated must actually change. Comparing only
+        # the full pair is insufficient when the case sampled just one date.
+        candidate_pairs = [
+            pair for pair in _TRAVEL_DATE_PAIRS
+            if ("depart_date" not in new_vals
+                or pair[0] != initial_facts["depart_date"])
+            and ("return_date" not in new_vals
+                 or pair[1] != initial_facts["return_date"])
+        ]
+        if not candidate_pairs:
+            raise ValueError("no date pair available for a real update")
         depart, ret = r.choice(candidate_pairs)
         if "depart_date" in new_vals:
             new_vals["depart_date"] = depart
@@ -237,7 +246,14 @@ def _pick_update_targets(r: random.Random, initial_facts: dict, scenario: dict,
     if "laptop" in new_vals:
         compatible_os = _LAPTOP_OS_COMPAT[new_vals["laptop"]]
         if "os" in new_vals:
-            new_vals["os"] = r.choice(compatible_os)
+            # A compatibility fix must not turn an authored update into the
+            # nonsensical "from X to X". Prefer any compatible OS other than
+            # the initial value; all current laptop pools provide one.
+            choices = [os_name for os_name in compatible_os
+                       if os_name != initial_facts["os"]]
+            if not choices:
+                raise ValueError("no compatible OS available for a real update")
+            new_vals["os"] = r.choice(choices)
         # If os is NOT being updated but initial os is incompatible with new
         # laptop, we leave it — the case is contrived but not broken (user
         # switched laptops but hasn't switched OSes yet). Acceptable for v1.
@@ -318,6 +334,43 @@ def make_case(seed: int, scenario_name: str | None = None,
         update_utterance=update_utterance,
         probes=probes,
     )
+
+
+def validate_case(case: dict) -> None:
+    """Validate T2 ground truth without calling an LLM.
+
+    This checks the authored state transition: updated keys change to the
+    probe's new value, preserved keys retain the initial value, and every
+    explicit old/new value is present in the compound update utterance.
+    """
+    initial = case["initial_facts"]
+    updated = case["updated_facts"]
+    probes = case["probes"]
+    update_text = case["update_utterance"]
+
+    if not updated or not set(updated).issubset(initial):
+        raise ValueError(f"{case['case_id']}: updated keys must be a nonempty subset")
+    if len(probes) != len(initial):
+        raise ValueError(f"{case['case_id']}: expected one probe per initial fact")
+    if len({p["key"] for p in probes}) != len(probes):
+        raise ValueError(f"{case['case_id']}: duplicate probe keys")
+
+    for key, new_value in updated.items():
+        old_value = initial[key]
+        if new_value == old_value:
+            raise ValueError(f"{case['case_id']}: {key} does not actually change")
+        if old_value not in update_text or new_value not in update_text:
+            raise ValueError(f"{case['case_id']}: update text omits {key}'s old/new value")
+
+    by_key = {probe["key"]: probe for probe in probes}
+    if set(by_key) != set(initial):
+        raise ValueError(f"{case['case_id']}: probe keys do not equal fact keys")
+    for key, old_value in initial.items():
+        probe = by_key[key]
+        expected_kind = "updated" if key in updated else "preserved"
+        expected_value = updated.get(key, old_value)
+        if probe["kind"] != expected_kind or probe["expected"] != expected_value:
+            raise ValueError(f"{case['case_id']}: inconsistent ground truth for {key}")
 
 
 def generate(n: int, out_path: Path, seed: int = 0,

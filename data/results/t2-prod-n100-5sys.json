@@ -1,44 +1,64 @@
 {
+  "metadata": {
+    "rescored_from": "data/results/t2-prod-n100-5sys.json",
+    "case_files": [
+      "data/cases/compound_update_n100_s100.json"
+    ],
+    "judge": "t2-exact-v3-token-boundary-plus-authored-aliases",
+    "llm_calls": 0,
+    "changed_probe_judgments": 62,
+    "excluded_case_ids": [
+      "T2-0104"
+    ],
+    "exclusion_reasons": {
+      "T2-0104": "T2-0104: os does not actually change"
+    },
+    "excluded_result_rows": 5,
+    "known_invalid_systems": [
+      "mem0"
+    ],
+    "invalid_system_reason": "Historical mem0 rows were produced before full reset of mem0's recent-message SQLite state between T2 cases. They require an isolated rerun and are not publishable scores."
+  },
   "summary": {
     "no_memory": {
-      "n_total": 100,
-      "n_scored": 100,
+      "n_total": 99,
+      "n_scored": 99,
       "n_errors": 0,
       "update_recall": 0.0,
       "no_confusion": 1.0,
       "no_collateral": 0.0
     },
     "naive_markdown": {
-      "n_total": 100,
-      "n_scored": 100,
+      "n_total": 99,
+      "n_scored": 99,
       "n_errors": 0,
-      "update_recall": 0.9775,
-      "no_confusion": 0.995,
-      "no_collateral": 0.9599999999999997
+      "update_recall": 0.9974747474747475,
+      "no_confusion": 0.9974747474747475,
+      "no_collateral": 0.9781144781144779
     },
     "pure_vector": {
-      "n_total": 100,
-      "n_scored": 100,
+      "n_total": 99,
+      "n_scored": 99,
       "n_errors": 0,
-      "update_recall": 0.875,
-      "no_confusion": 0.9125,
-      "no_collateral": 0.9616666666666664
+      "update_recall": 0.8863636363636364,
+      "no_confusion": 0.9065656565656566,
+      "no_collateral": 0.9831649831649831
     },
     "amh": {
-      "n_total": 100,
-      "n_scored": 100,
+      "n_total": 99,
+      "n_scored": 99,
       "n_errors": 0,
-      "update_recall": 0.885,
-      "no_confusion": 0.9175,
-      "no_collateral": 0.9616666666666664
+      "update_recall": 0.8964646464646465,
+      "no_confusion": 0.9166666666666666,
+      "no_collateral": 0.9797979797979798
     },
     "mem0": {
-      "n_total": 100,
-      "n_scored": 100,
+      "n_total": 99,
+      "n_scored": 99,
       "n_errors": 0,
-      "update_recall": 0.68,
-      "no_confusion": 0.925,
-      "no_collateral": 0.5583333333333332
+      "update_recall": 0.6868686868686869,
+      "no_confusion": 0.9267676767676768,
+      "no_collateral": 0.5639730639730639
     }
   },
   "rows": [
@@ -440,107 +460,6 @@
             "answer": "unknown",
             "context_len_chars": 0,
             "hit": false
-          }
-        ]
-      },
-      "system": "no_memory",
-      "error": null
-    },
-    {
-      "case_id": "T2-0104",
-      "scenario": "dev_setup",
-      "score": {
-        "update_recall": 0.0,
-        "no_confusion": 1.0,
-        "no_collateral": 0.0,
-        "update_hits": 0,
-        "update_total": 4,
-        "preserve_hits": 0,
-        "preserve_total": 6,
-        "per_probe": [
-          {
-            "key": "package_mgr",
-            "kind": "preserved",
-            "expected": "Nix",
-            "answer": "unknown",
-            "context_len_chars": 0,
-            "hit": false
-          },
-          {
-            "key": "display",
-            "kind": "preserved",
-            "expected": "Studio Display 5K",
-            "answer": "unknown",
-            "context_len_chars": 0,
-            "hit": false
-          },
-          {
-            "key": "shell",
-            "kind": "updated",
-            "expected": "nushell",
-            "answer": "unknown",
-            "context_len_chars": 0,
-            "hit": false,
-            "old_value_leaked": false
-          },
-          {
-            "key": "os",
-            "kind": "updated",
-            "expected": "Arch Linux",
-            "answer": "unknown",
-            "context_len_chars": 0,
-            "hit": false,
-            "old_value_leaked": false
-          },
-          {
-            "key": "laptop",
-            "kind": "updated",
-            "expected": "Surface Laptop 6",
-            "answer": "unknown",
-            "context_len_chars": 0,
-            "hit": false,
-            "old_value_leaked": false
-          },
-          {
-            "key": "storage",
-            "kind": "preserved",
-            "expected": "1TB SSD",
-            "answer": "unknown",
-            "context_len_chars": 0,
-            "hit": false
-          },
-          {
-            "key": "theme",
-            "kind": "preserved",
-            "expected": "Tokyo Night",
-            "answer": "unknown",
-            "context_len_chars": 0,
-            "hit": false
-          },
-          {
-            "key": "terminal",
-            "kind": "preserved",
-            "expected": "Alacritty",
-            "answer": "unknown",
-            "context_len_chars": 0,
-            "hit": false
-          },
-          {
-            "key": "ram",
-            "kind": "preserved",
-            "expected": "64GB",
-            "answer": "unknown",
-            "context_len_chars": 0,
-            "hit": false
-          },
-          {
-            "key": "font",
-            "kind": "updated",
-            "expected": "JetBrains Mono",
-            "answer": "unknown",
-            "context_len_chars": 0,
-            "hit": false,
-            "old_value_leaked": false
           }
         ]
       },
@@ -10451,10 +10370,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -10531,7 +10450,7 @@
             "expected": "SSL 2+",
             "answer": "SSL 2+",
             "context_len_chars": 714,
-            "hit": false
+            "hit": true
           },
           {
             "key": "webcam",
@@ -10540,107 +10459,6 @@
             "answer": "Elgato Facecam",
             "context_len_chars": 714,
             "hit": true
-          }
-        ]
-      },
-      "system": "naive_markdown",
-      "error": null
-    },
-    {
-      "case_id": "T2-0104",
-      "scenario": "dev_setup",
-      "score": {
-        "update_recall": 1.0,
-        "no_confusion": 0.75,
-        "no_collateral": 1.0,
-        "update_hits": 4,
-        "update_total": 4,
-        "preserve_hits": 6,
-        "preserve_total": 6,
-        "per_probe": [
-          {
-            "key": "package_mgr",
-            "kind": "preserved",
-            "expected": "Nix",
-            "answer": "Nix",
-            "context_len_chars": 679,
-            "hit": true
-          },
-          {
-            "key": "display",
-            "kind": "preserved",
-            "expected": "Studio Display 5K",
-            "answer": "Studio Display 5K",
-            "context_len_chars": 679,
-            "hit": true
-          },
-          {
-            "key": "shell",
-            "kind": "updated",
-            "expected": "nushell",
-            "answer": "nushell",
-            "context_len_chars": 679,
-            "hit": true,
-            "old_value_leaked": false
-          },
-          {
-            "key": "os",
-            "kind": "updated",
-            "expected": "Arch Linux",
-            "answer": "Arch Linux",
-            "context_len_chars": 679,
-            "hit": true,
-            "old_value_leaked": true
-          },
-          {
-            "key": "laptop",
-            "kind": "updated",
-            "expected": "Surface Laptop 6",
-            "answer": "Surface Laptop 6",
-            "context_len_chars": 679,
-            "hit": true,
-            "old_value_leaked": false
-          },
-          {
-            "key": "storage",
-            "kind": "preserved",
-            "expected": "1TB SSD",
-            "answer": "1TB SSD",
-            "context_len_chars": 679,
-            "hit": true
-          },
-          {
-            "key": "theme",
-            "kind": "preserved",
-            "expected": "Tokyo Night",
-            "answer": "Tokyo Night",
-            "context_len_chars": 679,
-            "hit": true
-          },
-          {
-            "key": "terminal",
-            "kind": "preserved",
-            "expected": "Alacritty",
-            "answer": "Alacritty",
-            "context_len_chars": 679,
-            "hit": true
-          },
-          {
-            "key": "ram",
-            "kind": "preserved",
-            "expected": "64GB",
-            "answer": "64GB",
-            "context_len_chars": 679,
-            "hit": true
-          },
-          {
-            "key": "font",
-            "kind": "updated",
-            "expected": "JetBrains Mono",
-            "answer": "JetBrains Mono",
-            "context_len_chars": 679,
-            "hit": true,
-            "old_value_leaked": false
           }
         ]
       },
@@ -12166,10 +11984,10 @@
       "case_id": "T2-0120",
       "scenario": "home_office",
       "score": {
-        "update_recall": 0.75,
+        "update_recall": 1.0,
         "no_confusion": 1.0,
         "no_collateral": 1.0,
-        "update_hits": 3,
+        "update_hits": 4,
         "update_total": 4,
         "preserve_hits": 6,
         "preserve_total": 6,
@@ -12246,7 +12064,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+.",
             "context_len_chars": 757,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           },
           {
@@ -13176,12 +12994,12 @@
       "case_id": "T2-0130",
       "scenario": "home_office",
       "score": {
-        "update_recall": 0.75,
+        "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
-        "update_hits": 3,
+        "no_collateral": 1.0,
+        "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -13207,7 +13025,7 @@
             "expected": "SSL 2+",
             "answer": "SSL 2+",
             "context_len_chars": 765,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           },
           {
@@ -13258,7 +13076,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+.",
             "context_len_chars": 765,
-            "hit": false
+            "hit": true
           },
           {
             "key": "headphones",
@@ -13378,10 +13196,10 @@
       "case_id": "T2-0132",
       "scenario": "travel_plan",
       "score": {
-        "update_recall": 0.75,
+        "update_recall": 1.0,
         "no_confusion": 1.0,
         "no_collateral": 1.0,
-        "update_hits": 3,
+        "update_hits": 4,
         "update_total": 4,
         "preserve_hits": 6,
         "preserve_total": 6,
@@ -13450,7 +13268,7 @@
             "expected": "with their partner",
             "answer": "partner",
             "context_len_chars": 629,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           },
           {
@@ -14388,12 +14206,12 @@
       "case_id": "T2-0142",
       "scenario": "home_office",
       "score": {
-        "update_recall": 0.75,
+        "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
-        "update_hits": 3,
+        "no_collateral": 1.0,
+        "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -14411,7 +14229,7 @@
             "expected": "SSL 2+",
             "answer": "SSL 2+.",
             "context_len_chars": 712,
-            "hit": false
+            "hit": true
           },
           {
             "key": "webcam",
@@ -14443,7 +14261,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+",
             "context_len_chars": 712,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           },
           {
@@ -14693,10 +14511,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -14730,7 +14548,7 @@
             "expected": "with family",
             "answer": "family",
             "context_len_chars": 614,
-            "hit": false
+            "hit": true
           },
           {
             "key": "airline",
@@ -14996,10 +14814,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -15075,7 +14893,7 @@
             "expected": "with family",
             "answer": "family",
             "context_len_chars": 629,
-            "hit": false
+            "hit": true
           },
           {
             "key": "purpose",
@@ -15398,10 +15216,10 @@
       "case_id": "T2-0152",
       "scenario": "travel_plan",
       "score": {
-        "update_recall": 0.75,
+        "update_recall": 1.0,
         "no_confusion": 1.0,
         "no_collateral": 1.0,
-        "update_hits": 3,
+        "update_hits": 4,
         "update_total": 4,
         "preserve_hits": 6,
         "preserve_total": 6,
@@ -15470,7 +15288,7 @@
             "expected": "with their partner",
             "answer": "Chloe's partner",
             "context_len_chars": 621,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           },
           {
@@ -16006,10 +15824,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -16035,7 +15853,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+.",
             "context_len_chars": 736,
-            "hit": false
+            "hit": true
           },
           {
             "key": "mic",
@@ -16107,10 +15925,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -16187,7 +16005,7 @@
             "expected": "with their partner",
             "answer": "their partner",
             "context_len_chars": 631,
-            "hit": false
+            "hit": true
           },
           {
             "key": "flight_class",
@@ -16511,10 +16329,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -16582,7 +16400,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+.",
             "context_len_chars": 754,
-            "hit": false
+            "hit": true
           },
           {
             "key": "mic",
@@ -17117,10 +16935,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -17138,7 +16956,7 @@
             "expected": "with family",
             "answer": "family",
             "context_len_chars": 595,
-            "hit": false
+            "hit": true
           },
           {
             "key": "departure_city",
@@ -17521,10 +17339,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -17584,7 +17402,7 @@
             "expected": "with family",
             "answer": "family",
             "context_len_chars": 590,
-            "hit": false
+            "hit": true
           },
           {
             "key": "destination",
@@ -18327,10 +18145,10 @@
       "case_id": "T2-0181",
       "scenario": "home_office",
       "score": {
-        "update_recall": 0.75,
+        "update_recall": 1.0,
         "no_confusion": 1.0,
         "no_collateral": 1.0,
-        "update_hits": 3,
+        "update_hits": 4,
         "update_total": 4,
         "preserve_hits": 6,
         "preserve_total": 6,
@@ -18382,7 +18200,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+",
             "context_len_chars": 727,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           },
           {
@@ -19135,10 +18953,10 @@
       "case_id": "T2-0189",
       "scenario": "travel_plan",
       "score": {
-        "update_recall": 0.75,
+        "update_recall": 1.0,
         "no_confusion": 1.0,
         "no_collateral": 1.0,
-        "update_hits": 3,
+        "update_hits": 4,
         "update_total": 4,
         "preserve_hits": 6,
         "preserve_total": 6,
@@ -19224,7 +19042,7 @@
             "expected": "with their partner",
             "answer": "Eun's partner.",
             "context_len_chars": 601,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           }
         ]
@@ -19440,10 +19258,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -19511,7 +19329,7 @@
             "expected": "with their partner",
             "answer": "their partner",
             "context_len_chars": 583,
-            "hit": false
+            "hit": true
           },
           {
             "key": "meal_pref",
@@ -19842,10 +19660,10 @@
       "case_id": "T2-0196",
       "scenario": "home_office",
       "score": {
-        "update_recall": 0.75,
+        "update_recall": 1.0,
         "no_confusion": 1.0,
         "no_collateral": 1.0,
-        "update_hits": 3,
+        "update_hits": 4,
         "update_total": 4,
         "preserve_hits": 6,
         "preserve_total": 6,
@@ -19864,7 +19682,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+.",
             "context_len_chars": 693,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           },
           {
@@ -20551,10 +20369,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -20631,7 +20449,7 @@
             "expected": "SSL 2+",
             "answer": "SSL 2+",
             "context_len_chars": 503,
-            "hit": false
+            "hit": true
           },
           {
             "key": "webcam",
@@ -20640,107 +20458,6 @@
             "answer": "Elgato Facecam",
             "context_len_chars": 503,
             "hit": true
-          }
-        ]
-      },
-      "system": "pure_vector",
-      "error": null
-    },
-    {
-      "case_id": "T2-0104",
-      "scenario": "dev_setup",
-      "score": {
-        "update_recall": 1.0,
-        "no_confusion": 0.75,
-        "no_collateral": 1.0,
-        "update_hits": 4,
-        "update_total": 4,
-        "preserve_hits": 6,
-        "preserve_total": 6,
-        "per_probe": [
-          {
-            "key": "package_mgr",
-            "kind": "preserved",
-            "expected": "Nix",
-            "answer": "Nix",
-            "context_len_chars": 258,
-            "hit": true
-          },
-          {
-            "key": "display",
-            "kind": "preserved",
-            "expected": "Studio Display 5K",
-            "answer": "Studio Display 5K",
-            "context_len_chars": 483,
-            "hit": true
-          },
-          {
-            "key": "shell",
-            "kind": "updated",
-            "expected": "nushell",
-            "answer": "nushell",
-            "context_len_chars": 455,
-            "hit": true,
-            "old_value_leaked": false
-          },
-          {
-            "key": "os",
-            "kind": "updated",
-            "expected": "Arch Linux",
-            "answer": "Arch Linux",
-            "context_len_chars": 461,
-            "hit": true,
-            "old_value_leaked": true
-          },
-          {
-            "key": "laptop",
-            "kind": "updated",
-            "expected": "Surface Laptop 6",
-            "answer": "Surface Laptop 6",
-            "context_len_chars": 461,
-            "hit": true,
-            "old_value_leaked": false
-          },
-          {
-            "key": "storage",
-            "kind": "preserved",
-            "expected": "1TB SSD",
-            "answer": "1TB SSD",
-            "context_len_chars": 267,
-            "hit": true
-          },
-          {
-            "key": "theme",
-            "kind": "preserved",
-            "expected": "Tokyo Night",
-            "answer": "Tokyo Night",
-            "context_len_chars": 459,
-            "hit": true
-          },
-          {
-            "key": "terminal",
-            "kind": "preserved",
-            "expected": "Alacritty",
-            "answer": "Alacritty",
-            "context_len_chars": 258,
-            "hit": true
-          },
-          {
-            "key": "ram",
-            "kind": "preserved",
-            "expected": "64GB",
-            "answer": "64GB",
-            "context_len_chars": 461,
-            "hit": true
-          },
-          {
-            "key": "font",
-            "kind": "updated",
-            "expected": "JetBrains Mono",
-            "answer": "JetBrains Mono",
-            "context_len_chars": 483,
-            "hit": true,
-            "old_value_leaked": false
           }
         ]
       },
@@ -22266,10 +21983,10 @@
       "case_id": "T2-0120",
       "scenario": "home_office",
       "score": {
-        "update_recall": 0.75,
+        "update_recall": 1.0,
         "no_confusion": 1.0,
         "no_collateral": 1.0,
-        "update_hits": 3,
+        "update_hits": 4,
         "update_total": 4,
         "preserve_hits": 6,
         "preserve_total": 6,
@@ -22346,7 +22063,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+",
             "context_len_chars": 526,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           },
           {
@@ -23276,12 +22993,12 @@
       "case_id": "T2-0130",
       "scenario": "home_office",
       "score": {
-        "update_recall": 0.75,
+        "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
-        "update_hits": 3,
+        "no_collateral": 1.0,
+        "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -23307,7 +23024,7 @@
             "expected": "SSL 2+",
             "answer": "SSL 2+",
             "context_len_chars": 533,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           },
           {
@@ -23358,7 +23075,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+.",
             "context_len_chars": 536,
-            "hit": false
+            "hit": true
           },
           {
             "key": "headphones",
@@ -23682,10 +23399,10 @@
       "score": {
         "update_recall": 0.75,
         "no_confusion": 0.75,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 3,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -23694,7 +23411,7 @@
             "expected": "with family",
             "answer": "family",
             "context_len_chars": 241,
-            "hit": false
+            "hit": true
           },
           {
             "key": "hotel_room",
@@ -24488,12 +24205,12 @@
       "case_id": "T2-0142",
       "scenario": "home_office",
       "score": {
-        "update_recall": 0.75,
+        "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
-        "update_hits": 3,
+        "no_collateral": 1.0,
+        "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -24511,7 +24228,7 @@
             "expected": "SSL 2+",
             "answer": "SSL 2+",
             "context_len_chars": 487,
-            "hit": false
+            "hit": true
           },
           {
             "key": "webcam",
@@ -24543,7 +24260,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+",
             "context_len_chars": 491,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           },
           {
@@ -24793,10 +24510,10 @@
       "score": {
         "update_recall": 0.25,
         "no_confusion": 0.25,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 1,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -24830,7 +24547,7 @@
             "expected": "with family",
             "answer": "family",
             "context_len_chars": 243,
-            "hit": false
+            "hit": true
           },
           {
             "key": "airline",
@@ -25096,10 +24813,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -25175,7 +24892,7 @@
             "expected": "with family",
             "answer": "family",
             "context_len_chars": 246,
-            "hit": false
+            "hit": true
           },
           {
             "key": "purpose",
@@ -25297,7 +25014,7 @@
       "scenario": "travel_plan",
       "score": {
         "update_recall": 0.75,
-        "no_confusion": 1.0,
+        "no_confusion": 0.75,
         "no_collateral": 1.0,
         "update_hits": 3,
         "update_total": 4,
@@ -25319,7 +25036,7 @@
             "answer": "family",
             "context_len_chars": 262,
             "hit": false,
-            "old_value_leaked": false
+            "old_value_leaked": true
           },
           {
             "key": "airline",
@@ -25499,7 +25216,7 @@
       "scenario": "travel_plan",
       "score": {
         "update_recall": 0.5,
-        "no_confusion": 0.75,
+        "no_confusion": 0.5,
         "no_collateral": 0.8333333333333334,
         "update_hits": 2,
         "update_total": 4,
@@ -25571,7 +25288,7 @@
             "answer": "family",
             "context_len_chars": 242,
             "hit": false,
-            "old_value_leaked": false
+            "old_value_leaked": true
           },
           {
             "key": "depart_date",
@@ -26106,10 +25823,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -26135,7 +25852,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+",
             "context_len_chars": 506,
-            "hit": false
+            "hit": true
           },
           {
             "key": "mic",
@@ -26207,10 +25924,10 @@
       "score": {
         "update_recall": 0.75,
         "no_confusion": 0.75,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 3,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -26287,7 +26004,7 @@
             "expected": "with their partner",
             "answer": "Their partner.",
             "context_len_chars": 251,
-            "hit": false
+            "hit": true
           },
           {
             "key": "flight_class",
@@ -26611,10 +26328,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -26682,7 +26399,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+",
             "context_len_chars": 537,
-            "hit": false
+            "hit": true
           },
           {
             "key": "mic",
@@ -27217,10 +26934,10 @@
       "score": {
         "update_recall": 0.5,
         "no_confusion": 0.75,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 2,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -27238,7 +26955,7 @@
             "expected": "with family",
             "answer": "family",
             "context_len_chars": 223,
-            "hit": false
+            "hit": true
           },
           {
             "key": "departure_city",
@@ -27317,7 +27034,7 @@
       "scenario": "travel_plan",
       "score": {
         "update_recall": 0.5,
-        "no_confusion": 0.75,
+        "no_confusion": 0.5,
         "no_collateral": 1.0,
         "update_hits": 2,
         "update_total": 4,
@@ -27356,7 +27073,7 @@
             "answer": "Farida's partner.",
             "context_len_chars": 246,
             "hit": false,
-            "old_value_leaked": false
+            "old_value_leaked": true
           },
           {
             "key": "airline",
@@ -27520,10 +27237,10 @@
       "score": {
         "update_recall": 0.75,
         "no_confusion": 0.75,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 3,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -27575,7 +27292,7 @@
             "expected": "with family",
             "answer": "family",
             "context_len_chars": 254,
-            "hit": false
+            "hit": true
           },
           {
             "key": "meal_pref",
@@ -27621,10 +27338,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -27684,7 +27401,7 @@
             "expected": "with family",
             "answer": "family",
             "context_len_chars": 223,
-            "hit": false
+            "hit": true
           },
           {
             "key": "destination",
@@ -28427,10 +28144,10 @@
       "case_id": "T2-0181",
       "scenario": "home_office",
       "score": {
-        "update_recall": 0.75,
+        "update_recall": 1.0,
         "no_confusion": 1.0,
         "no_collateral": 1.0,
-        "update_hits": 3,
+        "update_hits": 4,
         "update_total": 4,
         "preserve_hits": 6,
         "preserve_total": 6,
@@ -28482,7 +28199,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+",
             "context_len_chars": 509,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           },
           {
@@ -29540,10 +29257,10 @@
       "score": {
         "update_recall": 0.5,
         "no_confusion": 0.5,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 2,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -29611,7 +29328,7 @@
             "expected": "with their partner",
             "answer": "their partner",
             "context_len_chars": 227,
-            "hit": false
+            "hit": true
           },
           {
             "key": "meal_pref",
@@ -29942,10 +29659,10 @@
       "case_id": "T2-0196",
       "scenario": "home_office",
       "score": {
-        "update_recall": 0.75,
+        "update_recall": 1.0,
         "no_confusion": 1.0,
         "no_collateral": 1.0,
-        "update_hits": 3,
+        "update_hits": 4,
         "update_total": 4,
         "preserve_hits": 6,
         "preserve_total": 6,
@@ -29964,7 +29681,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+",
             "context_len_chars": 470,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           },
           {
@@ -30651,10 +30368,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -30731,7 +30448,7 @@
             "expected": "SSL 2+",
             "answer": "SSL 2+",
             "context_len_chars": 564,
-            "hit": false
+            "hit": true
           },
           {
             "key": "webcam",
@@ -30740,107 +30457,6 @@
             "answer": "Elgato Facecam",
             "context_len_chars": 564,
             "hit": true
-          }
-        ]
-      },
-      "system": "amh",
-      "error": null
-    },
-    {
-      "case_id": "T2-0104",
-      "scenario": "dev_setup",
-      "score": {
-        "update_recall": 1.0,
-        "no_confusion": 0.75,
-        "no_collateral": 1.0,
-        "update_hits": 4,
-        "update_total": 4,
-        "preserve_hits": 6,
-        "preserve_total": 6,
-        "per_probe": [
-          {
-            "key": "package_mgr",
-            "kind": "preserved",
-            "expected": "Nix",
-            "answer": "Nix",
-            "context_len_chars": 529,
-            "hit": true
-          },
-          {
-            "key": "display",
-            "kind": "preserved",
-            "expected": "Studio Display 5K",
-            "answer": "Studio Display 5K",
-            "context_len_chars": 536,
-            "hit": true
-          },
-          {
-            "key": "shell",
-            "kind": "updated",
-            "expected": "nushell",
-            "answer": "nushell",
-            "context_len_chars": 536,
-            "hit": true,
-            "old_value_leaked": false
-          },
-          {
-            "key": "os",
-            "kind": "updated",
-            "expected": "Arch Linux",
-            "answer": "Arch Linux",
-            "context_len_chars": 536,
-            "hit": true,
-            "old_value_leaked": true
-          },
-          {
-            "key": "laptop",
-            "kind": "updated",
-            "expected": "Surface Laptop 6",
-            "answer": "Surface Laptop 6",
-            "context_len_chars": 536,
-            "hit": true,
-            "old_value_leaked": false
-          },
-          {
-            "key": "storage",
-            "kind": "preserved",
-            "expected": "1TB SSD",
-            "answer": "1TB SSD",
-            "context_len_chars": 546,
-            "hit": true
-          },
-          {
-            "key": "theme",
-            "kind": "preserved",
-            "expected": "Tokyo Night",
-            "answer": "Tokyo Night",
-            "context_len_chars": 536,
-            "hit": true
-          },
-          {
-            "key": "terminal",
-            "kind": "preserved",
-            "expected": "Alacritty",
-            "answer": "Alacritty",
-            "context_len_chars": 536,
-            "hit": true
-          },
-          {
-            "key": "ram",
-            "kind": "preserved",
-            "expected": "64GB",
-            "answer": "64GB",
-            "context_len_chars": 546,
-            "hit": true
-          },
-          {
-            "key": "font",
-            "kind": "updated",
-            "expected": "JetBrains Mono",
-            "answer": "JetBrains Mono",
-            "context_len_chars": 536,
-            "hit": true,
-            "old_value_leaked": false
           }
         ]
       },
@@ -32366,10 +31982,10 @@
       "case_id": "T2-0120",
       "scenario": "home_office",
       "score": {
-        "update_recall": 0.25,
+        "update_recall": 0.5,
         "no_confusion": 0.5,
         "no_collateral": 1.0,
-        "update_hits": 1,
+        "update_hits": 2,
         "update_total": 4,
         "preserve_hits": 6,
         "preserve_total": 6,
@@ -32446,7 +32062,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+",
             "context_len_chars": 604,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           },
           {
@@ -33376,12 +32992,12 @@
       "case_id": "T2-0130",
       "scenario": "home_office",
       "score": {
-        "update_recall": 0.75,
+        "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
-        "update_hits": 3,
+        "no_collateral": 1.0,
+        "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -33407,7 +33023,7 @@
             "expected": "SSL 2+",
             "answer": "SSL 2+",
             "context_len_chars": 619,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           },
           {
@@ -33458,7 +33074,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+",
             "context_len_chars": 619,
-            "hit": false
+            "hit": true
           },
           {
             "key": "headphones",
@@ -34588,12 +34204,12 @@
       "case_id": "T2-0142",
       "scenario": "home_office",
       "score": {
-        "update_recall": 0.75,
+        "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
-        "update_hits": 3,
+        "no_collateral": 1.0,
+        "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -34611,7 +34227,7 @@
             "expected": "SSL 2+",
             "answer": "SSL 2+",
             "context_len_chars": 557,
-            "hit": false
+            "hit": true
           },
           {
             "key": "webcam",
@@ -34643,7 +34259,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+",
             "context_len_chars": 557,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           },
           {
@@ -34893,10 +34509,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -34930,7 +34546,7 @@
             "expected": "with family",
             "answer": "family",
             "context_len_chars": 469,
-            "hit": false
+            "hit": true
           },
           {
             "key": "airline",
@@ -35196,10 +34812,10 @@
       "score": {
         "update_recall": 0.5,
         "no_confusion": 0.75,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 2,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -35275,7 +34891,7 @@
             "expected": "with family",
             "answer": "family",
             "context_len_chars": 489,
-            "hit": false
+            "hit": true
           },
           {
             "key": "purpose",
@@ -36206,10 +35822,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -36235,7 +35851,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+",
             "context_len_chars": 589,
-            "hit": false
+            "hit": true
           },
           {
             "key": "mic",
@@ -36307,10 +35923,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -36387,7 +36003,7 @@
             "expected": "with their partner",
             "answer": "Their partner.",
             "context_len_chars": 485,
-            "hit": false
+            "hit": true
           },
           {
             "key": "flight_class",
@@ -36711,10 +36327,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -36782,7 +36398,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+.",
             "context_len_chars": 607,
-            "hit": false
+            "hit": true
           },
           {
             "key": "mic",
@@ -37317,10 +36933,10 @@
       "score": {
         "update_recall": 0.75,
         "no_confusion": 0.75,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 3,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -37338,7 +36954,7 @@
             "expected": "with family",
             "answer": "family",
             "context_len_chars": 454,
-            "hit": false
+            "hit": true
           },
           {
             "key": "departure_city",
@@ -37721,10 +37337,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -37784,7 +37400,7 @@
             "expected": "with family",
             "answer": "family",
             "context_len_chars": 450,
-            "hit": false
+            "hit": true
           },
           {
             "key": "destination",
@@ -38527,10 +38143,10 @@
       "case_id": "T2-0181",
       "scenario": "home_office",
       "score": {
-        "update_recall": 0.75,
+        "update_recall": 1.0,
         "no_confusion": 1.0,
         "no_collateral": 1.0,
-        "update_hits": 3,
+        "update_hits": 4,
         "update_total": 4,
         "preserve_hits": 6,
         "preserve_total": 6,
@@ -38582,7 +38198,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+",
             "context_len_chars": 579,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           },
           {
@@ -39640,10 +39256,10 @@
       "score": {
         "update_recall": 0.75,
         "no_confusion": 0.75,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 3,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -39711,7 +39327,7 @@
             "expected": "with their partner",
             "answer": "Their partner.",
             "context_len_chars": 450,
-            "hit": false
+            "hit": true
           },
           {
             "key": "meal_pref",
@@ -39841,7 +39457,7 @@
       "scenario": "home_office",
       "score": {
         "update_recall": 0.75,
-        "no_confusion": 1.0,
+        "no_confusion": 0.75,
         "no_collateral": 1.0,
         "update_hits": 3,
         "update_total": 4,
@@ -39922,7 +39538,7 @@
             "answer": "SSL 2+",
             "context_len_chars": 548,
             "hit": false,
-            "old_value_leaked": false
+            "old_value_leaked": true
           },
           {
             "key": "chair",
@@ -40042,10 +39658,10 @@
       "case_id": "T2-0196",
       "scenario": "home_office",
       "score": {
-        "update_recall": 0.5,
+        "update_recall": 0.75,
         "no_confusion": 0.75,
         "no_collateral": 1.0,
-        "update_hits": 2,
+        "update_hits": 3,
         "update_total": 4,
         "preserve_hits": 6,
         "preserve_total": 6,
@@ -40064,7 +39680,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+",
             "context_len_chars": 541,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           },
           {
@@ -40751,10 +40367,10 @@
       "score": {
         "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
+        "no_collateral": 1.0,
         "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -40831,7 +40447,7 @@
             "expected": "SSL 2+",
             "answer": "SSL 2+",
             "context_len_chars": 867,
-            "hit": false
+            "hit": true
           },
           {
             "key": "webcam",
@@ -40840,107 +40456,6 @@
             "answer": "Elgato Facecam",
             "context_len_chars": 813,
             "hit": true
-          }
-        ]
-      },
-      "system": "mem0",
-      "error": null
-    },
-    {
-      "case_id": "T2-0104",
-      "scenario": "dev_setup",
-      "score": {
-        "update_recall": 1.0,
-        "no_confusion": 0.75,
-        "no_collateral": 0.8333333333333334,
-        "update_hits": 4,
-        "update_total": 4,
-        "preserve_hits": 5,
-        "preserve_total": 6,
-        "per_probe": [
-          {
-            "key": "package_mgr",
-            "kind": "preserved",
-            "expected": "Nix",
-            "answer": "Nix",
-            "context_len_chars": 837,
-            "hit": true
-          },
-          {
-            "key": "display",
-            "kind": "preserved",
-            "expected": "Studio Display 5K",
-            "answer": "Studio Display 5K",
-            "context_len_chars": 939,
-            "hit": true
-          },
-          {
-            "key": "shell",
-            "kind": "updated",
-            "expected": "nushell",
-            "answer": "nushell",
-            "context_len_chars": 854,
-            "hit": true,
-            "old_value_leaked": false
-          },
-          {
-            "key": "os",
-            "kind": "updated",
-            "expected": "Arch Linux",
-            "answer": "Arch Linux",
-            "context_len_chars": 1055,
-            "hit": true,
-            "old_value_leaked": true
-          },
-          {
-            "key": "laptop",
-            "kind": "updated",
-            "expected": "Surface Laptop 6",
-            "answer": "Surface Laptop 6",
-            "context_len_chars": 920,
-            "hit": true,
-            "old_value_leaked": false
-          },
-          {
-            "key": "storage",
-            "kind": "preserved",
-            "expected": "1TB SSD",
-            "answer": "1TB SSD",
-            "context_len_chars": 929,
-            "hit": true
-          },
-          {
-            "key": "theme",
-            "kind": "preserved",
-            "expected": "Tokyo Night",
-            "answer": "Tokyo Night",
-            "context_len_chars": 888,
-            "hit": true
-          },
-          {
-            "key": "terminal",
-            "kind": "preserved",
-            "expected": "Alacritty",
-            "answer": "Alacritty",
-            "context_len_chars": 823,
-            "hit": true
-          },
-          {
-            "key": "ram",
-            "kind": "preserved",
-            "expected": "64GB",
-            "answer": "unknown",
-            "context_len_chars": 980,
-            "hit": false
-          },
-          {
-            "key": "font",
-            "kind": "updated",
-            "expected": "JetBrains Mono",
-            "answer": "JetBrains Mono",
-            "context_len_chars": 931,
-            "hit": true,
-            "old_value_leaked": false
           }
         ]
       },
@@ -42466,10 +41981,10 @@
       "case_id": "T2-0120",
       "scenario": "home_office",
       "score": {
-        "update_recall": 0.75,
+        "update_recall": 1.0,
         "no_confusion": 1.0,
         "no_collateral": 0.6666666666666666,
-        "update_hits": 3,
+        "update_hits": 4,
         "update_total": 4,
         "preserve_hits": 4,
         "preserve_total": 6,
@@ -42546,7 +42061,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+",
             "context_len_chars": 1011,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           },
           {
@@ -43476,12 +42991,12 @@
       "case_id": "T2-0130",
       "scenario": "home_office",
       "score": {
-        "update_recall": 0.75,
+        "update_recall": 1.0,
         "no_confusion": 1.0,
-        "no_collateral": 0.8333333333333334,
-        "update_hits": 3,
+        "no_collateral": 1.0,
+        "update_hits": 4,
         "update_total": 4,
-        "preserve_hits": 5,
+        "preserve_hits": 6,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -43507,7 +43022,7 @@
             "expected": "SSL 2+",
             "answer": "SSL 2+",
             "context_len_chars": 1158,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           },
           {
@@ -43558,7 +43073,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+",
             "context_len_chars": 974,
-            "hit": false
+            "hit": true
           },
           {
             "key": "headphones",
@@ -43577,10 +43092,10 @@
       "case_id": "T2-0131",
       "scenario": "travel_plan",
       "score": {
-        "update_recall": 0.75,
+        "update_recall": 1.0,
         "no_confusion": 1.0,
         "no_collateral": 1.0,
-        "update_hits": 3,
+        "update_hits": 4,
         "update_total": 4,
         "preserve_hits": 6,
         "preserve_total": 6,
@@ -43666,7 +43181,7 @@
             "expected": "with family",
             "answer": "family",
             "context_len_chars": 1505,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           }
         ]
@@ -46306,10 +45821,10 @@
       "score": {
         "update_recall": 0.75,
         "no_confusion": 1.0,
-        "no_collateral": 0.3333333333333333,
+        "no_collateral": 0.5,
         "update_hits": 3,
         "update_total": 4,
-        "preserve_hits": 2,
+        "preserve_hits": 3,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -46335,7 +45850,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+",
             "context_len_chars": 913,
-            "hit": false
+            "hit": true
           },
           {
             "key": "mic",
@@ -46407,10 +45922,10 @@
       "score": {
         "update_recall": 0.25,
         "no_confusion": 1.0,
-        "no_collateral": 0.16666666666666666,
+        "no_collateral": 0.3333333333333333,
         "update_hits": 1,
         "update_total": 4,
-        "preserve_hits": 1,
+        "preserve_hits": 2,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -46487,7 +46002,7 @@
             "expected": "with their partner",
             "answer": "partner",
             "context_len_chars": 1301,
-            "hit": false
+            "hit": true
           },
           {
             "key": "flight_class",
@@ -49740,10 +49255,10 @@
       "score": {
         "update_recall": 0.25,
         "no_confusion": 0.75,
-        "no_collateral": 0.5,
+        "no_collateral": 0.6666666666666666,
         "update_hits": 1,
         "update_total": 4,
-        "preserve_hits": 3,
+        "preserve_hits": 4,
         "preserve_total": 6,
         "per_probe": [
           {
@@ -49811,7 +49326,7 @@
             "expected": "with their partner",
             "answer": "their partner",
             "context_len_chars": 998,
-            "hit": false
+            "hit": true
           },
           {
             "key": "meal_pref",
@@ -50142,10 +49657,10 @@
       "case_id": "T2-0196",
       "scenario": "home_office",
       "score": {
-        "update_recall": 0.75,
+        "update_recall": 1.0,
         "no_confusion": 1.0,
         "no_collateral": 0.5,
-        "update_hits": 3,
+        "update_hits": 4,
         "update_total": 4,
         "preserve_hits": 3,
         "preserve_total": 6,
@@ -50164,7 +49679,7 @@
             "expected": "Audioengine A2+",
             "answer": "Audioengine A2+",
             "context_len_chars": 1053,
-            "hit": false,
+            "hit": true,
             "old_value_leaked": false
           },
           {

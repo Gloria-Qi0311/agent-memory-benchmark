@@ -44,11 +44,12 @@ Each level exposes a different memory-system capability that v0's atomic setup h
 - `amh` — Agent Memory Hub, Markdown+FS shared memory, **the only explicitly multi-agent-native system**
 - `mem0` — LLM extraction at write + vector top-K at read (single-agent system, repurposed)
 
-### T2 — Compound update (✅ n=300 data; findings draft)
+### T2 — Compound update (corrected analysis; mem0 rerun pending)
 
-The n=100 and n=200 result files have been merged. The findings document is
-still a draft because judge edge cases, confidence intervals, and failure-mode
-tables require final validation. See [`t2_findings.md`](./t2_findings.md).
+Stored answers were rejudged after fixing token-boundary and accepted-answer
+issues; two invalid no-op cases were excluded. Four systems now have reportable
+scores. Historical mem0 rows predate complete recent-message isolation and are
+diagnostic only until an isolated rerun. See [`t2_findings.md`](./t2_findings.md).
 
 **Case shape:** three phases, three agents.
 - Phase 1 (`agent_a`): writes N=10 initial facts one-per-call

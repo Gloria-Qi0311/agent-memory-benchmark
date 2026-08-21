@@ -30,6 +30,20 @@ def test_match_word_boundary():
     assert _match("Rust", "switched to rust.")
 
 
+def test_match_product_names_with_nonword_suffixes():
+    assert _match("SSL 2+", "ssl 2+")
+    assert _match("SSL 2+", "the interface is ssl 2+.")
+    assert _match("Audioengine A2+", "audioengine a2+.")
+    assert _match("Next.js", "next.js")
+    assert _match("C++", "uses c++ now")
+
+
+def test_match_does_not_accept_larger_alphanumeric_tokens():
+    assert not _match("Go", "going")
+    assert not _match("Zed", "customized")
+    assert not _match("SSL 2+", "ssl 2+pro")
+
+
 def test_no_memory_is_empty():
     m = NoMemory()
     m.write("agent_a", "something")
@@ -251,6 +265,63 @@ def test_compound_update_score_collateral_damage():
     s = compound_update_score(probes, initial)
     assert s["update_recall"] == 1.0
     assert s["no_collateral"] == 0.0
+
+
+def test_compound_update_score_accepts_special_character_product_name():
+    initial = {"audio_interface": "SSL 2+", "speakers": "Yamaha HS5"}
+    probes = [
+        {"key": "audio_interface", "kind": "preserved", "expected": "SSL 2+",
+         "answer": "SSL 2+."},
+        {"key": "speakers", "kind": "updated", "expected": "Audioengine A2+",
+         "answer": "Audioengine A2+."},
+    ]
+    s = compound_update_score(probes, initial)
+    assert s["update_recall"] == 1.0
+    assert s["no_confusion"] == 1.0
+    assert s["no_collateral"] == 1.0
+
+
+def test_compound_update_score_accepts_travel_companion_ground_truth_aliases():
+    initial = {"travel_companion": "with their partner"}
+    probes = [
+        {"key": "travel_companion", "kind": "preserved",
+         "expected": "with their partner", "answer": "Alex's partner."},
+    ]
+    assert compound_update_score(probes, initial)["no_collateral"] == 1.0
+
+    initial = {"travel_companion": "with family"}
+    probes[0].update(expected="with family", answer="Family")
+    assert compound_update_score(probes, initial)["no_collateral"] == 1.0
+
+
+def test_committed_t2_ground_truth_is_internally_consistent():
+    import json
+    from src.cases.compound_update import validate_case
+
+    paths = [
+        ROOT / "data/cases/compound_update_n10_s0.json",
+        ROOT / "data/cases/compound_update_n100_s100.json",
+        ROOT / "data/cases/compound_update_n200_s200.json",
+    ]
+    known_invalid = {}
+    for path in paths:
+        for case in json.loads(path.read_text(encoding="utf-8")):
+            try:
+                validate_case(case)
+            except ValueError as exc:
+                known_invalid[case["case_id"]] = str(exc)
+    # These two already-run cases contain an authored no-op ("from X to X").
+    # They must be excluded from corrected results rather than relabeled after
+    # the model has seen them. The generator fix prevents new occurrences.
+    assert set(known_invalid) == {"T2-0104", "T2-0255"}
+    assert all("does not actually change" in error for error in known_invalid.values())
+
+
+def test_compound_update_generator_never_authors_noop_updates():
+    from src.cases.compound_update import make_case, validate_case
+
+    for seed in range(600):
+        validate_case(make_case(seed=seed).to_dict())
 
 
 # ---------------------------------------------------------------------------
@@ -545,6 +616,26 @@ def test_mem0_config_isolates_message_history_with_vector_store():
 
     assert config["history_db_path"] == "/tmp/example-mem0-case/history.db"
     assert config["vector_store"]["config"]["path"] == "/tmp/example-mem0-case"
+
+
+def test_mem0_reset_clears_full_store_including_recent_messages():
+    from src.systems.mem0_system import Mem0System
+
+    class FakeMemory:
+        def __init__(self):
+            self.reset_calls = 0
+
+        def reset(self):
+            self.reset_calls += 1
+
+    system = object.__new__(Mem0System)
+    system._mem = FakeMemory()
+    system._write_results = [{"stale": True}]
+    system.reset()
+    assert system._mem.reset_calls == 1
+    assert system._write_results == []
+    system._mem = None
+    system._persist_dir = None
 
 
 def test_deepseek_retry_classification():

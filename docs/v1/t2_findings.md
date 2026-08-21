@@ -1,154 +1,142 @@
-# T2 — Compound Update: Findings (draft, n≈300)
+# T2 — Compound Update: corrected analysis
 
-> Status: the n=100 and n=200 experiment data are complete, but the tables,
-> confidence intervals, failure analysis, and case study marked `{TBD}` below
-> have not yet been finalized. Treat this as a working analysis, not a
-> publication-ready result.
+## Current status
 
-## Headline
+The judge and ground-truth audit are complete for the stored T2 answers. The
+results for `no_memory`, `naive_markdown`, `pure_vector`, and `AMH` can be
+reported. The historical `mem0` rows are retained for diagnosis but are **not
+publishable**: those runs predate full clearing of mem0's recent-message SQLite
+state between cases and therefore may contain cross-case contamination. mem0
+must be rerun with the corrected adapter before a five-system comparison is
+final.
 
-Preliminary merged scores show `no_collateral=0.482` for mem0 versus about
-`0.96` for naive_markdown and AMH. This is a strong candidate finding, but the
-exact gap and its split between missing and wrong answers must be recomputed
-after the judge edge cases are fixed. It is intentionally not presented as a
-final headline yet.
+No DeepSeek calls were required for the corrected scoring. The reader answers
+and memory contexts already stored in the result files were judged again.
 
-The final chart will be added after the judge edge cases and statistical tables
-are validated; the current repository does not treat a draft chart as a
-published artifact.
+## What T2 measures
 
-## What this task measures
+Each case simulates three agents and one shared memory:
 
-Each case has three phases involving three distinct agent identities — the first task in the benchmark where multi-agent means real time-separated writers and reader:
+1. `agent_a` writes ten initial facts, one per call.
+2. `agent_b` writes one sentence that explicitly updates four facts.
+3. `agent_c` independently asks about all ten facts.
 
-- **Phase 1 (agent_a)**: writes N=10 initial facts about a persona, one write call per fact. Simulates "agent that logged the initial state" (Cursor logging setup, ChatGPT logging preferences, etc.).
-- **Phase 2 (agent_b)**: writes ONE compound update statement covering K=4 of the initial facts, using explicit phrasing:
-  > "{persona} switched their {cat1} from {old1} to {new1}, their {cat2} from {old2} to {new2}, ..."
-- **Phase 3 (agent_c)**: probes each of the N=10 facts individually.
+| Metric | Product question |
+|---|---|
+| `update_recall` | Did the four intended new values become answerable? |
+| `no_confusion` | Did answers avoid surfacing the corresponding old value? |
+| `no_collateral` | Did the six unmentioned facts remain answerable? |
 
-Three independent metrics measure different failure modes:
+`no_confusion` is not accuracy by itself: `unknown` contains no old value and
+therefore passes this metric while failing `update_recall`.
 
-| Metric | What it measures | Failure mode captured |
-|---|---|---|
-| `update_recall` | K updated probes surface the new value | "Did the system apply the update?" |
-| `no_confusion` | Updated-probe answer didn't accidentally include the OLD value | "Are new and old values getting mixed?" |
-| `no_collateral` | N–K preserved probes retain their initial value | "Did the update damage unrelated facts?" |
+## Corrected results
 
-## Results (n≈300)
+Two invalid authored cases were excluded, leaving n=298 for systems run on both
+batches. `pure_vector` was only run in the first batch and has n=99.
 
-{TBD table with means, CIs, all 5 systems}
+| System | n | Update recall, 95% CI | No confusion, 95% CI | No collateral, 95% CI |
+|---|---:|---:|---:|---:|
+| no_memory | 298 | 0.000 [0.000, 0.000] | 1.000 [1.000, 1.000] | 0.000 [0.000, 0.000] |
+| naive_markdown | 298 | **0.999** [0.997, 1.000] | **0.997** [0.993, 0.999] | 0.978 [0.971, 0.985] |
+| pure_vector | 99 | 0.886 [0.851, 0.919] | 0.907 [0.874, 0.937] | **0.983** [0.973, 0.992] |
+| AMH | 298 | 0.893 [0.876, 0.909] | 0.909 [0.893, 0.924] | 0.978 [0.971, 0.985] |
+| mem0 (historical, invalid run) | 298 | 0.584 | 0.896 | 0.489 |
 
-The preliminary merged file places mem0 well below the other memory systems on
-`no_collateral`. Pure vector has only n=100 while the other systems have n=300,
-so final comparisons must show per-system sample sizes and confidence intervals.
+The first four rows are corrected reportable scores. Confidence intervals are
+deterministic case-level percentile bootstrap intervals with 10,000 resamples.
+The mem0 values are shown only so old files remain interpretable; they are not
+evidence until an isolated rerun replaces them.
 
-## Per-scenario breakdown
+## Judge corrections
 
-{TBD — per-scenario table}
+### Token boundaries
 
-## How failures differ
+The old matcher used Python's `\b`. It incorrectly rejected exact answers that
+ended in punctuation-like product-name characters:
 
-### update_recall failures
-
-{TBD — what mem0 does when it fails an update: still surfaces old value, or "unknown", or wrong-category confusion}
-
-### no_collateral failures (the important one)
-
-Preserved-probe misses come in two flavors:
-
-- **`"unknown"`** — the memory system simply didn't return a value. Downstream reader honestly says it doesn't know.
-- **Wrong concrete value** — the memory system returned a *different* value from the same category. Downstream reader confidently answers with the wrong thing. This is **silent** — users don't observe it until they later notice a value they never set.
-
-| System | 'unknown' | wrong value (silent) | Total preserved-probe misses |
-|---|---|---|---|
-| naive_markdown | {TBD} | {TBD} | {TBD} |
-| pure_vector | {TBD} | {TBD} | {TBD} |
-| amh | {TBD} | {TBD} | {TBD} |
-| **mem0** | {TBD} | **{TBD}** | **{TBD}** |
-
-## Case study: {TBD}
-
-{TBD — pick a case where naive/amh score ≥ 0.85 on no_collateral and mem0 scores ≤ 0.4. Show the initial facts, the update statement, and mem0's per-probe answers side-by-side with ground truth.}
-
-## Why this is worse than T4's finding
-
-T4's headline was **"mem0 loses ~52pt on initial detail retrieval vs simpler systems"**. That's bad, but users can observe it — they say "I use a Framework 13" and later notice the agent thinks they use a MacBook.
-
-T2 is designed to expose a potentially worse class of failure: updates that
-damage unrelated memory. Whether each miss is an honest `unknown` or a confident
-wrong value is part of the unfinished failure-mode analysis.
-
-## Product implications
-
-Every implication from T4 still holds; T2 adds:
-
-1. **Update operations are not free of side effects** in systems with LLM-based reconciliation. A compound update statement (multi-fact) can cascade into edits of unmentioned facts.
-2. **Silent update-time damage is a stronger reason to store raw utterances** than T4's write-time detail loss. Raw storage means the reader can consult the original text; extracted storage means the reader consults mem0's post-update summary, which may have been mangled during the update pass.
-3. **If you must adopt an LLM-based memory system with update reconciliation**, add **post-update integrity checks**: pin the values of unmentioned facts before an update, re-read after, alert on unexpected diffs.
-
-## Comparison with T4
-
-| | T4 (single-write intake) | T2 (compound update) |
-|---|---|---|
-| mem0's headline recall | 0.43 | preliminary: 0.576 (update) / 0.482 (collateral) |
-| Gap to extraction-free trio | ~52pt on recall | pending validated analysis |
-| User can observe the failure | Yes | **No — silent** |
-| Failure trigger | Every intake | Every update |
-
-## Statistical methods
-
-- **n**: 300 cases for 4 of the 5 systems; **100 cases for pure_vector** (retained from the initial run; not re-run at n=200 because its role in the finding — showing that vector retrieval alone isn't the loss source — was already established at T4). Case seed ranges 100–199 and 200–399.
-- **Case shape**: N=10 initial facts, K=4 updated. See `src/cases/compound_update.py` for the generator.
-- **Reader LLM**: DeepSeek-V3.
-- **Bootstrap CI**: 10,000 resamples, 95% percentile interval.
-- **Judge**: programmatic word-boundary substring match. `update_recall` counts new-value hits among updated probes; `no_confusion` counts absence of old-value in the same answers; `no_collateral` counts initial-value hits among preserved probes.
-
-## Cost transparency
-
-mem0's per-case cost on T2 is **~10× its T4 cost**. Every one of the 10 initial writes in Phase 1 triggers a full mem0 extraction pipeline (LLM extraction → embedding → similarity match against existing entries → decision-and-store). The n=200 mem0 stage alone ran ~10 hours and consumed roughly ¥10-15 in DeepSeek tokens. The extraction-free systems (naive, pure_vector, AMH) were seconds per case; mem0 was minutes.
-
-For a production team, this is a concrete signal: **switching from naive to mem0 doesn't just introduce a quality risk (T4 + T2 findings), it introduces a per-write latency and cost that scales with writer chattiness**.
-
-## Limitations
-
-Same limitations as T4 (single reader LLM, cost-conscious mem0 config, three programmatic scenarios). T2-specific:
-
-1. **Explicit-phrasing updates only.** We tested "switched from X to Y" style. Implicit updates ("now uses Y" without mentioning X) may show a different failure profile — future variant.
-2. **Fixed K=4.** Varying K (1, 2, 3, 6, 8) would show whether mem0's collateral damage scales with update size.
-3. **AMH disclosure** carries over from T4 findings (fork at pinned state, identical treatment, statistical cluster with extraction-free peers).
-
-## Reproducing
-
-```bash
-# Generate case files (disjoint seed ranges)
-python scripts/generate_cases.py --task compound_update --n 100 --seed 100
-python scripts/generate_cases.py --task compound_update --n 200 --seed 200
-
-# Run n=100 (all 5 systems, including pure_vector as diagnostic)
-python scripts/run_compound_update.py \
-    --cases data/cases/compound_update_n100_s100.json \
-    --systems no_memory naive_markdown pure_vector amh mem0 \
-    --tag t2-prod-n100-5sys
-
-# Run n=200 extension (4 systems, dropping pure_vector)
-python scripts/run_compound_update.py \
-    --cases data/cases/compound_update_n200_s200.json \
-    --systems no_memory naive_markdown amh mem0 \
-    --tag t2-prod-n200-s200-4sys
-
-# Merge
-python scripts/merge_t2_runs.py \
-    --inputs data/results/t2-prod-n100-5sys.json \
-             data/results/t2-prod-n200-s200-4sys.json \
-    --out data/results/t2-prod-n300-merged.json
-
-# Analyze + plot + pick case study
-python scripts/analyze_t2.py
-python scripts/plot_t2.py
-python scripts/pick_t2_case_study.py \
-    --results data/results/t2-prod-n300-merged.json \
-    --cases data/cases/compound_update_n100_s100.json \
-            data/cases/compound_update_n200_s200.json
+```text
+expected: SSL 2+
+answer:   SSL 2+.
+old result: miss
+new result: hit
 ```
 
-Full raw per-case results committed in `data/results/`.
+The new matcher prevents `Go` from matching `going`, while accepting exact
+names containing `+`, `.`, `-`, or `/`.
+
+### Authored accepted answers
+
+T2 remains deterministic exact matching, not fuzzy similarity or an LLM judge.
+One field needed explicit accepted forms because its stored value and question
+use different grammar:
+
+| Ground-truth value | Accepted answers |
+|---|---|
+| `with family` | `with family`, `family` |
+| `with their partner` | `with their partner`, `their partner`, `partner` |
+| `with colleagues` | `with colleagues`, `colleagues` |
+| `solo` | `solo`, `alone` |
+
+Aliases are field-specific; they do not make matching generally fuzzy.
+
+## Ground-truth audit
+
+All 310 committed T2 case artifacts (10 smoke + 100 + 200 production) were
+checked programmatically for one probe per fact, unique keys, real old-to-new
+changes, presence of every old/new value in the update sentence, and correct
+updated/preserved probe labels.
+
+Two production cases failed:
+
+| Case | Invalid authored update |
+|---|---|
+| `T2-0104` | OS: `Arch Linux` → `Arch Linux` |
+| `T2-0255` | OS: `Ubuntu 24.04` → `Ubuntu 24.04` |
+
+The full cases were excluded instead of rewriting truth after the model had
+already seen them. Laptop/OS compatibility logic caused the bug by overwriting
+a selected new OS with the original OS. That branch and a similar single-date
+no-op branch are fixed. Six hundred generated seeds now pass validation.
+
+## Why historical mem0 must be rerun
+
+The old adapter cleared vector memories between T2 cases but did not clear
+mem0's recent-message SQLite table. mem0 uses those recent messages as
+extraction context. Since every case used the same benchmark user scope, later
+cases could receive utterances from earlier cases during extraction.
+
+The adapter now calls mem0's full `reset()`, clearing vector state and SQLite
+message/history state. The database also lives in the adapter's isolated
+temporary directory.
+
+Until the mem0-only rerun finishes, the defensible conclusion is:
+
+> On 298 valid compound-update cases, naive_markdown almost perfectly applied
+> explicit updates and preserved unrelated facts. AMH preserved unrelated facts
+> equally well but applied fewer intended updates. A valid mem0 comparison is
+> pending an isolated rerun.
+
+## Reproducing the corrected scoring
+
+```bash
+python scripts/rescore_t2.py \
+  --results data/results/t2-prod-n100-5sys.json \
+  --cases data/cases/compound_update_n100_s100.json \
+  --out data/results/t2-prod-n100-5sys.json
+
+python scripts/rescore_t2.py \
+  --results data/results/t2-prod-n200-s200-4sys.json \
+  --cases data/cases/compound_update_n200_s200.json \
+  --out data/results/t2-prod-n200-s200-4sys.json
+
+python scripts/merge_t2_runs.py \
+  --inputs data/results/t2-prod-n100-5sys.json \
+           data/results/t2-prod-n200-s200-4sys.json \
+  --out data/results/t2-prod-n300-merged.json
+
+python scripts/analyze_t2.py --results data/results/t2-prod-n300-merged.json
+```
+
+Result metadata records the judge version, excluded cases, changed probe
+judgments, zero LLM calls for rescoring, and the invalid historical mem0 status.

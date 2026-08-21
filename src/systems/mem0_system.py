@@ -73,9 +73,12 @@ class Mem0System(MemorySystem):
         self._write_results: list[dict] = []
 
     def reset(self) -> None:
-        # mem0 2.0+: filters dict instead of top-level user_id kwarg
-        try: self._mem.delete_all(filters={"user_id": self._user})
-        except Exception: pass
+        # delete_all() clears vector memories but leaves mem0's recent-message
+        # SQLite table intact. Because T2 reuses one adapter across cases,
+        # that would feed the previous case's utterances into extraction for
+        # the next case. Memory.reset() clears both vector and SQLite state.
+        self._mem.reset()
+        self._write_results = []
 
     def write(self, agent_id: str, text: str) -> None:
         result = self._mem.add(text, user_id=self._user, metadata={"agent_id": agent_id})

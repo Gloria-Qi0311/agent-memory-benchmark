@@ -56,7 +56,35 @@ def merge(inputs: list[Path]) -> dict:
             "no_confusion": _mean(acc["conf"]),
             "no_collateral": _mean(acc["coll"]),
         }
-    return {"summary": summary, "rows": rows}
+    source_metadata = [load(path).get("metadata", {}) for path in inputs]
+    return {
+        "metadata": {
+            "merged_from": [str(path) for path in inputs],
+            "judge": "t2-exact-v3-token-boundary-plus-authored-aliases",
+            "llm_calls_for_rescore": 0,
+            "excluded_case_ids": sorted({
+                case_id
+                for metadata in source_metadata
+                for case_id in metadata.get("excluded_case_ids", [])
+            }),
+            "changed_probe_judgments": sum(
+                metadata.get("changed_probe_judgments", 0)
+                for metadata in source_metadata
+            ),
+            "known_invalid_systems": sorted({
+                system
+                for metadata in source_metadata
+                for system in metadata.get("known_invalid_systems", [])
+            }),
+            "invalid_system_reason": next(
+                (metadata.get("invalid_system_reason") for metadata in source_metadata
+                 if metadata.get("invalid_system_reason")),
+                None,
+            ),
+        },
+        "summary": summary,
+        "rows": rows,
+    }
 
 
 def main() -> None:
