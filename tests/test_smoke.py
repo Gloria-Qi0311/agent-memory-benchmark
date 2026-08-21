@@ -289,8 +289,17 @@ def test_compound_update_score_accepts_travel_companion_ground_truth_aliases():
     ]
     assert compound_update_score(probes, initial)["no_collateral"] == 1.0
 
+
+def test_compound_update_score_accepts_storage_word_order_alias():
+    initial = {"storage": "4TB SSD"}
+    probes = [{
+        "key": "storage", "kind": "preserved", "expected": "4TB SSD",
+        "answer": "4TB of SSD storage.",
+    }]
+    assert compound_update_score(probes, initial)["no_collateral"] == 1.0
+
     initial = {"travel_companion": "with family"}
-    probes[0].update(expected="with family", answer="Family")
+    probes[0].update(key="travel_companion", expected="with family", answer="Family")
     assert compound_update_score(probes, initial)["no_collateral"] == 1.0
 
 
@@ -322,6 +331,42 @@ def test_compound_update_generator_never_authors_noop_updates():
 
     for seed in range(600):
         validate_case(make_case(seed=seed).to_dict())
+
+
+def test_t2_runner_excludes_invalid_ground_truth_before_system_creation(tmp_path, monkeypatch):
+    import json
+    from src import runner
+    from src.cases.compound_update import make_case
+
+    valid = make_case(seed=900).to_dict()
+    invalid = make_case(seed=901).to_dict()
+    key = next(iter(invalid["updated_facts"]))
+    invalid["updated_facts"][key] = invalid["initial_facts"][key]
+    for probe in invalid["probes"]:
+        if probe["key"] == key:
+            probe["expected"] = invalid["initial_facts"][key]
+    invalid["update_utterance"] = invalid["update_utterance"].replace(
+        f"to {make_case(seed=901).updated_facts[key]}",
+        f"to {invalid['initial_facts'][key]}",
+    )
+
+    class FakeSystem:
+        def reset(self): pass
+        def write(self, agent_id, text): pass
+        def read(self, agent_id, query): return "unknown"
+
+    cases_path = tmp_path / "cases.json"
+    out_path = tmp_path / "result.json"
+    cases_path.write_text(json.dumps([valid, invalid]), encoding="utf-8")
+    monkeypatch.setitem(runner.REGISTRY, "fake", FakeSystem)
+    monkeypatch.setattr(runner, "chat", lambda *_: "unknown")
+
+    runner.run_compound_update_experiment(cases_path, ["fake"], out_path)
+    result = json.loads(out_path.read_text(encoding="utf-8"))
+    assert result["metadata"]["case_count_loaded"] == 2
+    assert result["metadata"]["case_count_valid"] == 1
+    assert result["metadata"]["excluded_case_ids"] == [invalid["case_id"]]
+    assert len(result["rows"]) == 1
 
 
 # ---------------------------------------------------------------------------

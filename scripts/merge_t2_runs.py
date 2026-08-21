@@ -60,7 +60,7 @@ def merge(inputs: list[Path]) -> dict:
     return {
         "metadata": {
             "merged_from": [str(path) for path in inputs],
-            "judge": "t2-exact-v3-token-boundary-plus-authored-aliases",
+            "judge": "t2-exact-v4-token-boundary-plus-authored-aliases",
             "llm_calls_for_rescore": 0,
             "excluded_case_ids": sorted({
                 case_id
@@ -81,6 +81,25 @@ def merge(inputs: list[Path]) -> dict:
                  if metadata.get("invalid_system_reason")),
                 None,
             ),
+            "replaced_system_runs": {
+                system: [
+                    path
+                    for metadata in source_metadata
+                    for current_system, value in metadata.get("replaced_system_runs", {}).items()
+                    if current_system == system
+                    for path in (value if isinstance(value, list) else [value])
+                ]
+                for system in {
+                    current_system
+                    for metadata in source_metadata
+                    for current_system in metadata.get("replaced_system_runs", {})
+                }
+            },
+            "per_case_full_reset": {
+                system: enabled
+                for metadata in source_metadata
+                for system, enabled in metadata.get("per_case_full_reset", {}).items()
+            },
         },
         "summary": summary,
         "rows": rows,

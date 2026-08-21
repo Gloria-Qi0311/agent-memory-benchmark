@@ -16,7 +16,7 @@ product questions and should not be collapsed into one score.
 | Track | Task | Systems | Status |
 |---|---|---|---|
 | Factual memory | **T4 — split intake** | no_memory, naive_markdown, pure_vector, AMH, mem0 | ✅ n=300, [final writeup](./docs/v1/t4_findings.md) |
-| Factual memory | **T2 — compound update** | no_memory, naive_markdown, pure_vector, AMH, mem0 | Corrected n=298 analysis for four systems; isolated mem0 rerun pending |
+| Factual memory | **T2 — compound update** | no_memory, naive_markdown, pure_vector, AMH, mem0 | ✅ corrected n=298 five-system result, [final writeup](./docs/v1/t2_findings.md) |
 | User preference memory | **Preference pilot** | naive_markdown, AMH, mem0 | ✅ n=30 one-run pilot, [findings](./docs/v1/preference_pilot_n30_once_findings.md) |
 
 T4 tests whether detailed factual information survives a multi-agent memory

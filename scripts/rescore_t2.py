@@ -91,9 +91,10 @@ def rescore(
 
     return {
         "metadata": {
+            **source.get("metadata", {}),
             "rescored_from": str(results_path),
             "case_files": [str(path) for path in case_paths],
-            "judge": "t2-exact-v3-token-boundary-plus-authored-aliases",
+            "judge": "t2-exact-v4-token-boundary-plus-authored-aliases",
             "llm_calls": 0,
             "changed_probe_judgments": (
                 source.get("metadata", {}).get("changed_probe_judgments", 0)

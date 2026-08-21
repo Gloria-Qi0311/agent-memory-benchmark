@@ -44,6 +44,12 @@ def _t2_match(key: str, value: str, text: str) -> bool:
             "with colleagues": ["colleagues"],
             "solo": ["alone"],
         }.get(value.casefold(), []))
+    if key == "storage":
+        # Dataset values use "4TB SSD" while concise natural answers may use
+        # the equivalent "4TB of SSD storage" construction.
+        storage = re.fullmatch(r"(\d+tb) ssd", value.casefold())
+        if storage:
+            aliases.append(f"{storage.group(1)} of ssd storage")
     return any(_match(alias, text) for alias in aliases)
 
 

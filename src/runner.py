@@ -20,6 +20,7 @@ from .judge import (
     split_intake_score_aggregate,
     compound_update_score,
 )
+from .cases.compound_update import validate_case as validate_compound_update_case
 from .systems import REGISTRY
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -211,7 +212,16 @@ def run_compound_update_experiment(
     system_names: list[str],
     out_path: Path,
 ) -> dict:
-    cases = json.loads(cases_path.read_text())
+    loaded_cases = json.loads(cases_path.read_text())
+    cases = []
+    excluded_cases = {}
+    for case in loaded_cases:
+        try:
+            validate_compound_update_case(case)
+            cases.append(case)
+        except ValueError as exc:
+            excluded_cases[case["case_id"]] = str(exc)
+            _log(f"  [exclude] {case['case_id']}: {exc}")
     summary = {}
     out_path.parent.mkdir(parents=True, exist_ok=True)
     all_rows = []
@@ -260,7 +270,20 @@ def run_compound_update_experiment(
             "no_collateral": _mean(no_collaterals),
         }
 
-    out_path.write_text(json.dumps({"summary": summary, "rows": all_rows}, indent=2))
+    out_path.write_text(json.dumps({
+        "metadata": {
+            "task": "compound_update",
+            "cases_path": str(cases_path),
+            "case_count_loaded": len(loaded_cases),
+            "case_count_valid": len(cases),
+            "excluded_case_ids": sorted(excluded_cases),
+            "exclusion_reasons": excluded_cases,
+            "judge": "t2-exact-v4-token-boundary-plus-authored-aliases",
+            "systems": system_names,
+        },
+        "summary": summary,
+        "rows": all_rows,
+    }, indent=2))
     return summary
 
 

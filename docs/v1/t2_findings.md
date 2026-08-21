@@ -2,16 +2,10 @@
 
 ## Current status
 
-The judge and ground-truth audit are complete for the stored T2 answers. The
-results for `no_memory`, `naive_markdown`, `pure_vector`, and `AMH` can be
-reported. The historical `mem0` rows are retained for diagnosis but are **not
-publishable**: those runs predate full clearing of mem0's recent-message SQLite
-state between cases and therefore may contain cross-case contamination. mem0
-must be rerun with the corrected adapter before a five-system comparison is
-final.
-
-No DeepSeek calls were required for the corrected scoring. The reader answers
-and memory contexts already stored in the result files were judged again.
+The judge and ground-truth audit are complete. Historical mem0 rows that
+predated full recent-message isolation were discarded and replaced by a clean
+mem0-only rerun. All five systems now have reportable results. Existing reader
+answers were locally rejudged; only the replacement mem0 run called DeepSeek.
 
 ## What T2 measures
 
@@ -41,12 +35,18 @@ batches. `pure_vector` was only run in the first batch and has n=99.
 | naive_markdown | 298 | **0.999** [0.997, 1.000] | **0.997** [0.993, 0.999] | 0.978 [0.971, 0.985] |
 | pure_vector | 99 | 0.886 [0.851, 0.919] | 0.907 [0.874, 0.937] | **0.983** [0.973, 0.992] |
 | AMH | 298 | 0.893 [0.876, 0.909] | 0.909 [0.893, 0.924] | 0.978 [0.971, 0.985] |
-| mem0 (historical, invalid run) | 298 | 0.584 | 0.896 | 0.489 |
+| mem0 | 298 | 0.976 [0.966, 0.985] | 0.981 [0.971, 0.988] | 0.961 [0.952, 0.970] |
 
-The first four rows are corrected reportable scores. Confidence intervals are
-deterministic case-level percentile bootstrap intervals with 10,000 resamples.
-The mem0 values are shown only so old files remain interpretable; they are not
-evidence until an isolated rerun replaces them.
+All rows are reportable. Confidence intervals are deterministic case-level
+percentile bootstrap intervals with 10,000 resamples. pure_vector's n=99
+diagnostic result should not be read as having the same precision as n=298.
+
+The main result is that mem0 performs well once benchmark state is correctly
+isolated: its update recall is 0.976 and its no-collateral score is 0.961. It
+trails naive_markdown by 2.3 points on updates and 1.7 points on preservation,
+while outperforming AMH by 8.3 points on updates. The confidence intervals for
+mem0 and naive overlap slightly on no-collateral but do not overlap on update
+recall.
 
 ## Judge corrections
 
@@ -78,6 +78,9 @@ use different grammar:
 | `with colleagues` | `with colleagues`, `colleagues` |
 | `solo` | `solo`, `alone` |
 
+Storage answers also accept the authored word-order equivalent, for example
+`4TB SSD` and `4TB of SSD storage`.
+
 Aliases are field-specific; they do not make matching generally fuzzy.
 
 ## Ground-truth audit
@@ -99,7 +102,7 @@ already seen them. Laptop/OS compatibility logic caused the bug by overwriting
 a selected new OS with the original OS. That branch and a similar single-date
 no-op branch are fixed. Six hundred generated seeds now pass validation.
 
-## Why historical mem0 must be rerun
+## Why mem0 was rerun
 
 The old adapter cleared vector memories between T2 cases but did not clear
 mem0's recent-message SQLite table. mem0 uses those recent messages as
@@ -108,18 +111,44 @@ cases could receive utterances from earlier cases during extraction.
 
 The adapter now calls mem0's full `reset()`, clearing vector state and SQLite
 message/history state. The database also lives in the adapter's isolated
-temporary directory.
+temporary directory. A 10-case gate passed before the two production batches;
+the 99-case and 199-case runs both completed with zero runtime errors.
 
-Until the mem0-only rerun finishes, the defensible conclusion is:
+The correction materially changed the product conclusion. The contaminated
+historical mem0 run scored 0.584 update recall and 0.489 no-collateral after
+judge correction. The isolated replacement scored 0.976 and 0.961. The old
+numbers measured benchmark leakage, not mem0's T2 capability.
 
-> On 298 valid compound-update cases, naive_markdown almost perfectly applied
-> explicit updates and preserved unrelated facts. AMH preserved unrelated facts
-> equally well but applied fewer intended updates. A valid mem0 comparison is
-> pending an isolated rerun.
+The defensible conclusion is:
+
+> On explicit compound updates, naive_markdown is nearly perfect, mem0 is a
+> close second and substantially stronger than AMH at applying updates, and
+> all three preserve unmentioned facts at roughly 96–98%. Correct per-case
+> state isolation is necessary for any mem0 comparison.
 
 ## Reproducing the corrected scoring
 
 ```bash
+# Clean mem0 replacement runs (the runner excludes the two invalid cases)
+python scripts/run_compound_update.py \
+  --cases data/cases/compound_update_n100_s100.json \
+  --systems mem0 --tag t2-prod-n100-mem0-isolated
+
+python scripts/run_compound_update.py \
+  --cases data/cases/compound_update_n200_s200.json \
+  --systems mem0 --tag t2-prod-n200-mem0-isolated
+
+# Replace the historical mem0 rows, then rescore all stored answers
+python scripts/replace_t2_system_run.py \
+  --base data/results/t2-prod-n100-5sys.json \
+  --replacement data/results/t2-prod-n100-mem0-isolated.json \
+  --system mem0 --out data/results/t2-prod-n100-5sys.json
+
+python scripts/replace_t2_system_run.py \
+  --base data/results/t2-prod-n200-s200-4sys.json \
+  --replacement data/results/t2-prod-n200-mem0-isolated.json \
+  --system mem0 --out data/results/t2-prod-n200-s200-4sys.json
+
 python scripts/rescore_t2.py \
   --results data/results/t2-prod-n100-5sys.json \
   --cases data/cases/compound_update_n100_s100.json \
@@ -139,4 +168,4 @@ python scripts/analyze_t2.py --results data/results/t2-prod-n300-merged.json
 ```
 
 Result metadata records the judge version, excluded cases, changed probe
-judgments, zero LLM calls for rescoring, and the invalid historical mem0 status.
+judgments, the isolated mem0 source files, and full per-case reset provenance.
