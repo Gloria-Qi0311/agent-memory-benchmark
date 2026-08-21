@@ -251,3 +251,307 @@ def test_compound_update_score_collateral_damage():
     s = compound_update_score(probes, initial)
     assert s["update_recall"] == 1.0
     assert s["no_collateral"] == 0.0
+
+
+# ---------------------------------------------------------------------------
+# Preference Track v0 smoke cases
+# ---------------------------------------------------------------------------
+
+def test_preference_smoke_case_distribution():
+    """The review batch is exactly the agreed 6 diagnostic + 6 composite."""
+    from collections import Counter
+    from src.cases.preference import smoke_cases
+
+    cases = smoke_cases()
+    assert len(cases) == 12
+    assert Counter(c["layer"] for c in cases) == {
+        "diagnostic": 6,
+        "composite": 6,
+    }
+    assert Counter(
+        c["primary_capability"]
+        for c in cases
+        if c["layer"] == "diagnostic"
+    ) == {
+        "cross_agent_merge": 2,
+        "preference_update": 2,
+        "preference_boundary": 2,
+    }
+
+
+def test_preference_smoke_cases_validate():
+    """Every curated case satisfies the executable schema and unique-winner rule."""
+    from src.cases.preference import smoke_cases, validate_case
+
+    for case in smoke_cases():
+        validate_case(case)
+
+
+def test_preference_merge_cases_require_both_evidence_groups():
+    from src.cases.preference import smoke_cases
+
+    merge_cases = [
+        case for case in smoke_cases()
+        if case["primary_capability"] == "cross_agent_merge"
+    ]
+    assert len(merge_cases) == 2
+    for case in merge_cases:
+        candidates = case["decision"]["candidates"]
+        groups = case["ground_truth"]["evidence_groups"]
+        assert len(groups) == 2
+        for group in groups:
+            scores = {
+                candidate["id"]: len(set(group).intersection(candidate["attributes"]))
+                for candidate in candidates
+            }
+            best = max(scores.values())
+            assert sum(score == best for score in scores.values()) >= 2
+
+
+def test_preference_utterances_are_direct_user_speech():
+    """Writer inputs should look like user messages, not dataset narration."""
+    from src.cases.preference import smoke_cases
+
+    for case in smoke_cases():
+        for write in case["writes"]:
+            assert not write["utterance"].startswith(f'{case["persona"]}说：')
+
+
+def test_preference_composite_counterfactual_pairs():
+    """Each composite pair keeps the decision surface fixed but flips truth."""
+    from collections import defaultdict
+    from src.cases.preference import smoke_cases
+
+    pairs = defaultdict(list)
+    for case in smoke_cases():
+        if case["layer"] == "composite":
+            pairs[case["pair_id"]].append(case)
+
+    assert len(pairs) == 3
+    for pair_id, pair in pairs.items():
+        assert pair_id
+        assert len(pair) == 2
+        left, right = pair
+        assert left["decision"] == right["decision"]
+        assert left["persona"] == right["persona"]
+        assert left["ground_truth"]["expected_choice"] != right["ground_truth"]["expected_choice"]
+        assert left["writes"] != right["writes"]
+        # The scoped one-off event is held fixed; only the target preference
+        # history changes between the two counterfactual variants.
+        assert left["writes"][-1] == right["writes"][-1]
+
+
+def test_preference_case_final_agent_has_no_history():
+    """The decision surface contains no writer utterances or hidden truth."""
+    from src.cases.preference import smoke_cases
+
+    for case in smoke_cases():
+        decision_text = str(case["decision"])
+        for write in case["writes"]:
+            assert write["utterance"] not in decision_text
+        assert "ground_truth" not in case["decision"]
+
+
+def test_preference_expected_choice_is_unique_best_match():
+    """Ground truth is computed from candidate attributes, not an arbitrary label."""
+    from src.cases.preference import preference_match_scores, smoke_cases
+
+    for case in smoke_cases():
+        scores = preference_match_scores(case)
+        best = max(scores.values())
+        winners = [candidate_id for candidate_id, score in scores.items() if score == best]
+        assert winners == [case["ground_truth"]["expected_choice"]]
+
+
+def test_preference_smoke_choice_positions_are_balanced():
+    """The review batch must not reward a fixed A/B/C position strategy."""
+    from collections import Counter
+    from src.cases.preference import smoke_cases
+
+    assert Counter(
+        case["ground_truth"]["expected_choice"] for case in smoke_cases()
+    ) == {"A": 4, "B": 4, "C": 4}
+
+
+def test_preference_pilot_distribution_and_validation():
+    from collections import Counter
+    from src.cases.preference_pilot import pilot_cases
+
+    cases = pilot_cases()
+    assert len(cases) == 30
+    assert Counter(case["layer"] for case in cases) == {
+        "diagnostic": 12,
+        "composite": 18,
+    }
+    assert Counter(
+        case["primary_capability"]
+        for case in cases
+        if case["layer"] == "diagnostic"
+    ) == {
+        "cross_agent_merge": 4,
+        "preference_update": 4,
+        "preference_boundary": 4,
+    }
+
+
+def test_preference_pilot_has_nine_counterfactual_pairs():
+    from collections import Counter
+    from src.cases.preference_pilot import pilot_cases
+
+    pair_counts = Counter(
+        case["pair_id"] for case in pilot_cases() if case["pair_id"]
+    )
+    assert len(pair_counts) == 9
+    assert set(pair_counts.values()) == {2}
+
+
+def test_preference_pilot_choice_positions_are_balanced():
+    from collections import Counter
+    from src.cases.preference_pilot import pilot_cases
+
+    counts = Counter(case["ground_truth"]["expected_choice"] for case in pilot_cases())
+    assert counts == {"A": 10, "B": 10, "C": 10}
+
+
+def test_preference_pilot_merge_cases_need_every_writer_group():
+    from src.cases.preference_pilot import pilot_cases
+
+    merge_cases = [
+        case for case in pilot_cases()
+        if case["primary_capability"] == "cross_agent_merge"
+    ]
+    assert len(merge_cases) == 4
+    for case in merge_cases:
+        for group in case["ground_truth"]["evidence_groups"]:
+            scores = {
+                candidate["id"]: len(set(group).intersection(candidate["attributes"]))
+                for candidate in case["decision"]["candidates"]
+            }
+            winners = [
+                candidate_id for candidate_id, score in scores.items()
+                if score == max(scores.values())
+            ]
+            assert winners != [case["ground_truth"]["expected_choice"]]
+
+
+def test_preference_pilot_user_facing_inputs_are_english_and_nonempty():
+    import re
+    from src.cases.preference_pilot import pilot_cases
+
+    cjk = re.compile(r"[\u3400-\u9fff]")
+    for case in pilot_cases():
+        texts = [write["utterance"] for write in case["writes"]]
+        texts.extend([
+            case["decision"]["task"],
+            case["decision"]["memory_query"],
+            *[candidate["description"] for candidate in case["decision"]["candidates"]],
+        ])
+        assert all(text.strip() for text in texts)
+        assert not any(cjk.search(text) for text in texts)
+
+
+def test_preference_pilot_temporary_writes_are_held_constant_in_pairs():
+    from collections import defaultdict
+    from src.cases.preference_pilot import pilot_cases
+
+    pairs = defaultdict(list)
+    for case in pilot_cases():
+        if case["pair_id"]:
+            pairs[case["pair_id"]].append(case)
+    for pair in pairs.values():
+        left, right = pair
+        assert left["writes"][-1]["preference_kind"] == "temporary"
+        assert left["writes"][-1] == right["writes"][-1]
+        assert left["decision"] == right["decision"]
+
+
+def test_preference_no_history_choice_parser():
+    from scripts.check_preference_no_history import _parse_choice
+
+    assert _parse_choice('{"choice":"B","reason":"test"}', False) == "B"
+    assert _parse_choice('```json\n{"choice":"UNKNOWN","reason":"test"}\n```', True) == "UNKNOWN"
+
+
+def test_preference_no_history_has_nine_unique_surfaces():
+    from scripts.check_preference_no_history import _surface_id
+    from src.cases.preference import smoke_cases
+
+    surfaces = {_surface_id(case["decision"]) for case in smoke_cases()}
+    assert len(surfaces) == 9
+
+
+def test_preference_decision_parser():
+    from src.runner import _parse_preference_decision
+
+    assert _parse_preference_decision('{"choice":"C","reason":"符合偏好"}') == {
+        "choice": "C",
+        "reason": "符合偏好",
+    }
+    assert _parse_preference_decision('```json\n{"choice":"A","reason":"test"}\n```')["choice"] == "A"
+
+
+def test_preference_summary_scores_counterfactual_pairs():
+    from src.runner import _preference_summary
+    from src.cases.preference import smoke_cases
+
+    cases = smoke_cases()
+    rows = []
+    for case in cases:
+        rows.append({
+            "case_id": case["case_id"],
+            "pair_id": case["pair_id"],
+            "layer": case["layer"],
+            "primary_capability": case["primary_capability"],
+            "system": "fake",
+            "correct": True,
+            "context_chars": 10,
+            "total_seconds": 0.1,
+            "error": None,
+        })
+
+    summary = _preference_summary(cases, rows)["fake"]
+    assert summary["decision_accuracy"] == 1.0
+    assert summary["counterfactual_pair_success_rate"] == 1.0
+    assert summary["mean_context_chars"] == 10
+
+
+def test_mem0_write_records_native_noop_without_rejecting_case():
+    from src.systems.mem0_system import Mem0System
+
+    class FakeMemory:
+        def add(self, *args, **kwargs):
+            return {"results": []}
+
+    system = object.__new__(Mem0System)
+    system._mem = FakeMemory()
+    system._user = "test-user"
+    system._write_results = []
+    try:
+        system.write("agent_a", "A durable preference")
+        assert system.debug_write_results() == [{
+            "agent_id": "agent_a",
+            "text": "A durable preference",
+            "result": {"results": []},
+        }]
+    finally:
+        system._mem = None
+        system._persist_dir = None
+
+
+def test_mem0_config_isolates_message_history_with_vector_store():
+    from src.systems.mem0_system import _build_config
+
+    config = _build_config("/tmp/example-mem0-case")
+
+    assert config["history_db_path"] == "/tmp/example-mem0-case/history.db"
+    assert config["vector_store"]["config"]["path"] == "/tmp/example-mem0-case"
+
+
+def test_deepseek_retry_classification():
+    from openai import APIConnectionError, APIStatusError
+    from src.agent import _is_retryable
+
+    request = __import__("httpx").Request("POST", "https://api.deepseek.com/v1/chat/completions")
+    assert _is_retryable(APIConnectionError(request=request))
+    assert _is_retryable(APIStatusError("server error", response=__import__("httpx").Response(503, request=request), body=None))
+    assert not _is_retryable(APIStatusError("no credit", response=__import__("httpx").Response(402, request=request), body=None))

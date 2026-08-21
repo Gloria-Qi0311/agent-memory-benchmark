@@ -6,6 +6,12 @@ v0 used atomic memories — each "memory" was a single fact like `"Alex uses Pyt
 
 The lesson that drove v1: **atomic memory is not what real memory systems handle**. Real memories are structured paragraphs with multiple embedded facts. Real updates touch parts of memories, multiple facts simultaneously, or span across memories. v0 didn't measure any of that — v1 does.
 
+## Preference Track — English smoke (✅ DONE, n=12, 3 systems)
+
+The product-oriented multi-agent preference track compares `naive_markdown`, `AMH`, and `mem0` on cross-agent merge, preference updates, temporary-vs-durable boundaries, and composite counterfactual decisions. All benchmark-facing inputs are English to avoid conflating memory quality with cross-language embedding quality. After excluding one case whose authored answer proved ambiguous, the one-run smoke result is naive 11/11, mem0 11/11, and AMH 9/11. This is an engineering smoke, not a final ranking. Full writeup: [`preference_smoke_english_once_findings.md`](./preference_smoke_english_once_findings.md).
+
+The frozen 30-case pilot is also complete: `naive_markdown` 30/30, `mem0` 30/30, and `AMH` 28/30 in one run. Full writeup: [`preference_pilot_n30_once_findings.md`](./preference_pilot_n30_once_findings.md). Product-readable cases: [`preference_pilot_case_review.md`](./preference_pilot_case_review.md).
+
 ## v1 task types (4 levels of difficulty)
 
 Each level exposes a different memory-system capability that v0's atomic setup hides.
@@ -29,13 +35,19 @@ Each level exposes a different memory-system capability that v0's atomic setup h
 - `amh` — Agent Memory Hub, Markdown+FS shared memory, **the only explicitly multi-agent-native system**
 - `mem0` — LLM extraction at write + vector top-K at read (single-agent system, repurposed)
 
-### T2 — Compound update (next)
+### T2 — Compound update (in progress, n=100 done; n=200 extension running)
 
-**What the user does:** Says a single sentence that simultaneously updates K facts about themselves.
+**Headline (n=100 preview):** mem0 preserves only **~56% of unrelated facts** when a compound update lands, vs ~96% for naive_markdown / AMH. The failure is **silent** — the intended updates land correctly, but unrelated facts get silently damaged. See [`t2_findings.md`](./t2_findings.md).
 
-> "I rebuilt the stack — TypeScript + Next.js on Cloudflare, deployed via Vercel."
+**Case shape:** three phases, three agents.
+- Phase 1 (`agent_a`): writes N=10 initial facts one-per-call
+- Phase 2 (`agent_b`): writes ONE explicit multi-clause update covering K=4 facts ("switched their language from Python to TypeScript, their framework from Django to Next.js, ...")
+- Phase 3 (`agent_c`): probes each of the N facts independently
 
-(Previously was Python + Django on AWS + GitHub Actions — K=4 simultaneous changes.)
+**Three metrics:**
+- `update_recall` — did the K updates land?
+- `no_confusion` — was the new value contaminated by the old value?
+- `no_collateral` — were the N–K unmentioned facts left alone?
 
 **What the memory system must do:** Update all K facts. Don't update facts not mentioned. Don't conflate (assigning the TypeScript value to "framework" instead of "language").
 
