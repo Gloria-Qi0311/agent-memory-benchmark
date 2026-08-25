@@ -8,24 +8,78 @@ In 2026, MCP, A2A, and shared-memory products are pushing toward a world where *
 
 This benchmark fills the gap: **when N agents share one memory store, do existing memory systems hold up?**
 
-## Status
+## What is measured
 
-The project now has two complementary benchmark tracks. They answer different
-product questions and should not be collapsed into one score.
+The project has three published evaluations. They answer different product
+questions, so we report them separately rather than collapsing them into one
+overall score.
 
-| Track | Task | Systems | Status |
-|---|---|---|---|
-| Factual memory | **T4 — split intake** | no_memory, naive_markdown, pure_vector, AMH, mem0 | ✅ n=300, [final writeup](./docs/v1/t4_findings.md) |
-| Factual memory | **T2 — compound update** | no_memory, naive_markdown, pure_vector, AMH, mem0 | ✅ corrected n=298 five-system result, [final writeup](./docs/v1/t2_findings.md) |
-| User preference memory | **Preference pilot** | naive_markdown, AMH, mem0 | ✅ n=30 one-run pilot, [findings](./docs/v1/preference_pilot_n30_once_findings.md) |
+| Track | Task | What it tests | Systems | Published result |
+|---|---|---|---|---|
+| Factual memory | **T4 — split intake** | Retaining many details written in one long statement | `no_memory`, `naive_markdown`, `pure_vector`, `AMH`, `mem0` | ✅ n=300 · [write-up](./docs/v1/t4_findings.md) |
+| Factual memory | **T2 — compound update** | Applying several updates without changing unrelated facts | `no_memory`, `naive_markdown`, `pure_vector`, `AMH`, `mem0` | ✅ n=298 · [write-up](./docs/v1/t2_findings.md) |
+| User preference | **Preference pilot** | Merging durable preferences, updates, temporary requests, and decisions | `naive_markdown`, `AMH`, `mem0` | ✅ n=30 pilot · [findings](./docs/v1/preference_pilot_n30_once_findings.md) |
 
 T4 tests whether detailed factual information survives a multi-agent memory
 pipeline. T2 tests multi-fact updates and collateral damage. The Preference
-Track tests whether stable preferences can be merged across agents, updated,
+pilot tests whether stable preferences can be merged across agents, updated,
 kept separate from temporary requirements, and used in a decision. See
-[`docs/v1/`](./docs/v1/README.md) for the designs and limitations.
+[`docs/v1/`](./docs/v1/README.md) for the full task designs, scoring rules,
+and limitations.
 
-![T4 results](./docs/v1/t4_results.png)
+## Results at a glance
+
+These are the latest published results, not a single leaderboard. Scores are
+case-level averages; higher is better. `no_memory` is a factual-track floor,
+not a competing memory product.
+
+### T4 — split intake (n=300)
+
+| System | Per-detail recall | Aggregate recall |
+|---|---:|---:|
+| `no_memory` | 0.000 | 0.000 |
+| `naive_markdown` | **0.951** | **0.968** |
+| `pure_vector` | **0.951** | **0.969** |
+| `AMH` | **0.950** | **0.969** |
+| `mem0` | 0.432 | 0.555 |
+
+![T4 split-intake results](./docs/v1/t4_results.png)
+
+T4's main finding is that the extraction-free baselines and AMH retain most
+details in this short, single-write setting, while mem0 loses more details
+during its write-time extraction and retrieval pipeline. See the
+[full T4 analysis](./docs/v1/t4_findings.md) for confidence intervals and
+failure examples.
+
+### T2 — compound update (n=298; `pure_vector` n=99)
+
+| System | Update recall | No confusion | No collateral |
+|---|---:|---:|---:|
+| `no_memory` | 0.000 | 1.000 | 0.000 |
+| `naive_markdown` | **0.999** | **0.997** | 0.978 |
+| `pure_vector` | 0.886 | 0.907 | **0.983** |
+| `AMH` | 0.893 | 0.909 | 0.978 |
+| `mem0` | 0.976 | 0.981 | 0.961 |
+
+T2 shows a different pattern from T4: after fixing per-case mem0 isolation,
+mem0 applies explicit multi-fact updates well and is substantially ahead of
+AMH on update recall, while the verbatim markdown baseline remains strongest.
+The [T2 analysis](./docs/v1/t2_findings.md) documents the judge correction,
+the two excluded no-op cases, and the isolation fix.
+
+### Preference pilot (n=30, one run)
+
+| System | Overall | Single-item | Composite decision |
+|---|---:|---:|---:|
+| `naive_markdown` | **30/30** | 12/12 | 18/18 |
+| `mem0` | **30/30** | 12/12 | 18/18 |
+| `AMH` | 28/30 | 11/12 | 17/18 |
+
+The preference result is a small pilot, not a definitive ranking. It is
+included because preference memory is a product-relevant scenario where a
+system must distinguish durable preferences from temporary requirements.
+Read the [pilot findings](./docs/v1/preference_pilot_n30_once_findings.md)
+for the case design and failure analysis.
 
 An initial atomic-level pass (v0) is in the git history. It tested one-fact-per-memory + explicit-style updates and concluded that **atomic tasks don't discriminate memory systems** — modern LLMs reason out trivial updates from raw context, so a 30-line markdown baseline scores 100% and no headline finding emerges. The v0 scaffolding (agent client, runner, judge, mem0 adapter, baseline systems) is reused by v1; the v0 conclusions are not.
 
