@@ -18,3 +18,6 @@ class NaiveMarkdown(MemorySystem):
 
     def read(self, agent_id: str, query: str) -> str:
         return "\n".join(self._entries)
+
+    def debug_snapshot(self):
+        return list(self._entries)

@@ -10,14 +10,20 @@ This benchmark fills the gap: **when N agents share one memory store, do existin
 
 ## Status
 
-🚧 **Active development.** v1 task suite — four task types probing non-trivial memory operations (T4 split intake, T2 compound update, T1 surgical edit, T3 cross-memory). See [`docs/v1/`](./docs/v1/README.md) for the design.
+The project now has two complementary benchmark tracks. They answer different
+product questions and should not be collapsed into one score.
 
-| Task | Status | Headline |
-|---|---|---|
-| **T4 — split intake** | ✅ done (n=300, 5 systems) | `mem0` **0.432** per-detail recall vs three extraction-free systems (`naive_markdown` / `pure_vector` / `AMH`) at **0.95**. [Full writeup](./docs/v1/t4_findings.md). |
-| T2 — compound update | next | |
-| T1 — surgical edit | planned | |
-| T3 — cross-memory | planned | |
+| Track | Task | Systems | Status |
+|---|---|---|---|
+| Factual memory | **T4 — split intake** | no_memory, naive_markdown, pure_vector, AMH, mem0 | ✅ n=300, [final writeup](./docs/v1/t4_findings.md) |
+| Factual memory | **T2 — compound update** | no_memory, naive_markdown, pure_vector, AMH, mem0 | ✅ corrected n=298 five-system result, [final writeup](./docs/v1/t2_findings.md) |
+| User preference memory | **Preference pilot** | naive_markdown, AMH, mem0 | ✅ n=30 one-run pilot, [findings](./docs/v1/preference_pilot_n30_once_findings.md) |
+
+T4 tests whether detailed factual information survives a multi-agent memory
+pipeline. T2 tests multi-fact updates and collateral damage. The Preference
+Track tests whether stable preferences can be merged across agents, updated,
+kept separate from temporary requirements, and used in a decision. See
+[`docs/v1/`](./docs/v1/README.md) for the designs and limitations.
 
 ![T4 results](./docs/v1/t4_results.png)
 
@@ -35,7 +41,7 @@ src/
 scripts/               # CLI entrypoints
 data/
   cases/               # generated case JSONs (committed for reproducibility)
-  results/             # experiment outputs (git-ignored)
+  results/             # published production results + ignored local runs
 docs/
   v1/                  # active task spec
   decisions.md         # frozen design choices + setup gotchas
@@ -56,7 +62,7 @@ cd agent-memory-benchmark
 python3.11 -m venv .venv && source .venv/bin/activate
 
 # 3. Dependencies
-pip install -r requirements.txt sentence-transformers
+pip install -r requirements.txt
 
 # 4. API key
 cp .env.example .env
@@ -78,7 +84,8 @@ cd ../..
 ## Stack
 
 - **Agent + judge LLM**: DeepSeek-V3 (cost + capability fit). Programmatic judging wherever possible; LLM-as-judge only as fallback.
-- **Memory systems under test (current set)**: `no_memory` (floor), `naive_markdown` (verbatim shared list), `long_context` (verbatim list, no agent tags), `regex_markdown` (naive + explicit retirement-pattern deletion), `mem0` (industry-default OSS).
+- **Factual-track systems**: `no_memory`, `naive_markdown`, `pure_vector`, `AMH`, and `mem0`.
+- **Preference-track systems**: `naive_markdown`, `AMH`, and `mem0`. `no_memory` and `pure_vector` are intentionally not part of this product comparison.
 - **mem0 backend**: DeepSeek for its internal LLM, sentence-transformers (`multi-qa-MiniLM-L6-cos-v1`) for embeddings, qdrant in embedded mode.
 - **Python**: 3.11+ required.
 
@@ -86,6 +93,7 @@ cd ../..
 
 - **Self-evaluation bias.** The DeepSeek agent and any LLM-judged subtask share the same model. Programmatic judging covers most of it.
 - **Single LLM, single vendor.** Cross-vendor evaluation (Claude + GPT + Llama) is parking-lot.
-- **Multi-agent is simulated.** Different writer agent_ids feed the same memory store; this captures the data-flow shape but not full agent autonomy (each agent receiving genuinely different raw context).
+- **Multi-agent is simulated.** Different writer agent IDs feed the same memory store; this captures cross-agent write/read flow, not autonomous agents with independent planning.
+- **Preference pilot size.** The n=30 run is useful for validating the benchmark and exposing failure cases, but it is not large enough for a definitive market ranking.
 
 See [`docs/v1/README.md`](./docs/v1/README.md) for the active benchmark design.

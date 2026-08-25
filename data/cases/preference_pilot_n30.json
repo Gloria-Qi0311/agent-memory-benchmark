@@ -1,0 +1,3554 @@
+[
+  {
+    "case_id": "PREF-D-MERGE-001",
+    "language": "en",
+    "pair_id": null,
+    "layer": "diagnostic",
+    "primary_capability": "cross_agent_merge",
+    "capabilities": [
+      "cross_agent_transfer",
+      "preference_synthesis"
+    ],
+    "scenario": "leisure_hotel",
+    "persona": "Hana",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "travel_agent",
+        "role": "travel discovery agent",
+        "session_id": "session_1",
+        "scope": "leisure_travel",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "When I travel for leisure, I prefer quiet hotels and try to avoid crowded, noisy places."
+      },
+      {
+        "order": 2,
+        "agent_id": "hotel_agent",
+        "role": "hotel recommendation agent",
+        "session_id": "session_2",
+        "scope": "leisure_travel",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I prefer small hotels with local character over standardized international chains."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "Kyoto hotel planner",
+      "current_context": {
+        "domain": "travel",
+        "context_type": "leisure_travel"
+      },
+      "task": "Hana is planning a five-day leisure trip to a large city. Choose the hotel that best matches her preferences.",
+      "memory_query": "What accommodation preferences does Hana have for a leisure trip?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "A quiet international chain in the city center, with full facilities and convenient transport, but standardized design and little local character.",
+          "attributes": [
+            "quiet",
+            "city_center",
+            "large_chain",
+            "full_service",
+            "little_local_character"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "A quiet, locally owned boutique hotel with few rooms and distinctive neighborhood character, but limited facilities and a location far from the city center.",
+          "attributes": [
+            "quiet",
+            "small_hotel",
+            "boutique",
+            "local_character",
+            "limited_facilities",
+            "farther_from_center"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A small, locally owned design hotel in the city center, with a popular restaurant, concierge service, and easy transport; its rooms overlook a lively pedestrian street and have average soundproofing.",
+          "attributes": [
+            "small_hotel",
+            "local_character",
+            "city_center",
+            "restaurant",
+            "concierge",
+            "easy_transport",
+            "lively",
+            "average_soundproofing"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "quiet",
+        "small_hotel",
+        "boutique",
+        "local_character"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [],
+      "superseded_preferences": [],
+      "evidence_groups": [
+        [
+          "quiet"
+        ],
+        [
+          "small_hotel",
+          "local_character"
+        ]
+      ],
+      "expected_choice": "B",
+      "required_reason_codes": [
+        "quiet",
+        "small_hotel",
+        "local_character"
+      ],
+      "forbidden_reason_codes": [],
+      "explanation": "B simultaneously satisfies the two preference fragments learned by different agents."
+    }
+  },
+  {
+    "case_id": "PREF-D-MERGE-002",
+    "language": "en",
+    "pair_id": null,
+    "layer": "diagnostic",
+    "primary_capability": "cross_agent_merge",
+    "capabilities": [
+      "cross_agent_transfer",
+      "preference_synthesis"
+    ],
+    "scenario": "developer_laptop",
+    "persona": "Alex",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "travel_setup_agent",
+        "role": "mobile work setup agent",
+        "session_id": "session_1",
+        "scope": "developer_laptop",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I carry my work laptop between home and the office every day, so I want it to weigh no more than 1.3 kilograms."
+      },
+      {
+        "order": 2,
+        "agent_id": "development_agent",
+        "role": "software development agent",
+        "session_id": "session_2",
+        "scope": "developer_laptop",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I run several local containers at once, so I need at least 32 GB of memory and good sustained cooling."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "work laptop agent",
+      "current_context": {
+        "domain": "shopping",
+        "context_type": "developer_laptop"
+      },
+      "task": "Alex is choosing a laptop for daily software-development work and commuting. Choose the model that best matches his preferences.",
+      "memory_query": "What does Alex need from a laptop for commuting and local development?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "An ultraportable 1.05 kg laptop with 16 GB of memory and quiet low-power cooling.",
+          "attributes": [
+            "ultralight",
+            "under_1_3kg",
+            "sixteen_gb",
+            "low_power_cooling"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "A 1.28 kg laptop with 32 GB of memory and a dual-fan cooling system suitable for sustained local workloads.",
+          "attributes": [
+            "under_1_3kg",
+            "at_least_32gb",
+            "thirty_two_gb",
+            "sustained_cooling",
+            "dual_fan"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A 1.75 kg mobile workstation with 64 GB of memory and the strongest sustained cooling of the three models.",
+          "attributes": [
+            "at_least_32gb",
+            "sixty_four_gb",
+            "sustained_cooling",
+            "strongest_cooling",
+            "heavy"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "under_1_3kg",
+        "at_least_32gb",
+        "sustained_cooling"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [],
+      "superseded_preferences": [],
+      "evidence_groups": [
+        [
+          "under_1_3kg"
+        ],
+        [
+          "at_least_32gb",
+          "sustained_cooling"
+        ]
+      ],
+      "expected_choice": "B",
+      "required_reason_codes": [
+        "under_1_3kg",
+        "at_least_32gb",
+        "sustained_cooling"
+      ],
+      "forbidden_reason_codes": [],
+      "explanation": "B is the only model that stays within the commuting weight limit while meeting the local-development memory and cooling needs."
+    }
+  },
+  {
+    "case_id": "PREF-D-UPDATE-001",
+    "language": "en",
+    "pair_id": null,
+    "layer": "diagnostic",
+    "primary_capability": "preference_update",
+    "capabilities": [
+      "cross_agent_transfer",
+      "preference_freshness",
+      "stale_preference_rejection"
+    ],
+    "scenario": "work_device_purchase",
+    "persona": "Bao",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "shopping_agent",
+        "role": "shopping assistant",
+        "session_id": "session_1",
+        "scope": "work_device_purchase",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I used to prioritize price when buying equipment for work. As long as it did the job, that was good enough for me."
+      },
+      {
+        "order": 2,
+        "agent_id": "work_agent",
+        "role": "work setup agent",
+        "session_id": "session_2",
+        "scope": "work_device_purchase",
+        "preference_kind": "update",
+        "source_type": "user_explicit",
+        "utterance": "Recent equipment failures have disrupted my work. From now on, reliability comes first; I am willing to pay more and no longer put price first."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "procurement agent",
+      "current_context": {
+        "domain": "shopping",
+        "context_type": "work_device_purchase"
+      },
+      "task": "Bao needs a new router for work. Choose the option that best matches his current preferences.",
+      "memory_query": "What does Bao currently prioritize when buying equipment for work?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "A mature entry-level model that costs 30% less, covers everyday needs, and includes a standard two-year warranty.",
+          "attributes": [
+            "low_price",
+            "basic_functionality",
+            "mature_entry_model",
+            "standard_warranty"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "A model that costs 30% more, has the strongest long-term reliability record, and includes a five-year warranty with on-site replacement.",
+          "attributes": [
+            "reliability_first",
+            "proven_stability",
+            "long_warranty",
+            "onsite_replacement"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A mid-priced model with the best throughput and management features and a three-year warranty, but only six months of market history.",
+          "attributes": [
+            "mid_price",
+            "high_performance",
+            "feature_rich",
+            "three_year_warranty",
+            "newer_model"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "reliability_first",
+        "proven_stability",
+        "long_warranty"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [],
+      "superseded_preferences": [
+        "low_price",
+        "price_first"
+      ],
+      "evidence_groups": [],
+      "expected_choice": "B",
+      "required_reason_codes": [
+        "reliability_first",
+        "proven_stability"
+      ],
+      "forbidden_reason_codes": [
+        "low_price",
+        "price_first"
+      ],
+      "explanation": "The later explicit update supersedes price-first purchasing in this scope."
+    }
+  },
+  {
+    "case_id": "PREF-D-UPDATE-002",
+    "language": "en",
+    "pair_id": null,
+    "layer": "diagnostic",
+    "primary_capability": "preference_update",
+    "capabilities": [
+      "cross_agent_transfer",
+      "preference_freshness",
+      "stale_preference_rejection"
+    ],
+    "scenario": "software_adoption",
+    "persona": "Chloe",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "tool_scout_agent",
+        "role": "software discovery agent",
+        "session_id": "session_1",
+        "scope": "team_software",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I used to prefer mature team tools with predictable releases and long-term support."
+      },
+      {
+        "order": 2,
+        "agent_id": "engineering_agent",
+        "role": "engineering operations agent",
+        "session_id": "session_2",
+        "scope": "team_software",
+        "preference_kind": "update",
+        "source_type": "user_explicit",
+        "utterance": "Several new automation features have recently improved our efficiency. I now prioritize the latest features and rapid iteration, as long as the vendor provides migration support; maturity is no longer my top concern."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "team tooling agent",
+      "current_context": {
+        "domain": "work",
+        "context_type": "team_software"
+      },
+      "task": "Chloe needs to choose a new workflow platform for her team. Choose the option that best matches her current preferences.",
+      "memory_query": "What does Chloe currently prefer when choosing software for her team?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "A newly launched platform with the most advanced automation, monthly feature releases, and vendor migration support, but a short track record.",
+          "attributes": [
+            "newest_features",
+            "rapid_iteration",
+            "vendor_migration_support",
+            "short_track_record"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "A mature all-in-one platform with the broadest feature and plugin set, but complex configuration that requires a certified service partner.",
+          "attributes": [
+            "mature",
+            "feature_rich",
+            "broad_ecosystem",
+            "professional_configuration"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A core-workflow platform with years of validation, predictable releases, clear documentation, and long-term support, but fewer advanced features.",
+          "attributes": [
+            "mature",
+            "maintainable",
+            "long_term_support",
+            "stable_release_cycle",
+            "fewer_advanced_features"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "newest_features",
+        "rapid_iteration",
+        "vendor_migration_support"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [],
+      "superseded_preferences": [
+        "mature",
+        "long_term_support",
+        "stable_release_cycle"
+      ],
+      "evidence_groups": [],
+      "expected_choice": "A",
+      "required_reason_codes": [
+        "newest_features",
+        "rapid_iteration",
+        "vendor_migration_support"
+      ],
+      "forbidden_reason_codes": [
+        "mature",
+        "long_term_support",
+        "stable_release_cycle"
+      ],
+      "explanation": "A reflects the new innovation-first preference rather than the old maturity preference."
+    }
+  },
+  {
+    "case_id": "PREF-D-BOUNDARY-001",
+    "language": "en",
+    "pair_id": null,
+    "layer": "diagnostic",
+    "primary_capability": "preference_boundary",
+    "capabilities": [
+      "cross_agent_transfer",
+      "scope_resolution",
+      "temporary_constraint_filtering"
+    ],
+    "scenario": "leisure_vs_business_hotel",
+    "persona": "Diego",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "leisure_agent",
+        "role": "leisure travel agent",
+        "session_id": "session_1",
+        "scope": "leisure_travel",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "For leisure trips, I like quiet, slow-paced small hotels and do not mind staying away from busy areas."
+      },
+      {
+        "order": 2,
+        "agent_id": "business_agent",
+        "role": "business travel agent",
+        "session_id": "session_2",
+        "scope": "business_trip_shanghai_01",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "For my one-day business trip to Shanghai last month, I needed a chain hotel near a transport hub so I could keep to the schedule."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "vacation planner",
+      "current_context": {
+        "domain": "travel",
+        "context_type": "leisure_travel"
+      },
+      "task": "Diego is planning a new private island vacation. Choose the accommodation that best matches the preferences applicable to this trip.",
+      "memory_query": "Which accommodation preferences apply to Diego's new private vacation?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "An international beachfront resort near the ferry terminal, with full facilities but busy common areas.",
+          "attributes": [
+            "large_chain",
+            "transport_hub_proximity",
+            "full_service",
+            "busy"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "A quiet small seaside guesthouse away from the commercial district, with few rooms and a relaxed pace but limited dining options.",
+          "attributes": [
+            "quiet",
+            "small_hotel",
+            "slow_paced",
+            "farther_from_center"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "An independent design hotel in the island town center, within walking distance of restaurants and the night market, but lively in the evenings.",
+          "attributes": [
+            "town_center",
+            "independent_design_hotel",
+            "walkable",
+            "lively"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "quiet",
+        "small_hotel",
+        "slow_paced",
+        "farther_from_center"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "transport_hub_proximity",
+        "large_chain"
+      ],
+      "superseded_preferences": [],
+      "evidence_groups": [],
+      "expected_choice": "B",
+      "required_reason_codes": [
+        "quiet",
+        "small_hotel",
+        "slow_paced"
+      ],
+      "forbidden_reason_codes": [
+        "transport_hub_proximity",
+        "large_chain"
+      ],
+      "explanation": "The Shanghai business-trip constraint must not propagate into a new leisure trip."
+    }
+  },
+  {
+    "case_id": "PREF-D-BOUNDARY-002",
+    "language": "en",
+    "pair_id": null,
+    "layer": "diagnostic",
+    "primary_capability": "preference_boundary",
+    "capabilities": [
+      "cross_agent_transfer",
+      "scope_resolution",
+      "temporary_constraint_filtering"
+    ],
+    "scenario": "personal_invitation_style",
+    "persona": "Eun",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "personal_writing_agent",
+        "role": "personal writing agent",
+        "session_id": "session_1",
+        "scope": "personal_messages",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "For event invitations to friends, I prefer a concise, neutral style. Clear time, location, and RSVP details are enough; I do not need much emotional language."
+      },
+      {
+        "order": 2,
+        "agent_id": "board_report_agent",
+        "role": "board report agent",
+        "session_id": "session_2",
+        "scope": "board_report_q3",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "For last week's board report, please use a formal tone, avoid emojis, and keep it under 300 words."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "personal invitation agent",
+      "current_context": {
+        "domain": "writing",
+        "context_type": "personal_messages"
+      },
+      "task": "Eun needs to write a birthday party invitation to friends. Choose the writing style that best matches her applicable preferences.",
+      "memory_query": "What writing style does Eun prefer for a birthday invitation to friends?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "A formally worded invitation that fully explains the arrangements and response process, uses no emojis, and stays under 300 words.",
+          "attributes": [
+            "formal_tone",
+            "complete_details",
+            "no_emoji",
+            "max_300_words"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "A warm, casual invitation with a personal greeting and a little playful language, while clearly stating the time and location.",
+          "attributes": [
+            "warm_tone",
+            "casual",
+            "playful"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A concise, neutral invitation template focused on the time, location, and RSVP, making it easy to confirm quickly.",
+          "attributes": [
+            "neutral",
+            "concise",
+            "template",
+            "rsvp_focused",
+            "clear_details"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "neutral",
+        "concise",
+        "rsvp_focused",
+        "clear_details"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "formal_tone",
+        "no_emoji",
+        "max_300_words"
+      ],
+      "superseded_preferences": [],
+      "evidence_groups": [],
+      "expected_choice": "C",
+      "required_reason_codes": [
+        "neutral",
+        "concise",
+        "rsvp_focused"
+      ],
+      "forbidden_reason_codes": [
+        "formal_tone",
+        "no_emoji",
+        "max_300_words"
+      ],
+      "explanation": "The board-report constraints were task-local and should not affect a personal invitation."
+    }
+  },
+  {
+    "case_id": "PREF-C-HOTEL-001-A",
+    "language": "en",
+    "pair_id": "PREF-C-HOTEL-001",
+    "layer": "composite",
+    "primary_capability": "composite_journey",
+    "capabilities": [
+      "cross_agent_merge",
+      "scope_resolution",
+      "temporary_constraint_filtering",
+      "counterfactual"
+    ],
+    "scenario": "counterfactual_hotel",
+    "persona": "Farida",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "leisure_agent",
+        "role": "leisure travel agent",
+        "session_id": "session_1",
+        "scope": "leisure_travel",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "On private vacations, quiet matters most to me, and I dislike crowded, noisy hotels."
+      },
+      {
+        "order": 2,
+        "agent_id": "hotel_agent",
+        "role": "hotel discovery agent",
+        "session_id": "session_2",
+        "scope": "leisure_travel",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I prefer small accommodations with local character; large international chains do not appeal to me."
+      },
+      {
+        "order": 3,
+        "agent_id": "family_trip_agent",
+        "role": "family travel agent",
+        "session_id": "session_3",
+        "scope": "family_trip_last_month",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "For a week-long family stay last month, the room had to include a kitchen and a washer."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "Kyoto vacation planner",
+      "current_context": {
+        "domain": "travel",
+        "context_type": "leisure_travel"
+      },
+      "task": "The user is taking a five-day private vacation in Kyoto. Choose the hotel that best matches the user's current preferences.",
+      "memory_query": "What accommodation preferences does this user have for a private vacation in Kyoto?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "A large international chain in the city center, with convenient transport and consistent service, but many rooms and a busy atmosphere.",
+          "attributes": [
+            "city_center",
+            "large_chain",
+            "brand_consistency",
+            "full_service",
+            "busy"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A quiet local machiya boutique hotel with few rooms and distinctive character, but farther from the main sights.",
+          "attributes": [
+            "quiet",
+            "boutique",
+            "local_character",
+            "farther_from_center"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "A modern serviced apartment near Kyoto Station, with a kitchen and washer for longer stays, but limited hotel service and local character.",
+          "attributes": [
+            "station_proximity",
+            "serviced_apartment",
+            "kitchen",
+            "laundry",
+            "self_service"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "quiet",
+        "boutique",
+        "local_character"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "kitchen",
+        "laundry"
+      ],
+      "superseded_preferences": [],
+      "evidence_groups": [],
+      "expected_choice": "C",
+      "required_reason_codes": [
+        "quiet",
+        "boutique",
+        "local_character"
+      ],
+      "forbidden_reason_codes": [
+        "kitchen",
+        "laundry"
+      ],
+      "explanation": "The prior family-trip facilities were task-local; the stable leisure preferences select C."
+    }
+  },
+  {
+    "case_id": "PREF-C-HOTEL-001-B",
+    "language": "en",
+    "pair_id": "PREF-C-HOTEL-001",
+    "layer": "composite",
+    "primary_capability": "composite_journey",
+    "capabilities": [
+      "cross_agent_merge",
+      "scope_resolution",
+      "temporary_constraint_filtering",
+      "counterfactual"
+    ],
+    "scenario": "counterfactual_hotel",
+    "persona": "Farida",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "leisure_agent",
+        "role": "leisure travel agent",
+        "session_id": "session_1",
+        "scope": "leisure_travel",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "For hotels on private vacations, convenient transport in the city center matters most to me."
+      },
+      {
+        "order": 2,
+        "agent_id": "hotel_agent",
+        "role": "hotel discovery agent",
+        "session_id": "session_2",
+        "scope": "leisure_travel",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I trust large international chains with consistent service standards and full facilities."
+      },
+      {
+        "order": 3,
+        "agent_id": "family_trip_agent",
+        "role": "family travel agent",
+        "session_id": "session_3",
+        "scope": "family_trip_last_month",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "For a week-long family stay last month, the room had to include a kitchen and a washer."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "Kyoto vacation planner",
+      "current_context": {
+        "domain": "travel",
+        "context_type": "leisure_travel"
+      },
+      "task": "The user is taking a five-day private vacation in Kyoto. Choose the hotel that best matches the user's current preferences.",
+      "memory_query": "What accommodation preferences does this user have for a private vacation in Kyoto?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "A large international chain in the city center, with convenient transport and consistent service, but many rooms and a busy atmosphere.",
+          "attributes": [
+            "city_center",
+            "large_chain",
+            "brand_consistency",
+            "full_service",
+            "busy"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A quiet local machiya boutique hotel with few rooms and distinctive character, but farther from the main sights.",
+          "attributes": [
+            "quiet",
+            "boutique",
+            "local_character",
+            "farther_from_center"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "A modern serviced apartment near Kyoto Station, with a kitchen and washer for longer stays, but limited hotel service and local character.",
+          "attributes": [
+            "station_proximity",
+            "serviced_apartment",
+            "kitchen",
+            "laundry",
+            "self_service"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "city_center",
+        "large_chain",
+        "brand_consistency",
+        "full_service"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "kitchen",
+        "laundry"
+      ],
+      "superseded_preferences": [],
+      "evidence_groups": [],
+      "expected_choice": "A",
+      "required_reason_codes": [
+        "city_center",
+        "large_chain",
+        "brand_consistency"
+      ],
+      "forbidden_reason_codes": [
+        "kitchen",
+        "laundry"
+      ],
+      "explanation": "The same decision surface flips because this user's leisure preferences favor option A."
+    }
+  },
+  {
+    "case_id": "PREF-C-ANALYSIS-001-A",
+    "language": "en",
+    "pair_id": "PREF-C-ANALYSIS-001",
+    "layer": "composite",
+    "primary_capability": "composite_journey",
+    "capabilities": [
+      "cross_agent_merge",
+      "scope_resolution",
+      "temporary_constraint_filtering",
+      "counterfactual"
+    ],
+    "scenario": "counterfactual_analysis_style",
+    "persona": "Hana",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "strategy_agent",
+        "role": "product strategy agent",
+        "session_id": "session_1",
+        "scope": "product_decision",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "When comparing proposals, give me the recommendation first; I do not want to read a long background section before it."
+      },
+      {
+        "order": 2,
+        "agent_id": "writing_agent",
+        "role": "business writing agent",
+        "session_id": "session_2",
+        "scope": "product_decision",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "Do not open with the full derivation. Start with a few clear points on what to choose and what to do next."
+      },
+      {
+        "order": 3,
+        "agent_id": "training_agent",
+        "role": "new-hire training agent",
+        "session_id": "session_3",
+        "scope": "new_hire_training_last_month",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "For last month's new-hire training, start with a real case to explain the situation and do not make the purchasing decision for them."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "product analysis agent",
+      "current_context": {
+        "domain": "work",
+        "context_type": "product_decision"
+      },
+      "task": "A few weeks later, the user needs to compare two vendor proposals in an internal product-team review; this material is not for training. Choose the presentation format that best matches the user's current analysis preferences.",
+      "memory_query": "What presentation style does this user prefer when comparing vendor proposals?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "Open with a recommendation, then use three concise bullets to summarize the key trade-offs and next action.",
+          "attributes": [
+            "conclusion_first",
+            "concise",
+            "action_oriented",
+            "bullet_points"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "Systematically present the full data, evidence sources, risk assumptions, and detailed reasoning before giving a conclusion.",
+          "attributes": [
+            "detailed",
+            "evidence_rich",
+            "full_reasoning",
+            "risk_analysis"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "Start with a real implementation case, then add a one-page comparison table without recommending an option, leaving the review team to decide.",
+          "attributes": [
+            "case_first",
+            "accessible",
+            "comparison_table",
+            "reader_decides"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "conclusion_first",
+        "concise",
+        "action_oriented",
+        "bullet_points"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "case_first",
+        "reader_decides"
+      ],
+      "superseded_preferences": [],
+      "evidence_groups": [],
+      "expected_choice": "A",
+      "required_reason_codes": [
+        "conclusion_first",
+        "concise",
+        "action_oriented"
+      ],
+      "forbidden_reason_codes": [
+        "case_first",
+        "reader_decides"
+      ],
+      "explanation": "The prior training format was task-local; the stable product-decision preference selects A."
+    }
+  },
+  {
+    "case_id": "PREF-C-ANALYSIS-001-B",
+    "language": "en",
+    "pair_id": "PREF-C-ANALYSIS-001",
+    "layer": "composite",
+    "primary_capability": "composite_journey",
+    "capabilities": [
+      "cross_agent_merge",
+      "scope_resolution",
+      "temporary_constraint_filtering",
+      "counterfactual"
+    ],
+    "scenario": "counterfactual_analysis_style",
+    "persona": "Hana",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "strategy_agent",
+        "role": "product strategy agent",
+        "session_id": "session_1",
+        "scope": "product_decision",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "For important proposal comparisons, I want the complete data and evidence sources, not just a simplified conclusion."
+      },
+      {
+        "order": 2,
+        "agent_id": "writing_agent",
+        "role": "business writing agent",
+        "session_id": "session_2",
+        "scope": "product_decision",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "Write out the risk assumptions and reasoning clearly so I can verify the analysis myself."
+      },
+      {
+        "order": 3,
+        "agent_id": "training_agent",
+        "role": "new-hire training agent",
+        "session_id": "session_3",
+        "scope": "new_hire_training_last_month",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "For last month's new-hire training, start with a real case to explain the situation and do not make the purchasing decision for them."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "product analysis agent",
+      "current_context": {
+        "domain": "work",
+        "context_type": "product_decision"
+      },
+      "task": "A few weeks later, the user needs to compare two vendor proposals in an internal product-team review; this material is not for training. Choose the presentation format that best matches the user's current analysis preferences.",
+      "memory_query": "What presentation style does this user prefer when comparing vendor proposals?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "Open with a recommendation, then use three concise bullets to summarize the key trade-offs and next action.",
+          "attributes": [
+            "conclusion_first",
+            "concise",
+            "action_oriented",
+            "bullet_points"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "Systematically present the full data, evidence sources, risk assumptions, and detailed reasoning before giving a conclusion.",
+          "attributes": [
+            "detailed",
+            "evidence_rich",
+            "full_reasoning",
+            "risk_analysis"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "Start with a real implementation case, then add a one-page comparison table without recommending an option, leaving the review team to decide.",
+          "attributes": [
+            "case_first",
+            "accessible",
+            "comparison_table",
+            "reader_decides"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "detailed",
+        "evidence_rich",
+        "full_reasoning",
+        "risk_analysis"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "case_first",
+        "reader_decides"
+      ],
+      "superseded_preferences": [],
+      "evidence_groups": [],
+      "expected_choice": "C",
+      "required_reason_codes": [
+        "detailed",
+        "evidence_rich",
+        "risk_analysis"
+      ],
+      "forbidden_reason_codes": [
+        "case_first",
+        "reader_decides"
+      ],
+      "explanation": "The prior training format was task-local; the stable evidence-first preference selects C."
+    }
+  },
+  {
+    "case_id": "PREF-C-SOFTWARE-001-A",
+    "language": "en",
+    "pair_id": "PREF-C-SOFTWARE-001",
+    "layer": "composite",
+    "primary_capability": "composite_journey",
+    "capabilities": [
+      "preference_update",
+      "stale_preference_rejection",
+      "temporary_constraint_filtering",
+      "counterfactual"
+    ],
+    "scenario": "counterfactual_software_purchase",
+    "persona": "Chloe",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "procurement_agent",
+        "role": "software procurement agent",
+        "session_id": "session_1",
+        "scope": "team_software",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I used to look at price first when choosing team software. If it worked, that was enough."
+      },
+      {
+        "order": 2,
+        "agent_id": "team_operations_agent",
+        "role": "team operations agent",
+        "session_id": "session_2",
+        "scope": "team_software",
+        "preference_kind": "update",
+        "source_type": "user_explicit",
+        "utterance": "After repeated failures with low-cost tools, I now prioritize proven, stable options with long-term support for this team's daily software; price no longer comes first."
+      },
+      {
+        "order": 3,
+        "agent_id": "demo_agent",
+        "role": "innovation demo agent",
+        "session_id": "session_3",
+        "scope": "innovation_demo_last_month",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "For a one-off innovation demo last month, it was fine to temporarily try the platform with the newest features."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "software procurement agent",
+      "current_context": {
+        "domain": "shopping",
+        "context_type": "team_software"
+      },
+      "task": "The user needs to choose a project management platform for a ten-person team to use daily over the next year. Choose the option that best matches the user's current preferences.",
+      "memory_query": "What does this user currently prioritize when choosing daily project management software for the team?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "The lowest-priced option, with simple core features and same-day rollout; it relies mainly on community support and has fewer integrations.",
+          "attributes": [
+            "low_price",
+            "simple_setup",
+            "basic_functionality",
+            "same_day_launch",
+            "community_support"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A higher-priced option with years of validation, a strong reliability record, mature integrations, and long-term vendor support, but a two-week rollout.",
+          "attributes": [
+            "proven_reliability",
+            "stable",
+            "mature_ecosystem",
+            "long_term_support",
+            "two_week_setup"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "A new platform with the most automation features and free vendor migration assistance, but a short track record and frequent releases.",
+          "attributes": [
+            "newest_features",
+            "advanced_automation",
+            "vendor_migration_support",
+            "short_track_record",
+            "frequent_change"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "proven_reliability",
+        "stable",
+        "long_term_support"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "newest_features"
+      ],
+      "superseded_preferences": [
+        "low_price"
+      ],
+      "evidence_groups": [],
+      "expected_choice": "C",
+      "required_reason_codes": [
+        "proven_reliability",
+        "stable",
+        "long_term_support"
+      ],
+      "forbidden_reason_codes": [
+        "newest_features",
+        "low_price"
+      ],
+      "explanation": "The stable updated preference applies to this team's daily software; the demo exception is expired."
+    }
+  },
+  {
+    "case_id": "PREF-C-SOFTWARE-001-B",
+    "language": "en",
+    "pair_id": "PREF-C-SOFTWARE-001",
+    "layer": "composite",
+    "primary_capability": "composite_journey",
+    "capabilities": [
+      "preference_update",
+      "stale_preference_rejection",
+      "temporary_constraint_filtering",
+      "counterfactual"
+    ],
+    "scenario": "counterfactual_software_purchase",
+    "persona": "Chloe",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "procurement_agent",
+        "role": "software procurement agent",
+        "session_id": "session_1",
+        "scope": "team_software",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I used to choose mature team software with comprehensive features and strong support."
+      },
+      {
+        "order": 2,
+        "agent_id": "team_operations_agent",
+        "role": "team operations agent",
+        "session_id": "session_2",
+        "scope": "team_software",
+        "preference_kind": "update",
+        "source_type": "user_explicit",
+        "utterance": "This team's budget will be tight for the next year. For their daily software, I now prioritize price and fast rollout instead of paying for a full ecosystem they will not use."
+      },
+      {
+        "order": 3,
+        "agent_id": "demo_agent",
+        "role": "innovation demo agent",
+        "session_id": "session_3",
+        "scope": "innovation_demo_last_month",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "For a one-off innovation demo last month, it was fine to temporarily try the platform with the newest features."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "software procurement agent",
+      "current_context": {
+        "domain": "shopping",
+        "context_type": "team_software"
+      },
+      "task": "The user needs to choose a project management platform for a ten-person team to use daily over the next year. Choose the option that best matches the user's current preferences.",
+      "memory_query": "What does this user currently prioritize when choosing daily project management software for the team?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "The lowest-priced option, with simple core features and same-day rollout; it relies mainly on community support and has fewer integrations.",
+          "attributes": [
+            "low_price",
+            "simple_setup",
+            "basic_functionality",
+            "same_day_launch",
+            "community_support"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A higher-priced option with years of validation, a strong reliability record, mature integrations, and long-term vendor support, but a two-week rollout.",
+          "attributes": [
+            "proven_reliability",
+            "stable",
+            "mature_ecosystem",
+            "long_term_support",
+            "two_week_setup"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "A new platform with the most automation features and free vendor migration assistance, but a short track record and frequent releases.",
+          "attributes": [
+            "newest_features",
+            "advanced_automation",
+            "vendor_migration_support",
+            "short_track_record",
+            "frequent_change"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "low_price",
+        "simple_setup",
+        "basic_functionality"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "newest_features"
+      ],
+      "superseded_preferences": [
+        "mature_ecosystem",
+        "long_term_support"
+      ],
+      "evidence_groups": [],
+      "expected_choice": "A",
+      "required_reason_codes": [
+        "low_price",
+        "simple_setup"
+      ],
+      "forbidden_reason_codes": [
+        "newest_features",
+        "mature_ecosystem",
+        "long_term_support"
+      ],
+      "explanation": "The explicit budget-first update selects A; the innovation-demo exception is expired."
+    }
+  },
+  {
+    "case_id": "PREF-D-MERGE-003",
+    "language": "en",
+    "pair_id": null,
+    "layer": "diagnostic",
+    "primary_capability": "cross_agent_merge",
+    "capabilities": [
+      "cross_agent_transfer",
+      "preference_synthesis"
+    ],
+    "scenario": "restaurant_choice",
+    "persona": "Iris",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "food_agent",
+        "role": "restaurant discovery agent",
+        "session_id": "session_1",
+        "scope": "personal_dining",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "When choosing a restaurant for myself, I want a menu with several genuinely plant-based main dishes, not just side salads."
+      },
+      {
+        "order": 2,
+        "agent_id": "social_agent",
+        "role": "social planning agent",
+        "session_id": "session_2",
+        "scope": "personal_dining",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I prefer restaurants quiet enough for an unhurried conversation; loud, crowded dining rooms wear me out."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "dinner planner",
+      "current_context": {
+        "domain": "dining",
+        "context_type": "personal_dining"
+      },
+      "task": "Iris is meeting a close friend for dinner. Choose the restaurant that best matches her preferences.",
+      "memory_query": "What restaurant qualities does Iris prefer for a personal dinner?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "A lively plant-based food hall with eight vegan mains, communal tables, loud music, and an average dinner price of $30 per person.",
+          "attributes": [
+            "plant_based_mains",
+            "many_vegan_options",
+            "loud",
+            "crowded",
+            "standard_price"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A small, quiet neighborhood restaurant with five plant-based mains, spaced tables, a relaxed two-hour seating, and an average dinner price of $55 per person.",
+          "attributes": [
+            "plant_based_mains",
+            "many_vegan_options",
+            "quiet",
+            "uncrowded",
+            "unhurried",
+            "premium_price"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "A small, quiet traditional grill with spaced tables, a relaxed two-hour seating, only one plant-based main, and an average dinner price of $30 per person.",
+          "attributes": [
+            "quiet",
+            "uncrowded",
+            "unhurried",
+            "limited_plant_based",
+            "standard_price"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "plant_based_mains",
+        "many_vegan_options",
+        "quiet",
+        "uncrowded"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [],
+      "superseded_preferences": [],
+      "evidence_groups": [
+        [
+          "plant_based_mains",
+          "many_vegan_options"
+        ],
+        [
+          "quiet",
+          "uncrowded"
+        ]
+      ],
+      "expected_choice": "C",
+      "required_reason_codes": [
+        "plant_based_mains",
+        "quiet"
+      ],
+      "forbidden_reason_codes": [],
+      "explanation": "C is the only option that combines a real plant-based menu with a quiet setting."
+    }
+  },
+  {
+    "case_id": "PREF-D-MERGE-004",
+    "language": "en",
+    "pair_id": null,
+    "layer": "diagnostic",
+    "primary_capability": "cross_agent_merge",
+    "capabilities": [
+      "cross_agent_transfer",
+      "preference_synthesis"
+    ],
+    "scenario": "home_office_chair",
+    "persona": "Jonah",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "home_agent",
+        "role": "home office planning agent",
+        "session_id": "session_1",
+        "scope": "home_office_chair",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "My desk nook is narrow. The chair must be no more than 60 centimeters wide, and within that limit I prefer the most compact option."
+      },
+      {
+        "order": 2,
+        "agent_id": "ergonomics_agent",
+        "role": "workplace ergonomics agent",
+        "session_id": "session_2",
+        "scope": "home_office_chair",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I sit for long work sessions and want adjustable lumbar support; the more completely I can adjust its height and depth, the better."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "home office shopping agent",
+      "current_context": {
+        "domain": "shopping",
+        "context_type": "home_office_chair"
+      },
+      "task": "Jonah is buying a chair for his home office. Choose the chair that best matches his preferences.",
+      "memory_query": "What size and back-support features does Jonah need in a home office chair?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "A compact 48 cm-wide task chair with a fixed mesh back and no adjustable lumbar support.",
+          "attributes": [
+            "most_compact",
+            "under_60cm",
+            "fixed_back",
+            "no_adjustable_lumbar"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A $550, 58 cm-wide compact ergonomic chair with adjustable lumbar height and depth, designed for long work sessions.",
+          "attributes": [
+            "under_60cm",
+            "adjustable_lumbar",
+            "lumbar_height_depth",
+            "long_session_support",
+            "premium_price"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "A $320, 68 cm-wide executive ergonomic chair with the widest lumbar height-and-depth adjustment range and a larger padded back.",
+          "attributes": [
+            "wide",
+            "strongest_lumbar",
+            "adjustable_lumbar",
+            "lumbar_height_depth",
+            "widest_adjustment_range",
+            "long_session_support",
+            "mid_price"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "under_60cm",
+        "adjustable_lumbar",
+        "lumbar_height_depth",
+        "long_session_support"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [],
+      "superseded_preferences": [],
+      "evidence_groups": [
+        [
+          "most_compact"
+        ],
+        [
+          "widest_adjustment_range"
+        ]
+      ],
+      "expected_choice": "C",
+      "required_reason_codes": [
+        "under_60cm",
+        "adjustable_lumbar",
+        "lumbar_height_depth"
+      ],
+      "forbidden_reason_codes": [],
+      "explanation": "C is the only chair narrow enough for the desk nook while also providing adjustable lumbar support for long sessions."
+    }
+  },
+  {
+    "case_id": "PREF-D-UPDATE-003",
+    "language": "en",
+    "pair_id": null,
+    "layer": "diagnostic",
+    "primary_capability": "preference_update",
+    "capabilities": [
+      "cross_agent_transfer",
+      "preference_freshness",
+      "stale_preference_rejection"
+    ],
+    "scenario": "exercise_class",
+    "persona": "Kavya",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "fitness_agent",
+        "role": "fitness discovery agent",
+        "session_id": "session_1",
+        "scope": "weekly_exercise",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I used to choose intense group workouts because the competition kept me motivated."
+      },
+      {
+        "order": 2,
+        "agent_id": "routine_agent",
+        "role": "weekly routine agent",
+        "session_id": "session_2",
+        "scope": "weekly_exercise",
+        "preference_kind": "update",
+        "source_type": "user_explicit",
+        "utterance": "My routine has changed. I now stick with low-impact sessions I can do independently at a steady pace; group competition is no longer what I want."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "fitness planning agent",
+      "current_context": {
+        "domain": "wellness",
+        "context_type": "weekly_exercise"
+      },
+      "task": "Kavya is choosing a recurring weekly exercise class. Choose the option that best matches her current preferences.",
+      "memory_query": "What kind of weekly exercise does Kavya currently prefer?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "A high-intensity team circuit with leaderboards, partner drills, and a fixed competitive pace.",
+          "attributes": [
+            "high_intensity",
+            "group_competition",
+            "leaderboard"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A low-impact studio session with individual stations, self-paced progress, and optional instructor guidance.",
+          "attributes": [
+            "low_impact",
+            "independent",
+            "steady_pace",
+            "self_paced"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "A moderate dance class with a social group format, synchronized routines, and energetic music.",
+          "attributes": [
+            "moderate_intensity",
+            "social_group",
+            "fixed_pace"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "low_impact",
+        "independent",
+        "steady_pace",
+        "self_paced"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [],
+      "superseded_preferences": [
+        "high_intensity",
+        "group_competition"
+      ],
+      "evidence_groups": [],
+      "expected_choice": "C",
+      "required_reason_codes": [
+        "low_impact",
+        "independent",
+        "steady_pace"
+      ],
+      "forbidden_reason_codes": [
+        "high_intensity",
+        "group_competition"
+      ],
+      "explanation": "The explicit routine change supersedes the former preference for competitive group exercise."
+    }
+  },
+  {
+    "case_id": "PREF-D-UPDATE-004",
+    "language": "en",
+    "pair_id": null,
+    "layer": "diagnostic",
+    "primary_capability": "preference_update",
+    "capabilities": [
+      "cross_agent_transfer",
+      "preference_freshness",
+      "stale_preference_rejection"
+    ],
+    "scenario": "grocery_fulfillment",
+    "persona": "Luis",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "grocery_agent",
+        "role": "grocery shopping agent",
+        "session_id": "session_1",
+        "scope": "weekly_groceries",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I used to choose the fastest grocery delivery window, even when it cost more."
+      },
+      {
+        "order": 2,
+        "agent_id": "household_agent",
+        "role": "household planning agent",
+        "session_id": "session_2",
+        "scope": "weekly_groceries",
+        "preference_kind": "update",
+        "source_type": "user_explicit",
+        "utterance": "I work near the market now. For weekly groceries, I prefer a scheduled pickup with minimal packaging, and speed is no longer worth an extra delivery fee."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "grocery fulfillment agent",
+      "current_context": {
+        "domain": "shopping",
+        "context_type": "weekly_groceries"
+      },
+      "task": "Luis is placing his regular weekly grocery order. Choose the fulfillment option that best matches his current preferences.",
+      "memory_query": "How does Luis currently prefer to receive his weekly groceries?",
+      "candidates": [
+        {
+          "id": "B",
+          "description": "A ninety-minute home delivery with a priority fee and individually bagged categories.",
+          "attributes": [
+            "fastest_delivery",
+            "priority_fee",
+            "extra_packaging"
+          ]
+        },
+        {
+          "id": "A",
+          "description": "A scheduled pickup beside Luis's workplace, packed together in reusable crates with no delivery fee.",
+          "attributes": [
+            "scheduled_pickup",
+            "near_work",
+            "minimal_packaging",
+            "no_delivery_fee"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A next-day home delivery with a small fee and standard disposable bags.",
+          "attributes": [
+            "next_day_delivery",
+            "small_fee",
+            "standard_packaging"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "scheduled_pickup",
+        "near_work",
+        "minimal_packaging",
+        "no_delivery_fee"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [],
+      "superseded_preferences": [
+        "fastest_delivery",
+        "priority_fee"
+      ],
+      "evidence_groups": [],
+      "expected_choice": "A",
+      "required_reason_codes": [
+        "scheduled_pickup",
+        "minimal_packaging"
+      ],
+      "forbidden_reason_codes": [
+        "fastest_delivery",
+        "priority_fee"
+      ],
+      "explanation": "The current pickup and packaging preference replaces the previous speed-first choice."
+    }
+  },
+  {
+    "case_id": "PREF-D-BOUNDARY-003",
+    "language": "en",
+    "pair_id": null,
+    "layer": "diagnostic",
+    "primary_capability": "preference_boundary",
+    "capabilities": [
+      "cross_agent_transfer",
+      "scope_resolution",
+      "temporary_constraint_filtering"
+    ],
+    "scenario": "personal_vs_client_dinner",
+    "persona": "Maya",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "food_agent",
+        "role": "personal dining agent",
+        "session_id": "session_1",
+        "scope": "personal_dining",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "For my own dinners, I enjoy spicy regional food and like trying dishes I have not had before."
+      },
+      {
+        "order": 2,
+        "agent_id": "client_agent",
+        "role": "client hospitality agent",
+        "session_id": "session_2",
+        "scope": "client_dinner_last_month",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "For last month's client dinner, I needed a quiet private room and a mild, familiar menu because the guests had different tastes."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "personal dinner agent",
+      "current_context": {
+        "domain": "dining",
+        "context_type": "personal_dining"
+      },
+      "task": "Maya is choosing a restaurant for a casual dinner with a close friend. Choose the option that best matches Maya's applicable preferences.",
+      "memory_query": "What dining preferences apply to Maya's casual personal dinner?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "A quiet hotel dining room with a private booth and a familiar mild international menu.",
+          "attributes": [
+            "quiet",
+            "private_room",
+            "mild",
+            "familiar_menu"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A casual regional restaurant known for spicy seasonal dishes and a rotating menu of less familiar specialties.",
+          "attributes": [
+            "spicy",
+            "regional_food",
+            "novel_dishes",
+            "casual"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "A popular pizza restaurant with a familiar menu, lively atmosphere, and several shareable classics.",
+          "attributes": [
+            "familiar_menu",
+            "lively",
+            "shareable"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "spicy",
+        "regional_food",
+        "novel_dishes"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "quiet",
+        "private_room",
+        "mild",
+        "familiar_menu"
+      ],
+      "superseded_preferences": [],
+      "evidence_groups": [],
+      "expected_choice": "C",
+      "required_reason_codes": [
+        "spicy",
+        "regional_food",
+        "novel_dishes"
+      ],
+      "forbidden_reason_codes": [
+        "quiet",
+        "private_room",
+        "mild",
+        "familiar_menu"
+      ],
+      "explanation": "The client-dinner requirements were guest-specific and do not replace Maya's personal dining preference."
+    }
+  },
+  {
+    "case_id": "PREF-D-BOUNDARY-004",
+    "language": "en",
+    "pair_id": null,
+    "layer": "diagnostic",
+    "primary_capability": "preference_boundary",
+    "capabilities": [
+      "cross_agent_transfer",
+      "scope_resolution",
+      "temporary_constraint_filtering"
+    ],
+    "scenario": "routine_project_communication",
+    "persona": "Noah",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "collaboration_agent",
+        "role": "collaboration agent",
+        "session_id": "session_1",
+        "scope": "routine_project_work",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "For routine project work, I prefer written asynchronous updates that I can review and respond to in my own time."
+      },
+      {
+        "order": 2,
+        "agent_id": "incident_agent",
+        "role": "incident response agent",
+        "session_id": "session_2",
+        "scope": "outage_last_week",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "During last week's production outage, call me immediately and keep a live video room open until service is restored."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "project setup agent",
+      "current_context": {
+        "domain": "work",
+        "context_type": "routine_project_work"
+      },
+      "task": "Noah is setting the normal communication policy for a new project with no active incident. Choose the policy that best matches his applicable preferences.",
+      "memory_query": "How does Noah prefer routine project communication when there is no incident?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "Keep a video room open during working hours and call whenever a teammate needs a quick response.",
+          "attributes": [
+            "live_video",
+            "phone_calls",
+            "synchronous"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "Use written project updates and comment threads, with teammates responding asynchronously when available.",
+          "attributes": [
+            "written",
+            "asynchronous",
+            "review_later"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "Hold two scheduled video meetings each day and summarize decisions afterward in writing.",
+          "attributes": [
+            "scheduled_video",
+            "synchronous",
+            "written_summary"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "written",
+        "asynchronous",
+        "review_later"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "live_video",
+        "phone_calls"
+      ],
+      "superseded_preferences": [],
+      "evidence_groups": [],
+      "expected_choice": "C",
+      "required_reason_codes": [
+        "written",
+        "asynchronous"
+      ],
+      "forbidden_reason_codes": [
+        "live_video",
+        "phone_calls"
+      ],
+      "explanation": "The live-call instruction applied to an outage, not routine project work."
+    }
+  },
+  {
+    "case_id": "PREF-C-FLIGHT-001-A",
+    "language": "en",
+    "pair_id": "PREF-C-FLIGHT-001",
+    "layer": "composite",
+    "primary_capability": "composite_journey",
+    "capabilities": [
+      "cross_agent_merge",
+      "scope_resolution",
+      "temporary_constraint_filtering",
+      "counterfactual"
+    ],
+    "scenario": "counterfactual_flight",
+    "persona": "Omar",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "travel_agent",
+        "role": "travel planning agent",
+        "session_id": "session_1",
+        "scope": "personal_flight",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "For vacation flights, I strongly prefer nonstop routes because connections make the trip tiring."
+      },
+      {
+        "order": 2,
+        "agent_id": "schedule_agent",
+        "role": "schedule planning agent",
+        "session_id": "session_2",
+        "scope": "personal_flight",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I prefer daytime flights that arrive with enough time to settle in before the evening."
+      },
+      {
+        "order": 3,
+        "agent_id": "family_agent",
+        "role": "family travel agent",
+        "session_id": "session_3",
+        "scope": "family_trip_last_year",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "For a family trip last year, we needed two checked bags, and one relative who was recovering from surgery needed airport wheelchair assistance."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "flight booking agent",
+      "current_context": {
+        "domain": "travel",
+        "context_type": "personal_flight"
+      },
+      "task": "The user is booking a personal flight to Lisbon for a five-day vacation. Choose the itinerary that best matches the user's current preferences.",
+      "memory_query": "What does this user currently prefer for personal vacation flights?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "A nonstop morning flight with a standard carry-on allowance, arriving before dinner; it costs 18% more than the cheapest option.",
+          "attributes": [
+            "nonstop",
+            "daytime",
+            "carry_on_included",
+            "arrive_early",
+            "higher_price"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "The lowest-priced overnight itinerary with one connection and a six-hour layover; carry-on costs extra.",
+          "attributes": [
+            "lowest_price",
+            "overnight",
+            "one_connection",
+            "long_layover"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A nonstop overnight flight at a mid-range price with a carry-on included, arriving early in the morning.",
+          "attributes": [
+            "nonstop",
+            "overnight",
+            "carry_on_included",
+            "mid_price"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "nonstop",
+        "daytime",
+        "arrive_early"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "checked_bags",
+        "wheelchair_assistance"
+      ],
+      "superseded_preferences": [],
+      "evidence_groups": [],
+      "expected_choice": "A",
+      "required_reason_codes": [
+        "nonstop",
+        "daytime"
+      ],
+      "forbidden_reason_codes": [
+        "checked_bags",
+        "wheelchair_assistance"
+      ],
+      "explanation": "The stable preferences in variant A select A; the held-constant historical requirement is task-local."
+    }
+  },
+  {
+    "case_id": "PREF-C-FLIGHT-001-B",
+    "language": "en",
+    "pair_id": "PREF-C-FLIGHT-001",
+    "layer": "composite",
+    "primary_capability": "composite_journey",
+    "capabilities": [
+      "cross_agent_merge",
+      "scope_resolution",
+      "temporary_constraint_filtering",
+      "counterfactual"
+    ],
+    "scenario": "counterfactual_flight",
+    "persona": "Omar",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "travel_agent",
+        "role": "travel planning agent",
+        "session_id": "session_1",
+        "scope": "personal_flight",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "For personal trips, keeping the fare as low as possible matters more to me than avoiding a connection."
+      },
+      {
+        "order": 2,
+        "agent_id": "schedule_agent",
+        "role": "schedule planning agent",
+        "session_id": "session_2",
+        "scope": "personal_flight",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I am comfortable flying overnight and taking a long layover if that meaningfully lowers the price."
+      },
+      {
+        "order": 3,
+        "agent_id": "family_agent",
+        "role": "family travel agent",
+        "session_id": "session_3",
+        "scope": "family_trip_last_year",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "For a family trip last year, we needed two checked bags, and one relative who was recovering from surgery needed airport wheelchair assistance."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "flight booking agent",
+      "current_context": {
+        "domain": "travel",
+        "context_type": "personal_flight"
+      },
+      "task": "The user is booking a personal flight to Lisbon for a five-day vacation. Choose the itinerary that best matches the user's current preferences.",
+      "memory_query": "What does this user currently prefer for personal vacation flights?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "A nonstop morning flight with a standard carry-on allowance, arriving before dinner; it costs 18% more than the cheapest option.",
+          "attributes": [
+            "nonstop",
+            "daytime",
+            "carry_on_included",
+            "arrive_early",
+            "higher_price"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "The lowest-priced overnight itinerary with one connection and a six-hour layover; carry-on costs extra.",
+          "attributes": [
+            "lowest_price",
+            "overnight",
+            "one_connection",
+            "long_layover"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A nonstop overnight flight at a mid-range price with a carry-on included, arriving early in the morning.",
+          "attributes": [
+            "nonstop",
+            "overnight",
+            "carry_on_included",
+            "mid_price"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "lowest_price",
+        "overnight",
+        "one_connection",
+        "long_layover"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "checked_bags",
+        "wheelchair_assistance"
+      ],
+      "superseded_preferences": [],
+      "evidence_groups": [],
+      "expected_choice": "B",
+      "required_reason_codes": [
+        "lowest_price",
+        "overnight"
+      ],
+      "forbidden_reason_codes": [
+        "checked_bags",
+        "wheelchair_assistance"
+      ],
+      "explanation": "The stable preferences in variant B select B; the held-constant historical requirement is task-local."
+    }
+  },
+  {
+    "case_id": "PREF-C-MEETING-001-A",
+    "language": "en",
+    "pair_id": "PREF-C-MEETING-001",
+    "layer": "composite",
+    "primary_capability": "composite_journey",
+    "capabilities": [
+      "cross_agent_merge",
+      "scope_resolution",
+      "temporary_constraint_filtering",
+      "counterfactual"
+    ],
+    "scenario": "counterfactual_meeting",
+    "persona": "Priya",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "facilitation_agent",
+        "role": "facilitation agent",
+        "session_id": "session_1",
+        "scope": "team_planning",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "For project kickoffs, I want people working together rather than listening to a long presentation."
+      },
+      {
+        "order": 2,
+        "agent_id": "team_agent",
+        "role": "team collaboration agent",
+        "session_id": "session_2",
+        "scope": "team_planning",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "Give every function a real chance to shape the plan through small-group discussion and a shared workspace."
+      },
+      {
+        "order": 3,
+        "agent_id": "investor_agent",
+        "role": "investor presentation agent",
+        "session_id": "session_3",
+        "scope": "investor_update_last_quarter",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "For last quarter's investor update, we needed a polished formal deck with questions moderated by the CEO."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "team meeting agent",
+      "current_context": {
+        "domain": "work",
+        "context_type": "team_planning"
+      },
+      "task": "The user is planning a ninety-minute internal kickoff for a new cross-functional project. Choose the format that best matches the user's current preferences.",
+      "memory_query": "What format does this user currently prefer for an internal project kickoff?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "A facilitated workshop with small-group exercises, a shared whiteboard, and time for every function to shape the plan.",
+          "attributes": [
+            "interactive",
+            "workshop",
+            "shared_input",
+            "collaborative"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "A concise decision meeting built around a pre-read, three unresolved questions, and a written owner and next step for each decision.",
+          "attributes": [
+            "concise",
+            "pre_read",
+            "decision_focused",
+            "clear_owners",
+            "next_steps"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A polished formal presentation followed by a short moderated question period, with discussion led by senior sponsors.",
+          "attributes": [
+            "formal",
+            "presentation",
+            "senior_led",
+            "limited_discussion"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "interactive",
+        "workshop",
+        "shared_input",
+        "collaborative"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "formal",
+        "presentation",
+        "senior_led"
+      ],
+      "superseded_preferences": [],
+      "evidence_groups": [],
+      "expected_choice": "A",
+      "required_reason_codes": [
+        "workshop",
+        "shared_input"
+      ],
+      "forbidden_reason_codes": [
+        "formal",
+        "presentation",
+        "senior_led"
+      ],
+      "explanation": "The stable preferences in variant A select A; the held-constant historical requirement is task-local."
+    }
+  },
+  {
+    "case_id": "PREF-C-MEETING-001-B",
+    "language": "en",
+    "pair_id": "PREF-C-MEETING-001",
+    "layer": "composite",
+    "primary_capability": "composite_journey",
+    "capabilities": [
+      "cross_agent_merge",
+      "scope_resolution",
+      "temporary_constraint_filtering",
+      "counterfactual"
+    ],
+    "scenario": "counterfactual_meeting",
+    "persona": "Priya",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "facilitation_agent",
+        "role": "facilitation agent",
+        "session_id": "session_1",
+        "scope": "team_planning",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "For internal project meetings, I prefer a short pre-read and a discussion focused only on unresolved decisions."
+      },
+      {
+        "order": 2,
+        "agent_id": "team_agent",
+        "role": "team collaboration agent",
+        "session_id": "session_2",
+        "scope": "team_planning",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "Each decision should end with a named owner and a clear next step; open-ended workshops frustrate me."
+      },
+      {
+        "order": 3,
+        "agent_id": "investor_agent",
+        "role": "investor presentation agent",
+        "session_id": "session_3",
+        "scope": "investor_update_last_quarter",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "For last quarter's investor update, we needed a polished formal deck with questions moderated by the CEO."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "team meeting agent",
+      "current_context": {
+        "domain": "work",
+        "context_type": "team_planning"
+      },
+      "task": "The user is planning a ninety-minute internal kickoff for a new cross-functional project. Choose the format that best matches the user's current preferences.",
+      "memory_query": "What format does this user currently prefer for an internal project kickoff?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "A facilitated workshop with small-group exercises, a shared whiteboard, and time for every function to shape the plan.",
+          "attributes": [
+            "interactive",
+            "workshop",
+            "shared_input",
+            "collaborative"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "A concise decision meeting built around a pre-read, three unresolved questions, and a written owner and next step for each decision.",
+          "attributes": [
+            "concise",
+            "pre_read",
+            "decision_focused",
+            "clear_owners",
+            "next_steps"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A polished formal presentation followed by a short moderated question period, with discussion led by senior sponsors.",
+          "attributes": [
+            "formal",
+            "presentation",
+            "senior_led",
+            "limited_discussion"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "concise",
+        "pre_read",
+        "decision_focused",
+        "clear_owners",
+        "next_steps"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "formal",
+        "presentation",
+        "senior_led"
+      ],
+      "superseded_preferences": [],
+      "evidence_groups": [],
+      "expected_choice": "B",
+      "required_reason_codes": [
+        "decision_focused",
+        "clear_owners"
+      ],
+      "forbidden_reason_codes": [
+        "formal",
+        "presentation",
+        "senior_led"
+      ],
+      "explanation": "The stable preferences in variant B select B; the held-constant historical requirement is task-local."
+    }
+  },
+  {
+    "case_id": "PREF-C-MEAL-001-A",
+    "language": "en",
+    "pair_id": "PREF-C-MEAL-001",
+    "layer": "composite",
+    "primary_capability": "composite_journey",
+    "capabilities": [
+      "cross_agent_merge",
+      "scope_resolution",
+      "temporary_constraint_filtering",
+      "counterfactual"
+    ],
+    "scenario": "counterfactual_meal",
+    "persona": "Quinn",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "nutrition_agent",
+        "role": "nutrition agent",
+        "session_id": "session_1",
+        "scope": "weekday_meals",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "For weekday meals, I prioritize a high-protein plan that includes fish, chicken, or eggs."
+      },
+      {
+        "order": 2,
+        "agent_id": "routine_agent",
+        "role": "routine planning agent",
+        "session_id": "session_2",
+        "scope": "weekday_meals",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I need meals I can reheat in under five minutes between meetings, even if the menu repeats."
+      },
+      {
+        "order": 3,
+        "agent_id": "event_agent",
+        "role": "event catering agent",
+        "session_id": "session_3",
+        "scope": "office_event_last_month",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "For last month's office event, every meal had to be nut-free and carry full allergen labels."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "meal planning agent",
+      "current_context": {
+        "domain": "food",
+        "context_type": "weekday_meals"
+      },
+      "task": "The user is selecting a weekday meal-plan service for regular personal use. Choose the plan that best matches the user's current preferences.",
+      "memory_query": "What does this user currently prefer for regular weekday meals?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "A high-protein plan with chicken, fish, and eggs; every meal reheats in under five minutes, but the menu repeats often.",
+          "attributes": [
+            "high_protein",
+            "animal_protein",
+            "under_five_minutes",
+            "repetitive"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "A plant-based plan with beans, grains, and seasonal vegetables, offering twelve rotating recipes that take about twenty minutes to prepare.",
+          "attributes": [
+            "plant_based",
+            "varied_menu",
+            "seasonal",
+            "twenty_minutes"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A broadly familiar catering plan with clearly labeled allergens and no nuts, but limited protein and only four menu choices.",
+          "attributes": [
+            "nut_free",
+            "allergen_labels",
+            "familiar",
+            "limited_variety"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "high_protein",
+        "animal_protein",
+        "under_five_minutes"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "nut_free",
+        "allergen_labels"
+      ],
+      "superseded_preferences": [],
+      "evidence_groups": [],
+      "expected_choice": "A",
+      "required_reason_codes": [
+        "high_protein",
+        "under_five_minutes"
+      ],
+      "forbidden_reason_codes": [
+        "nut_free",
+        "allergen_labels"
+      ],
+      "explanation": "The stable preferences in variant A select A; the held-constant historical requirement is task-local."
+    }
+  },
+  {
+    "case_id": "PREF-C-MEAL-001-B",
+    "language": "en",
+    "pair_id": "PREF-C-MEAL-001",
+    "layer": "composite",
+    "primary_capability": "composite_journey",
+    "capabilities": [
+      "cross_agent_merge",
+      "scope_resolution",
+      "temporary_constraint_filtering",
+      "counterfactual"
+    ],
+    "scenario": "counterfactual_meal",
+    "persona": "Quinn",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "nutrition_agent",
+        "role": "nutrition agent",
+        "session_id": "session_1",
+        "scope": "weekday_meals",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "For my regular meals, I prefer plant-based dishes built around beans, grains, and vegetables."
+      },
+      {
+        "order": 2,
+        "agent_id": "routine_agent",
+        "role": "routine planning agent",
+        "session_id": "session_2",
+        "scope": "weekday_meals",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "Menu variety matters to me, and I am happy to spend around twenty minutes preparing dinner."
+      },
+      {
+        "order": 3,
+        "agent_id": "event_agent",
+        "role": "event catering agent",
+        "session_id": "session_3",
+        "scope": "office_event_last_month",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "For last month's office event, every meal had to be nut-free and carry full allergen labels."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "meal planning agent",
+      "current_context": {
+        "domain": "food",
+        "context_type": "weekday_meals"
+      },
+      "task": "The user is selecting a weekday meal-plan service for regular personal use. Choose the plan that best matches the user's current preferences.",
+      "memory_query": "What does this user currently prefer for regular weekday meals?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "A high-protein plan with chicken, fish, and eggs; every meal reheats in under five minutes, but the menu repeats often.",
+          "attributes": [
+            "high_protein",
+            "animal_protein",
+            "under_five_minutes",
+            "repetitive"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "A plant-based plan with beans, grains, and seasonal vegetables, offering twelve rotating recipes that take about twenty minutes to prepare.",
+          "attributes": [
+            "plant_based",
+            "varied_menu",
+            "seasonal",
+            "twenty_minutes"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A broadly familiar catering plan with clearly labeled allergens and no nuts, but limited protein and only four menu choices.",
+          "attributes": [
+            "nut_free",
+            "allergen_labels",
+            "familiar",
+            "limited_variety"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "plant_based",
+        "varied_menu",
+        "twenty_minutes"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "nut_free",
+        "allergen_labels"
+      ],
+      "superseded_preferences": [],
+      "evidence_groups": [],
+      "expected_choice": "B",
+      "required_reason_codes": [
+        "plant_based",
+        "varied_menu"
+      ],
+      "forbidden_reason_codes": [
+        "nut_free",
+        "allergen_labels"
+      ],
+      "explanation": "The stable preferences in variant B select B; the held-constant historical requirement is task-local."
+    }
+  },
+  {
+    "case_id": "PREF-C-NOTIFY-001-A",
+    "language": "en",
+    "pair_id": "PREF-C-NOTIFY-001",
+    "layer": "composite",
+    "primary_capability": "composite_journey",
+    "capabilities": [
+      "cross_agent_merge",
+      "scope_resolution",
+      "temporary_constraint_filtering",
+      "counterfactual",
+      "preference_update",
+      "stale_preference_rejection"
+    ],
+    "scenario": "counterfactual_notification",
+    "persona": "Rina",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "workspace_agent",
+        "role": "workspace agent",
+        "session_id": "session_1",
+        "scope": "work_notifications",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I used to keep all workspace notifications on in real time."
+      },
+      {
+        "order": 2,
+        "agent_id": "focus_agent",
+        "role": "focus planning agent",
+        "session_id": "session_2",
+        "scope": "work_notifications",
+        "preference_kind": "update",
+        "source_type": "user_explicit",
+        "utterance": "The interruptions are hurting my focus. From now on, send blockers immediately but collect routine changes into one daily digest."
+      },
+      {
+        "order": 3,
+        "agent_id": "leave_agent",
+        "role": "leave coverage agent",
+        "session_id": "session_3",
+        "scope": "vacation_last_month",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "While I was on vacation last month, hold all noncritical notifications until I returned."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "notification setup agent",
+      "current_context": {
+        "domain": "work",
+        "context_type": "work_notifications"
+      },
+      "task": "The user is configuring notifications for daily work in a new team workspace. Choose the policy that best matches the user's current preferences.",
+      "memory_query": "How does this user currently want daily work notifications handled?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "Put all project updates, including blockers, into one end-of-day digest.",
+          "attributes": [
+            "all_digest",
+            "routine_digest",
+            "urgent_delayed"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "Send every message, status change, and blocker immediately as a separate notification.",
+          "attributes": [
+            "all_realtime",
+            "urgent_immediate",
+            "routine_realtime",
+            "many_interruptions"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "Send blockers immediately and combine routine status changes into one scheduled daily digest.",
+          "attributes": [
+            "urgent_immediate",
+            "routine_digest",
+            "scheduled_digest",
+            "fewer_interruptions"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "urgent_immediate",
+        "routine_digest",
+        "scheduled_digest"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "noncritical_delayed"
+      ],
+      "superseded_preferences": [],
+      "evidence_groups": [],
+      "expected_choice": "C",
+      "required_reason_codes": [
+        "urgent_immediate",
+        "routine_digest"
+      ],
+      "forbidden_reason_codes": [
+        "noncritical_delayed"
+      ],
+      "explanation": "The stable preferences in variant A select C; the held-constant historical requirement is task-local."
+    }
+  },
+  {
+    "case_id": "PREF-C-NOTIFY-001-B",
+    "language": "en",
+    "pair_id": "PREF-C-NOTIFY-001",
+    "layer": "composite",
+    "primary_capability": "composite_journey",
+    "capabilities": [
+      "cross_agent_merge",
+      "scope_resolution",
+      "temporary_constraint_filtering",
+      "counterfactual",
+      "preference_update",
+      "stale_preference_rejection"
+    ],
+    "scenario": "counterfactual_notification",
+    "persona": "Rina",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "workspace_agent",
+        "role": "workspace agent",
+        "session_id": "session_1",
+        "scope": "work_notifications",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I used to prefer a daily digest for routine workspace updates."
+      },
+      {
+        "order": 2,
+        "agent_id": "focus_agent",
+        "role": "focus planning agent",
+        "session_id": "session_2",
+        "scope": "work_notifications",
+        "preference_kind": "update",
+        "source_type": "user_explicit",
+        "utterance": "My role now requires continuous coordination. I want every project message, status change, and blocker delivered immediately instead of waiting for a digest."
+      },
+      {
+        "order": 3,
+        "agent_id": "leave_agent",
+        "role": "leave coverage agent",
+        "session_id": "session_3",
+        "scope": "vacation_last_month",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "While I was on vacation last month, hold all noncritical notifications until I returned."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "notification setup agent",
+      "current_context": {
+        "domain": "work",
+        "context_type": "work_notifications"
+      },
+      "task": "The user is configuring notifications for daily work in a new team workspace. Choose the policy that best matches the user's current preferences.",
+      "memory_query": "How does this user currently want daily work notifications handled?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "Put all project updates, including blockers, into one end-of-day digest.",
+          "attributes": [
+            "all_digest",
+            "routine_digest",
+            "urgent_delayed"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "Send every message, status change, and blocker immediately as a separate notification.",
+          "attributes": [
+            "all_realtime",
+            "urgent_immediate",
+            "routine_realtime",
+            "many_interruptions"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "Send blockers immediately and combine routine status changes into one scheduled daily digest.",
+          "attributes": [
+            "urgent_immediate",
+            "routine_digest",
+            "scheduled_digest",
+            "fewer_interruptions"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "all_realtime",
+        "urgent_immediate",
+        "routine_realtime"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "noncritical_delayed"
+      ],
+      "superseded_preferences": [],
+      "evidence_groups": [],
+      "expected_choice": "B",
+      "required_reason_codes": [
+        "all_realtime",
+        "routine_realtime"
+      ],
+      "forbidden_reason_codes": [
+        "noncritical_delayed"
+      ],
+      "explanation": "The stable preferences in variant B select B; the held-constant historical requirement is task-local."
+    }
+  },
+  {
+    "case_id": "PREF-C-COURSE-001-A",
+    "language": "en",
+    "pair_id": "PREF-C-COURSE-001",
+    "layer": "composite",
+    "primary_capability": "composite_journey",
+    "capabilities": [
+      "cross_agent_merge",
+      "scope_resolution",
+      "temporary_constraint_filtering",
+      "counterfactual"
+    ],
+    "scenario": "counterfactual_course",
+    "persona": "Sam",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "learning_agent",
+        "role": "learning preference agent",
+        "session_id": "session_1",
+        "scope": "professional_learning",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I learn professional skills best by building something real rather than only listening to lectures."
+      },
+      {
+        "order": 2,
+        "agent_id": "career_agent",
+        "role": "career development agent",
+        "session_id": "session_2",
+        "scope": "professional_learning",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I want each module to contribute to a portfolio project and include feedback I can apply the next week."
+      },
+      {
+        "order": 3,
+        "agent_id": "certification_agent",
+        "role": "certification agent",
+        "session_id": "session_3",
+        "scope": "certification_exam_last_spring",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "For a certification exam last spring, I needed timed drills and test-taking shortcuts for two weeks."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "learning agent",
+      "current_context": {
+        "domain": "education",
+        "context_type": "professional_learning"
+      },
+      "task": "The user is choosing a twelve-week course to build a durable new professional skill. Choose the course format that best matches the user's current learning preferences.",
+      "memory_query": "How does this user currently prefer to learn a durable professional skill?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "A project-based course in which each module adds to a working portfolio project, with weekly instructor feedback.",
+          "attributes": [
+            "hands_on",
+            "project_based",
+            "portfolio",
+            "feedback"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "A structured course that teaches principles in sequence through lectures, readings, and cumulative concept exercises.",
+          "attributes": [
+            "structured_theory",
+            "sequential",
+            "conceptual_foundation",
+            "cumulative"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "An intensive exam bootcamp focused on timed drills, test-taking shortcuts, and a final practice exam.",
+          "attributes": [
+            "exam_focused",
+            "timed_drills",
+            "shortcuts",
+            "practice_exam"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "hands_on",
+        "project_based",
+        "portfolio",
+        "feedback"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "exam_focused",
+        "timed_drills",
+        "shortcuts"
+      ],
+      "superseded_preferences": [],
+      "evidence_groups": [],
+      "expected_choice": "A",
+      "required_reason_codes": [
+        "project_based",
+        "portfolio"
+      ],
+      "forbidden_reason_codes": [
+        "exam_focused",
+        "timed_drills",
+        "shortcuts"
+      ],
+      "explanation": "The stable preferences in variant A select A; the held-constant historical requirement is task-local."
+    }
+  },
+  {
+    "case_id": "PREF-C-COURSE-001-B",
+    "language": "en",
+    "pair_id": "PREF-C-COURSE-001",
+    "layer": "composite",
+    "primary_capability": "composite_journey",
+    "capabilities": [
+      "cross_agent_merge",
+      "scope_resolution",
+      "temporary_constraint_filtering",
+      "counterfactual"
+    ],
+    "scenario": "counterfactual_course",
+    "persona": "Sam",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "learning_agent",
+        "role": "learning preference agent",
+        "session_id": "session_1",
+        "scope": "professional_learning",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I learn durable professional skills best when the underlying principles are taught in a clear sequence."
+      },
+      {
+        "order": 2,
+        "agent_id": "career_agent",
+        "role": "career development agent",
+        "session_id": "session_2",
+        "scope": "professional_learning",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I prefer structured readings and cumulative concept exercises before applying a method in practice."
+      },
+      {
+        "order": 3,
+        "agent_id": "certification_agent",
+        "role": "certification agent",
+        "session_id": "session_3",
+        "scope": "certification_exam_last_spring",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "For a certification exam last spring, I needed timed drills and test-taking shortcuts for two weeks."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "learning agent",
+      "current_context": {
+        "domain": "education",
+        "context_type": "professional_learning"
+      },
+      "task": "The user is choosing a twelve-week course to build a durable new professional skill. Choose the course format that best matches the user's current learning preferences.",
+      "memory_query": "How does this user currently prefer to learn a durable professional skill?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "A project-based course in which each module adds to a working portfolio project, with weekly instructor feedback.",
+          "attributes": [
+            "hands_on",
+            "project_based",
+            "portfolio",
+            "feedback"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "A structured course that teaches principles in sequence through lectures, readings, and cumulative concept exercises.",
+          "attributes": [
+            "structured_theory",
+            "sequential",
+            "conceptual_foundation",
+            "cumulative"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "An intensive exam bootcamp focused on timed drills, test-taking shortcuts, and a final practice exam.",
+          "attributes": [
+            "exam_focused",
+            "timed_drills",
+            "shortcuts",
+            "practice_exam"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "structured_theory",
+        "sequential",
+        "conceptual_foundation",
+        "cumulative"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "exam_focused",
+        "timed_drills",
+        "shortcuts"
+      ],
+      "superseded_preferences": [],
+      "evidence_groups": [],
+      "expected_choice": "B",
+      "required_reason_codes": [
+        "structured_theory",
+        "conceptual_foundation"
+      ],
+      "forbidden_reason_codes": [
+        "exam_focused",
+        "timed_drills",
+        "shortcuts"
+      ],
+      "explanation": "The stable preferences in variant B select B; the held-constant historical requirement is task-local."
+    }
+  },
+  {
+    "case_id": "PREF-C-FURNITURE-001-A",
+    "language": "en",
+    "pair_id": "PREF-C-FURNITURE-001",
+    "layer": "composite",
+    "primary_capability": "composite_journey",
+    "capabilities": [
+      "cross_agent_merge",
+      "scope_resolution",
+      "temporary_constraint_filtering",
+      "counterfactual"
+    ],
+    "scenario": "counterfactual_furniture",
+    "persona": "Tara",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "home_agent",
+        "role": "home planning agent",
+        "session_id": "session_1",
+        "scope": "home_furniture",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "For furniture I will keep for years, I prefer durable pieces that can be repaired instead of replaced."
+      },
+      {
+        "order": 2,
+        "agent_id": "shopping_agent",
+        "role": "shopping agent",
+        "session_id": "session_2",
+        "scope": "home_furniture",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "Certified materials and a local maker matter more to me than getting the item immediately."
+      },
+      {
+        "order": 3,
+        "agent_id": "rental_agent",
+        "role": "temporary rental agent",
+        "session_id": "session_3",
+        "scope": "furnished_rental_last_year",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "For a furnished rental last year, the table had to fold flat and be easy to move between rooms."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "furniture shopping agent",
+      "current_context": {
+        "domain": "shopping",
+        "context_type": "home_furniture"
+      },
+      "task": "The user is buying a dining table for their current home. Choose the option that best matches the user's current preferences.",
+      "memory_query": "What does this user currently prioritize when buying long-term home furniture?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "A repairable solid-wood table made from certified timber by a local workshop, with a ten-year warranty and six-week lead time.",
+          "attributes": [
+            "durable",
+            "repairable",
+            "certified_materials",
+            "local_maker",
+            "long_warranty"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "The lowest-priced flat-pack table, available for delivery tomorrow, with a two-year expected lifespan.",
+          "attributes": [
+            "lowest_price",
+            "fast_delivery",
+            "flat_pack",
+            "short_lifespan"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A compact folding table on wheels that is easy to move and store, but uses lightweight composite material.",
+          "attributes": [
+            "compact",
+            "folding",
+            "portable",
+            "lightweight"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "durable",
+        "repairable",
+        "certified_materials",
+        "local_maker",
+        "long_warranty"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "compact",
+        "folding",
+        "portable"
+      ],
+      "superseded_preferences": [],
+      "evidence_groups": [],
+      "expected_choice": "A",
+      "required_reason_codes": [
+        "durable",
+        "certified_materials"
+      ],
+      "forbidden_reason_codes": [
+        "compact",
+        "folding",
+        "portable"
+      ],
+      "explanation": "The stable preferences in variant A select A; the held-constant historical requirement is task-local."
+    }
+  },
+  {
+    "case_id": "PREF-C-FURNITURE-001-B",
+    "language": "en",
+    "pair_id": "PREF-C-FURNITURE-001",
+    "layer": "composite",
+    "primary_capability": "composite_journey",
+    "capabilities": [
+      "cross_agent_merge",
+      "scope_resolution",
+      "temporary_constraint_filtering",
+      "counterfactual"
+    ],
+    "scenario": "counterfactual_furniture",
+    "persona": "Tara",
+    "writes": [
+      {
+        "order": 1,
+        "agent_id": "home_agent",
+        "role": "home planning agent",
+        "session_id": "session_1",
+        "scope": "home_furniture",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "For household furniture, my current priority is the lowest possible upfront price."
+      },
+      {
+        "order": 2,
+        "agent_id": "shopping_agent",
+        "role": "shopping agent",
+        "session_id": "session_2",
+        "scope": "home_furniture",
+        "preference_kind": "stable",
+        "source_type": "user_explicit",
+        "utterance": "I need delivery within the next two days and accept that I may replace the item after a couple of years."
+      },
+      {
+        "order": 3,
+        "agent_id": "rental_agent",
+        "role": "temporary rental agent",
+        "session_id": "session_3",
+        "scope": "furnished_rental_last_year",
+        "preference_kind": "temporary",
+        "source_type": "user_explicit",
+        "utterance": "For a furnished rental last year, the table had to fold flat and be easy to move between rooms."
+      }
+    ],
+    "decision": {
+      "agent_id": "agent_d",
+      "role": "furniture shopping agent",
+      "current_context": {
+        "domain": "shopping",
+        "context_type": "home_furniture"
+      },
+      "task": "The user is buying a dining table for their current home. Choose the option that best matches the user's current preferences.",
+      "memory_query": "What does this user currently prioritize when buying long-term home furniture?",
+      "candidates": [
+        {
+          "id": "A",
+          "description": "A repairable solid-wood table made from certified timber by a local workshop, with a ten-year warranty and six-week lead time.",
+          "attributes": [
+            "durable",
+            "repairable",
+            "certified_materials",
+            "local_maker",
+            "long_warranty"
+          ]
+        },
+        {
+          "id": "B",
+          "description": "The lowest-priced flat-pack table, available for delivery tomorrow, with a two-year expected lifespan.",
+          "attributes": [
+            "lowest_price",
+            "fast_delivery",
+            "flat_pack",
+            "short_lifespan"
+          ]
+        },
+        {
+          "id": "C",
+          "description": "A compact folding table on wheels that is easy to move and store, but uses lightweight composite material.",
+          "attributes": [
+            "compact",
+            "folding",
+            "portable",
+            "lightweight"
+          ]
+        }
+      ],
+      "instruction": "Use only the current task, candidate information, and retrieved shared-memory context. Choose the option that best fits the user's currently applicable preferences. Return JSON only.",
+      "output_schema": {
+        "choice": "A | B | C",
+        "applied_preference_codes": [
+          "preference_code"
+        ]
+      }
+    },
+    "ground_truth": {
+      "active_preferences": [
+        "lowest_price",
+        "fast_delivery",
+        "short_lifespan"
+      ],
+      "wrong_scope_preferences": [],
+      "expired_preferences": [
+        "compact",
+        "folding",
+        "portable"
+      ],
+      "superseded_preferences": [],
+      "evidence_groups": [],
+      "expected_choice": "B",
+      "required_reason_codes": [
+        "lowest_price",
+        "fast_delivery"
+      ],
+      "forbidden_reason_codes": [
+        "compact",
+        "folding",
+        "portable"
+      ],
+      "explanation": "The stable preferences in variant B select B; the held-constant historical requirement is task-local."
+    }
+  }
+]

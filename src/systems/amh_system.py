@@ -73,9 +73,13 @@ class AMHSystem(MemorySystem):
         )
         return "\n".join(entry.content for _, entry in scored)
 
+    def close(self) -> None:
+        if self._root is not None:
+            shutil.rmtree(self._root, ignore_errors=True)
+            self._root = None
+
     def __del__(self):
         try:
-            if self._root is not None:
-                shutil.rmtree(self._root, ignore_errors=True)
+            self.close()
         except Exception:
             pass

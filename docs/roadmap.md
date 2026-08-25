@@ -12,17 +12,24 @@ The project is "done" when these three things are public and findable from one s
 
 ## Done
 
-- **Project scaffold**: DeepSeek client, runner, judge, mem0 adapter, baseline systems (`no_memory`, `naive_markdown`, `long_context`), per-case error handling and progress logging, test smoke (12 tests).
+- **Project scaffold**: DeepSeek client, runner, judge, memory adapters, per-case error handling and progress logging, and automated tests.
 - **v0 atomic-task pass — concluded that atomic memory + atomic update is too trivial to discriminate systems.** Code+data removed when v1 superseded; the lesson is the only thing we kept.
 - **v1 / T4 — split intake (n=100)**. mem0 0.555 per-detail recall vs naive_markdown 0.952. 95% CIs do not overlap. Failure-mode analysis: mem0's misses are 67% hallucinated wrong values (vs 38% for naive). See [`docs/v1/t4_findings.md`](./v1/t4_findings.md), [`docs/v1/t4_results.png`](./v1/t4_results.png).
+- **v1 / T2 — corrected five-system result.** Matcher and authored aliases fixed; two invalid no-op cases excluded; mem0 rerun with full per-case isolation. Final n=298 result: naive update recall 0.999, mem0 0.976, AMH 0.893; no-collateral 0.978, 0.961, and 0.978 respectively. pure_vector remains a diagnostic n=99 run.
+- **Preference Track pilot (n=30, one run)**. English-only benchmark inputs; `naive_markdown` 30/30, `mem0` 30/30, `AMH` 28/30. This validates the track but is not a final ranking.
 - Local sentence-transformers model checked in via manual download (HF library path blocked by SSL/HEAD issues on this machine).
 - Python 3.11 baseline established; documented in `docs/decisions.md`.
 
 ## Now
 
-- **v1 / T2 — compound update.** One sentence simultaneously updates K facts. Tests "don't conflate, don't drop, don't damage." Reuses runner / judge primitives from T4.
+- Consolidate the factual and preference tracks into one reproducible public artifact while keeping their metrics and conclusions separate.
 
-## Next (v1 task pipeline)
+## Next
+
+- Produce the final T2 chart from the corrected five-system result.
+- Decide whether to scale the Preference Track beyond the 30-case pilot after reviewing its current saturation.
+
+## Later factual-memory tasks
 
 - **T1 — surgical edit on long memory.** First a richly detailed memory, then a small update that changes one embedded detail. Tests localized edit under conflict.
 - **T3 — cross-memory.** One update touches several past memories scattered across sessions. Tests cross-session consolidation — the place mem0's design promises value.

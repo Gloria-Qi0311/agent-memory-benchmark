@@ -1,0 +1,2718 @@
+{
+  "metadata": {
+    "task": "preference",
+    "created_at": "2026-08-21T09:56:32.965043+00:00",
+    "cases_path": "data/cases/preference_pilot_n30.json",
+    "case_set": "preference_pilot_n30",
+    "case_count": 30,
+    "systems": [
+      "naive_markdown",
+      "amh"
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.0,
+    "runs": 1
+  },
+  "summary": {
+    "amh": {
+      "n_total": 30,
+      "n_scored": 30,
+      "n_errors": 0,
+      "decision_accuracy": 0.9333333333333333,
+      "diagnostic_accuracy": 0.9166666666666666,
+      "composite_accuracy": 0.9444444444444444,
+      "counterfactual_pair_success_rate": 0.8888888888888888,
+      "accuracy_by_primary_capability": {
+        "composite_journey": 0.9444444444444444,
+        "cross_agent_merge": 1.0,
+        "preference_boundary": 1.0,
+        "preference_update": 0.75
+      },
+      "mean_context_chars": 239.43333333333334,
+      "mean_total_seconds": 1.0013235096742088
+    },
+    "naive_markdown": {
+      "n_total": 30,
+      "n_scored": 30,
+      "n_errors": 0,
+      "decision_accuracy": 1.0,
+      "diagnostic_accuracy": 1.0,
+      "composite_accuracy": 1.0,
+      "counterfactual_pair_success_rate": 1.0,
+      "accuracy_by_primary_capability": {
+        "composite_journey": 1.0,
+        "cross_agent_merge": 1.0,
+        "preference_boundary": 1.0,
+        "preference_update": 1.0
+      },
+      "mean_context_chars": 324.8,
+      "mean_total_seconds": 1.1143134070327505
+    }
+  },
+  "rows": [
+    {
+      "case_id": "PREF-D-MERGE-001",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "cross_agent_merge",
+      "scenario": "leisure_hotel",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "travel_agent",
+          "utterance": "When I travel for leisure, I prefer quiet hotels and try to avoid crowded, noisy places.",
+          "elapsed_seconds": 1.2919772416353226e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "hotel_agent",
+          "utterance": "I prefer small hotels with local character over standardized international chains.",
+          "elapsed_seconds": 7.08969309926033e-07
+        }
+      ],
+      "memory_snapshot": [
+        "[travel_agent] When I travel for leisure, I prefer quiet hotels and try to avoid crowded, noisy places.",
+        "[hotel_agent] I prefer small hotels with local character over standardized international chains."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 9.170034900307655e-07,
+      "query": "What accommodation preferences does Hana have for a leisure trip?",
+      "retrieved_context": "[travel_agent] When I travel for leisure, I prefer quiet hotels and try to avoid crowded, noisy places.\n[hotel_agent] I prefer small hotels with local character over standardized international chains.",
+      "context_chars": 200,
+      "read_seconds": 7.910421118140221e-07,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"Hana prefers quiet, small hotels with local character; B best matches both, despite limited facilities and distance.\"}",
+      "choice": "B",
+      "reason": "Hana prefers quiet, small hotels with local character; B best matches both, despite limited facilities and distance.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 1.4242971249623224,
+      "total_seconds": 1.424337917007506,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-MERGE-002",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "cross_agent_merge",
+      "scenario": "developer_laptop",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "travel_setup_agent",
+          "utterance": "I carry my work laptop between home and the office every day, so I want it to weigh no more than 1.3 kilograms.",
+          "elapsed_seconds": 8.459086529910564e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "development_agent",
+          "utterance": "I run several local containers at once, so I need at least 32 GB of memory and good sustained cooling.",
+          "elapsed_seconds": 1.041102223098278e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[travel_setup_agent] I carry my work laptop between home and the office every day, so I want it to weigh no more than 1.3 kilograms.",
+        "[development_agent] I run several local containers at once, so I need at least 32 GB of memory and good sustained cooling."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.7499551177024841e-06,
+      "query": "What does Alex need from a laptop for commuting and local development?",
+      "retrieved_context": "[travel_setup_agent] I carry my work laptop between home and the office every day, so I want it to weigh no more than 1.3 kilograms.\n[development_agent] I run several local containers at once, so I need at least 32 GB of memory and good sustained cooling.",
+      "context_chars": 255,
+      "read_seconds": 1.6249250620603561e-06,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"Meets the 1.3 kg weight limit and 32 GB memory requirement with adequate sustained cooling.\"}",
+      "choice": "B",
+      "reason": "Meets the 1.3 kg weight limit and 32 GB memory requirement with adequate sustained cooling.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 1.2731417920440435,
+      "total_seconds": 1.2731838750187308,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-UPDATE-001",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_update",
+      "scenario": "work_device_purchase",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "shopping_agent",
+          "utterance": "I used to prioritize price when buying equipment for work. As long as it did the job, that was good enough for me.",
+          "elapsed_seconds": 2.6333029381930828e-05
+        },
+        {
+          "order": 2,
+          "agent_id": "work_agent",
+          "utterance": "Recent equipment failures have disrupted my work. From now on, reliability comes first; I am willing to pay more and no longer put price first.",
+          "elapsed_seconds": 3.1249364838004112e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[shopping_agent] I used to prioritize price when buying equipment for work. As long as it did the job, that was good enough for me.",
+        "[work_agent] Recent equipment failures have disrupted my work. From now on, reliability comes first; I am willing to pay more and no longer put price first."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 2.874992787837982e-06,
+      "query": "What does Bao currently prioritize when buying equipment for work?",
+      "retrieved_context": "[shopping_agent] I used to prioritize price when buying equipment for work. As long as it did the job, that was good enough for me.\n[work_agent] Recent equipment failures have disrupted my work. From now on, reliability comes first; I am willing to pay more and no longer put price first.",
+      "context_chars": 288,
+      "read_seconds": 3.2919924706220627e-06,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"Bao now prioritizes reliability over price, and B offers the strongest reliability and best warranty.\"}",
+      "choice": "B",
+      "reason": "Bao now prioritizes reliability over price, and B offers the strongest reliability and best warranty.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 1.0488707079784945,
+      "total_seconds": 1.048949166899547,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-UPDATE-002",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_update",
+      "scenario": "software_adoption",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "tool_scout_agent",
+          "utterance": "I used to prefer mature team tools with predictable releases and long-term support.",
+          "elapsed_seconds": 3.584078513085842e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "engineering_agent",
+          "utterance": "Several new automation features have recently improved our efficiency. I now prioritize the latest features and rapid iteration, as long as the vendor provides migration support; maturity is no longer my top concern.",
+          "elapsed_seconds": 2.3329630494117737e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[tool_scout_agent] I used to prefer mature team tools with predictable releases and long-term support.",
+        "[engineering_agent] Several new automation features have recently improved our efficiency. I now prioritize the latest features and rapid iteration, as long as the vendor provides migration support; maturity is no longer my top concern."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 2.00001522898674e-06,
+      "query": "What does Chloe currently prefer when choosing software for her team?",
+      "retrieved_context": "[tool_scout_agent] I used to prefer mature team tools with predictable releases and long-term support.\n[engineering_agent] Several new automation features have recently improved our efficiency. I now prioritize the latest features and rapid iteration, as long as the vendor provides migration support; maturity is no longer my top concern.",
+      "context_chars": 339,
+      "read_seconds": 1.5409896150231361e-06,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"The engineering agent's updated preference prioritizes latest features and rapid iteration with vendor migration support, which option A provides.\"}",
+      "choice": "A",
+      "reason": "The engineering agent's updated preference prioritizes latest features and rapid iteration with vendor migration support, which option A provides.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 0.9471801250474527,
+      "total_seconds": 0.9472311659483239,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-BOUNDARY-001",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_boundary",
+      "scenario": "leisure_vs_business_hotel",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "leisure_agent",
+          "utterance": "For leisure trips, I like quiet, slow-paced small hotels and do not mind staying away from busy areas.",
+          "elapsed_seconds": 4.375004209578037e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "business_agent",
+          "utterance": "For my one-day business trip to Shanghai last month, I needed a chain hotel near a transport hub so I could keep to the schedule.",
+          "elapsed_seconds": 1.6249250620603561e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[leisure_agent] For leisure trips, I like quiet, slow-paced small hotels and do not mind staying away from busy areas.",
+        "[business_agent] For my one-day business trip to Shanghai last month, I needed a chain hotel near a transport hub so I could keep to the schedule."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 3.1669624149799347e-06,
+      "query": "Which accommodation preferences apply to Diego's new private vacation?",
+      "retrieved_context": "[leisure_agent] For leisure trips, I like quiet, slow-paced small hotels and do not mind staying away from busy areas.\n[business_agent] For my one-day business trip to Shanghai last month, I needed a chain hotel near a transport hub so I could keep to the schedule.",
+      "context_chars": 265,
+      "read_seconds": 2.749962732195854e-06,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"The leisure preference favors quiet, slow-paced small hotels away from busy areas, which B matches best.\"}",
+      "choice": "B",
+      "reason": "The leisure preference favors quiet, slow-paced small hotels away from busy areas, which B matches best.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 1.0178040419705212,
+      "total_seconds": 1.0178419169969857,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-BOUNDARY-002",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_boundary",
+      "scenario": "personal_invitation_style",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "personal_writing_agent",
+          "utterance": "For event invitations to friends, I prefer a concise, neutral style. Clear time, location, and RSVP details are enough; I do not need much emotional language.",
+          "elapsed_seconds": 2.9170187190175056e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "board_report_agent",
+          "utterance": "For last week's board report, please use a formal tone, avoid emojis, and keep it under 300 words.",
+          "elapsed_seconds": 1.0830117389559746e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[personal_writing_agent] For event invitations to friends, I prefer a concise, neutral style. Clear time, location, and RSVP details are enough; I do not need much emotional language.",
+        "[board_report_agent] For last week's board report, please use a formal tone, avoid emojis, and keep it under 300 words."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.9579892978072166e-06,
+      "query": "What writing style does Eun prefer for a birthday invitation to friends?",
+      "retrieved_context": "[personal_writing_agent] For event invitations to friends, I prefer a concise, neutral style. Clear time, location, and RSVP details are enough; I do not need much emotional language.\n[board_report_agent] For last week's board report, please use a formal tone, avoid emojis, and keep it under 300 words.",
+      "context_chars": 303,
+      "read_seconds": 1.8749851733446121e-06,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"The memory shows a preference for concise, neutral invitations to friends with clear time, location, and RSVP details.\"}",
+      "choice": "C",
+      "reason": "The memory shows a preference for concise, neutral invitations to friends with clear time, location, and RSVP details.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 0.9032652910100296,
+      "total_seconds": 0.9033117089420557,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-HOTEL-001-A",
+      "pair_id": "PREF-C-HOTEL-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_hotel",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "leisure_agent",
+          "utterance": "On private vacations, quiet matters most to me, and I dislike crowded, noisy hotels.",
+          "elapsed_seconds": 3.3329706639051437e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "hotel_agent",
+          "utterance": "I prefer small accommodations with local character; large international chains do not appeal to me.",
+          "elapsed_seconds": 1.00000761449337e-06
+        },
+        {
+          "order": 3,
+          "agent_id": "family_trip_agent",
+          "utterance": "For a week-long family stay last month, the room had to include a kitchen and a washer.",
+          "elapsed_seconds": 1.0419171303510666e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[leisure_agent] On private vacations, quiet matters most to me, and I dislike crowded, noisy hotels.",
+        "[hotel_agent] I prefer small accommodations with local character; large international chains do not appeal to me.",
+        "[family_trip_agent] For a week-long family stay last month, the room had to include a kitchen and a washer."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 2.249958924949169e-06,
+      "query": "What accommodation preferences does this user have for a private vacation in Kyoto?",
+      "retrieved_context": "[leisure_agent] On private vacations, quiet matters most to me, and I dislike crowded, noisy hotels.\n[hotel_agent] I prefer small accommodations with local character; large international chains do not appeal to me.\n[family_trip_agent] For a week-long family stay last month, the room had to include a kitchen and a washer.",
+      "context_chars": 322,
+      "read_seconds": 8.292030543088913e-06,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"The user values quiet, dislikes crowded hotels, and prefers small local character over large chains, so the quiet machiya boutique fits best.\"}",
+      "choice": "C",
+      "reason": "The user values quiet, dislikes crowded hotels, and prefers small local character over large chains, so the quiet machiya boutique fits best.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 0.9188668749993667,
+      "total_seconds": 0.9189154170453548,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-HOTEL-001-B",
+      "pair_id": "PREF-C-HOTEL-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_hotel",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "leisure_agent",
+          "utterance": "For hotels on private vacations, convenient transport in the city center matters most to me.",
+          "elapsed_seconds": 8.124974556267262e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "hotel_agent",
+          "utterance": "I trust large international chains with consistent service standards and full facilities.",
+          "elapsed_seconds": 1.6669509932398796e-06
+        },
+        {
+          "order": 3,
+          "agent_id": "family_trip_agent",
+          "utterance": "For a week-long family stay last month, the room had to include a kitchen and a washer.",
+          "elapsed_seconds": 1.5830155462026596e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[leisure_agent] For hotels on private vacations, convenient transport in the city center matters most to me.",
+        "[hotel_agent] I trust large international chains with consistent service standards and full facilities.",
+        "[family_trip_agent] For a week-long family stay last month, the room had to include a kitchen and a washer."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 8.332892321050167e-06,
+      "query": "What accommodation preferences does this user have for a private vacation in Kyoto?",
+      "retrieved_context": "[leisure_agent] For hotels on private vacations, convenient transport in the city center matters most to me.\n[hotel_agent] I trust large international chains with consistent service standards and full facilities.\n[family_trip_agent] For a week-long family stay last month, the room had to include a kitchen and a washer.",
+      "context_chars": 320,
+      "read_seconds": 4.250090569257736e-06,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"The user prioritizes city-center transport and trusts large international chains with consistent service and full facilities.\"}",
+      "choice": "A",
+      "reason": "The user prioritizes city-center transport and trusts large international chains with consistent service and full facilities.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 0.8338006250560284,
+      "total_seconds": 0.8338730420218781,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-ANALYSIS-001-A",
+      "pair_id": "PREF-C-ANALYSIS-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_analysis_style",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "strategy_agent",
+          "utterance": "When comparing proposals, give me the recommendation first; I do not want to read a long background section before it.",
+          "elapsed_seconds": 3.7919962778687477e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "writing_agent",
+          "utterance": "Do not open with the full derivation. Start with a few clear points on what to choose and what to do next.",
+          "elapsed_seconds": 1.0830117389559746e-06
+        },
+        {
+          "order": 3,
+          "agent_id": "training_agent",
+          "utterance": "For last month's new-hire training, start with a real case to explain the situation and do not make the purchasing decision for them.",
+          "elapsed_seconds": 1.166015863418579e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[strategy_agent] When comparing proposals, give me the recommendation first; I do not want to read a long background section before it.",
+        "[writing_agent] Do not open with the full derivation. Start with a few clear points on what to choose and what to do next.",
+        "[training_agent] For last month's new-hire training, start with a real case to explain the situation and do not make the purchasing decision for them."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 2.3329630494117737e-06,
+      "query": "What presentation style does this user prefer when comparing vendor proposals?",
+      "retrieved_context": "[strategy_agent] When comparing proposals, give me the recommendation first; I do not want to read a long background section before it.\n[writing_agent] Do not open with the full derivation. Start with a few clear points on what to choose and what to do next.\n[training_agent] For last month's new-hire training, start with a real case to explain the situation and do not make the purchasing decision for them.",
+      "context_chars": 409,
+      "read_seconds": 1.8338905647397041e-06,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"The user's current analysis preference is to see the recommendation first, followed by concise key points and next action.\"}",
+      "choice": "A",
+      "reason": "The user's current analysis preference is to see the recommendation first, followed by concise key points and next action.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 1.0029609580524266,
+      "total_seconds": 1.002999791991897,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-ANALYSIS-001-B",
+      "pair_id": "PREF-C-ANALYSIS-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_analysis_style",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "strategy_agent",
+          "utterance": "For important proposal comparisons, I want the complete data and evidence sources, not just a simplified conclusion.",
+          "elapsed_seconds": 3.1249364838004112e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "writing_agent",
+          "utterance": "Write out the risk assumptions and reasoning clearly so I can verify the analysis myself.",
+          "elapsed_seconds": 1.625041477382183e-06
+        },
+        {
+          "order": 3,
+          "agent_id": "training_agent",
+          "utterance": "For last month's new-hire training, start with a real case to explain the situation and do not make the purchasing decision for them.",
+          "elapsed_seconds": 1.0420335456728935e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[strategy_agent] For important proposal comparisons, I want the complete data and evidence sources, not just a simplified conclusion.",
+        "[writing_agent] Write out the risk assumptions and reasoning clearly so I can verify the analysis myself.",
+        "[training_agent] For last month's new-hire training, start with a real case to explain the situation and do not make the purchasing decision for them."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.7499551177024841e-06,
+      "query": "What presentation style does this user prefer when comparing vendor proposals?",
+      "retrieved_context": "[strategy_agent] For important proposal comparisons, I want the complete data and evidence sources, not just a simplified conclusion.\n[writing_agent] Write out the risk assumptions and reasoning clearly so I can verify the analysis myself.\n[training_agent] For last month's new-hire training, start with a real case to explain the situation and do not make the purchasing decision for them.",
+      "context_chars": 390,
+      "read_seconds": 1.5420373529195786e-06,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"The user wants complete data, evidence sources, and clear reasoning for important proposal comparisons, not a simplified conclusion.\"}",
+      "choice": "C",
+      "reason": "The user wants complete data, evidence sources, and clear reasoning for important proposal comparisons, not a simplified conclusion.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 0.8465393329970539,
+      "total_seconds": 0.846591291949153,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-SOFTWARE-001-A",
+      "pair_id": "PREF-C-SOFTWARE-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_software_purchase",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "procurement_agent",
+          "utterance": "I used to look at price first when choosing team software. If it worked, that was enough.",
+          "elapsed_seconds": 3.2499665394425392e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "team_operations_agent",
+          "utterance": "After repeated failures with low-cost tools, I now prioritize proven, stable options with long-term support for this team's daily software; price no longer comes first.",
+          "elapsed_seconds": 1.237494871020317e-05
+        },
+        {
+          "order": 3,
+          "agent_id": "demo_agent",
+          "utterance": "For a one-off innovation demo last month, it was fine to temporarily try the platform with the newest features.",
+          "elapsed_seconds": 1.374981366097927e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[procurement_agent] I used to look at price first when choosing team software. If it worked, that was enough.",
+        "[team_operations_agent] After repeated failures with low-cost tools, I now prioritize proven, stable options with long-term support for this team's daily software; price no longer comes first.",
+        "[demo_agent] For a one-off innovation demo last month, it was fine to temporarily try the platform with the newest features."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.8329592421650887e-06,
+      "query": "What does this user currently prioritize when choosing daily project management software for the team?",
+      "retrieved_context": "[procurement_agent] I used to look at price first when choosing team software. If it worked, that was enough.\n[team_operations_agent] After repeated failures with low-cost tools, I now prioritize proven, stable options with long-term support for this team's daily software; price no longer comes first.\n[demo_agent] For a one-off innovation demo last month, it was fine to temporarily try the platform with the newest features.",
+      "context_chars": 427,
+      "read_seconds": 1.584063284099102e-06,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"The user now prioritizes proven, stable options with long-term support for daily team use, which matches option C despite its higher price and longer rollout.\"}",
+      "choice": "C",
+      "reason": "The user now prioritizes proven, stable options with long-term support for daily team use, which matches option C despite its higher price and longer rollout.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 0.9704579999670386,
+      "total_seconds": 0.9705226660007611,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-SOFTWARE-001-B",
+      "pair_id": "PREF-C-SOFTWARE-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_software_purchase",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "procurement_agent",
+          "utterance": "I used to choose mature team software with comprehensive features and strong support.",
+          "elapsed_seconds": 3.4580007195472717e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "team_operations_agent",
+          "utterance": "This team's budget will be tight for the next year. For their daily software, I now prioritize price and fast rollout instead of paying for a full ecosystem they will not use.",
+          "elapsed_seconds": 1.999898813664913e-06
+        },
+        {
+          "order": 3,
+          "agent_id": "demo_agent",
+          "utterance": "For a one-off innovation demo last month, it was fine to temporarily try the platform with the newest features.",
+          "elapsed_seconds": 1.2920936569571495e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[procurement_agent] I used to choose mature team software with comprehensive features and strong support.",
+        "[team_operations_agent] This team's budget will be tight for the next year. For their daily software, I now prioritize price and fast rollout instead of paying for a full ecosystem they will not use.",
+        "[demo_agent] For a one-off innovation demo last month, it was fine to temporarily try the platform with the newest features."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 2.040993422269821e-06,
+      "query": "What does this user currently prioritize when choosing daily project management software for the team?",
+      "retrieved_context": "[procurement_agent] I used to choose mature team software with comprehensive features and strong support.\n[team_operations_agent] This team's budget will be tight for the next year. For their daily software, I now prioritize price and fast rollout instead of paying for a full ecosystem they will not use.\n[demo_agent] For a one-off innovation demo last month, it was fine to temporarily try the platform with the newest features.",
+      "context_chars": 430,
+      "read_seconds": 1.915963366627693e-06,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"The team's budget is tight and they prioritize price and fast rollout for daily software, which option A best matches.\"}",
+      "choice": "A",
+      "reason": "The team's budget is tight and they prioritize price and fast rollout for daily software, which option A best matches.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 0.9350457080872729,
+      "total_seconds": 0.9350812080083415,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-MERGE-003",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "cross_agent_merge",
+      "scenario": "restaurant_choice",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "food_agent",
+          "utterance": "When choosing a restaurant for myself, I want a menu with several genuinely plant-based main dishes, not just side salads.",
+          "elapsed_seconds": 2.7919886633753777e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "social_agent",
+          "utterance": "I prefer restaurants quiet enough for an unhurried conversation; loud, crowded dining rooms wear me out.",
+          "elapsed_seconds": 1.00000761449337e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[food_agent] When choosing a restaurant for myself, I want a menu with several genuinely plant-based main dishes, not just side salads.",
+        "[social_agent] I prefer restaurants quiet enough for an unhurried conversation; loud, crowded dining rooms wear me out."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.459033228456974e-06,
+      "query": "What restaurant qualities does Iris prefer for a personal dinner?",
+      "retrieved_context": "[food_agent] When choosing a restaurant for myself, I want a menu with several genuinely plant-based main dishes, not just side salads.\n[social_agent] I prefer restaurants quiet enough for an unhurried conversation; loud, crowded dining rooms wear me out.",
+      "context_chars": 255,
+      "read_seconds": 1.0830117389559746e-06,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"It offers several plant-based mains and a quiet, unhurried setting for conversation.\"}",
+      "choice": "C",
+      "reason": "It offers several plant-based mains and a quiet, unhurried setting for conversation.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 1.0284305829554796,
+      "total_seconds": 1.0284705420490354,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-MERGE-004",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "cross_agent_merge",
+      "scenario": "home_office_chair",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "home_agent",
+          "utterance": "My desk nook is narrow. The chair must be no more than 60 centimeters wide, and within that limit I prefer the most compact option.",
+          "elapsed_seconds": 2.7919886633753777e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "ergonomics_agent",
+          "utterance": "I sit for long work sessions and want adjustable lumbar support; the more completely I can adjust its height and depth, the better.",
+          "elapsed_seconds": 1.4170072972774506e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[home_agent] My desk nook is narrow. The chair must be no more than 60 centimeters wide, and within that limit I prefer the most compact option.",
+        "[ergonomics_agent] I sit for long work sessions and want adjustable lumbar support; the more completely I can adjust its height and depth, the better."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.5409896150231361e-06,
+      "query": "What size and back-support features does Jonah need in a home office chair?",
+      "retrieved_context": "[home_agent] My desk nook is narrow. The chair must be no more than 60 centimeters wide, and within that limit I prefer the most compact option.\n[ergonomics_agent] I sit for long work sessions and want adjustable lumbar support; the more completely I can adjust its height and depth, the better.",
+      "context_chars": 295,
+      "read_seconds": 9.579816833138466e-07,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"It fits the 60 cm width limit and offers fully adjustable lumbar support for long sessions.\"}",
+      "choice": "C",
+      "reason": "It fits the 60 cm width limit and offers fully adjustable lumbar support for long sessions.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 1.4533877910580486,
+      "total_seconds": 1.4534289999864995,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-UPDATE-003",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_update",
+      "scenario": "exercise_class",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "fitness_agent",
+          "utterance": "I used to choose intense group workouts because the competition kept me motivated.",
+          "elapsed_seconds": 4.458939656615257e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "routine_agent",
+          "utterance": "My routine has changed. I now stick with low-impact sessions I can do independently at a steady pace; group competition is no longer what I want.",
+          "elapsed_seconds": 1.3329554349184036e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[fitness_agent] I used to choose intense group workouts because the competition kept me motivated.",
+        "[routine_agent] My routine has changed. I now stick with low-impact sessions I can do independently at a steady pace; group competition is no longer what I want."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 2.4170149117708206e-06,
+      "query": "What kind of weekly exercise does Kavya currently prefer?",
+      "retrieved_context": "[fitness_agent] I used to choose intense group workouts because the competition kept me motivated.\n[routine_agent] My routine has changed. I now stick with low-impact sessions I can do independently at a steady pace; group competition is no longer what I want.",
+      "context_chars": 260,
+      "read_seconds": 1.7919810488820076e-06,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"Her current preference is low-impact, independent, steady-paced sessions, which option C matches best.\"}",
+      "choice": "C",
+      "reason": "Her current preference is low-impact, independent, steady-paced sessions, which option C matches best.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 1.5728343339869753,
+      "total_seconds": 1.572889875038527,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-UPDATE-004",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_update",
+      "scenario": "grocery_fulfillment",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "grocery_agent",
+          "utterance": "I used to choose the fastest grocery delivery window, even when it cost more.",
+          "elapsed_seconds": 2.4209031835198402e-05
+        },
+        {
+          "order": 2,
+          "agent_id": "household_agent",
+          "utterance": "I work near the market now. For weekly groceries, I prefer a scheduled pickup with minimal packaging, and speed is no longer worth an extra delivery fee.",
+          "elapsed_seconds": 1.2919772416353226e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[grocery_agent] I used to choose the fastest grocery delivery window, even when it cost more.",
+        "[household_agent] I work near the market now. For weekly groceries, I prefer a scheduled pickup with minimal packaging, and speed is no longer worth an extra delivery fee."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.7919810488820076e-06,
+      "query": "How does Luis currently prefer to receive his weekly groceries?",
+      "retrieved_context": "[grocery_agent] I used to choose the fastest grocery delivery window, even when it cost more.\n[household_agent] I work near the market now. For weekly groceries, I prefer a scheduled pickup with minimal packaging, and speed is no longer worth an extra delivery fee.",
+      "context_chars": 265,
+      "read_seconds": 1.2079253792762756e-06,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"Luis now prefers scheduled pickup near work with minimal packaging and no extra delivery fee over speed.\"}",
+      "choice": "A",
+      "reason": "Luis now prefers scheduled pickup near work with minimal packaging and no extra delivery fee over speed.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 0.863709875033237,
+      "total_seconds": 0.8637622079113498,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-BOUNDARY-003",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_boundary",
+      "scenario": "personal_vs_client_dinner",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "food_agent",
+          "utterance": "For my own dinners, I enjoy spicy regional food and like trying dishes I have not had before.",
+          "elapsed_seconds": 2.7919886633753777e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "client_agent",
+          "utterance": "For last month's client dinner, I needed a quiet private room and a mild, familiar menu because the guests had different tastes.",
+          "elapsed_seconds": 1.125037670135498e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[food_agent] For my own dinners, I enjoy spicy regional food and like trying dishes I have not had before.",
+        "[client_agent] For last month's client dinner, I needed a quiet private room and a mild, familiar menu because the guests had different tastes."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.5419209375977516e-06,
+      "query": "What dining preferences apply to Maya's casual personal dinner?",
+      "retrieved_context": "[food_agent] For my own dinners, I enjoy spicy regional food and like trying dishes I have not had before.\n[client_agent] For last month's client dinner, I needed a quiet private room and a mild, familiar menu because the guests had different tastes.",
+      "context_chars": 250,
+      "read_seconds": 1.208973117172718e-06,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"Maya's own dinner preference favors spicy regional food and trying unfamiliar dishes, which option C matches.\"}",
+      "choice": "C",
+      "reason": "Maya's own dinner preference favors spicy regional food and trying unfamiliar dishes, which option C matches.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 1.299812666955404,
+      "total_seconds": 1.2998406660044566,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-BOUNDARY-004",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_boundary",
+      "scenario": "routine_project_communication",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "collaboration_agent",
+          "utterance": "For routine project work, I prefer written asynchronous updates that I can review and respond to in my own time.",
+          "elapsed_seconds": 4.041939973831177e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "incident_agent",
+          "utterance": "During last week's production outage, call me immediately and keep a live video room open until service is restored.",
+          "elapsed_seconds": 1.125037670135498e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[collaboration_agent] For routine project work, I prefer written asynchronous updates that I can review and respond to in my own time.",
+        "[incident_agent] During last week's production outage, call me immediately and keep a live video room open until service is restored."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 2.374988980591297e-06,
+      "query": "How does Noah prefer routine project communication when there is no incident?",
+      "retrieved_context": "[collaboration_agent] For routine project work, I prefer written asynchronous updates that I can review and respond to in my own time.\n[incident_agent] During last week's production outage, call me immediately and keep a live video room open until service is restored.",
+      "context_chars": 268,
+      "read_seconds": 1.708976924419403e-06,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"Routine project work calls for written asynchronous updates, which matches the stated preference.\"}",
+      "choice": "C",
+      "reason": "Routine project work calls for written asynchronous updates, which matches the stated preference.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 0.9631031670141965,
+      "total_seconds": 0.9631332920398563,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-FLIGHT-001-A",
+      "pair_id": "PREF-C-FLIGHT-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_flight",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "travel_agent",
+          "utterance": "For vacation flights, I strongly prefer nonstop routes because connections make the trip tiring.",
+          "elapsed_seconds": 1.4998950064182281e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "schedule_agent",
+          "utterance": "I prefer daytime flights that arrive with enough time to settle in before the evening.",
+          "elapsed_seconds": 6.25033862888813e-07
+        },
+        {
+          "order": 3,
+          "agent_id": "family_agent",
+          "utterance": "For a family trip last year, we needed two checked bags, and one relative who was recovering from surgery needed airport wheelchair assistance.",
+          "elapsed_seconds": 5.00003807246685e-07
+        }
+      ],
+      "memory_snapshot": [
+        "[travel_agent] For vacation flights, I strongly prefer nonstop routes because connections make the trip tiring.",
+        "[schedule_agent] I prefer daytime flights that arrive with enough time to settle in before the evening.",
+        "[family_agent] For a family trip last year, we needed two checked bags, and one relative who was recovering from surgery needed airport wheelchair assistance."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 5.84055669605732e-07,
+      "query": "What does this user currently prefer for personal vacation flights?",
+      "retrieved_context": "[travel_agent] For vacation flights, I strongly prefer nonstop routes because connections make the trip tiring.\n[schedule_agent] I prefer daytime flights that arrive with enough time to settle in before the evening.\n[family_agent] For a family trip last year, we needed two checked bags, and one relative who was recovering from surgery needed airport wheelchair assistance.",
+      "context_chars": 374,
+      "read_seconds": 7.08969309926033e-07,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"Nonstop and daytime arrival align with the stated preferences for nonstop routes and daytime flights with time to settle in.\"}",
+      "choice": "A",
+      "reason": "Nonstop and daytime arrival align with the stated preferences for nonstop routes and daytime flights with time to settle in.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 1.2868362499866635,
+      "total_seconds": 1.286865875008516,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-FLIGHT-001-B",
+      "pair_id": "PREF-C-FLIGHT-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_flight",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "travel_agent",
+          "utterance": "For personal trips, keeping the fare as low as possible matters more to me than avoiding a connection.",
+          "elapsed_seconds": 3.832974471151829e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "schedule_agent",
+          "utterance": "I am comfortable flying overnight and taking a long layover if that meaningfully lowers the price.",
+          "elapsed_seconds": 1.6249250620603561e-06
+        },
+        {
+          "order": 3,
+          "agent_id": "family_agent",
+          "utterance": "For a family trip last year, we needed two checked bags, and one relative who was recovering from surgery needed airport wheelchair assistance.",
+          "elapsed_seconds": 1.249951310455799e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[travel_agent] For personal trips, keeping the fare as low as possible matters more to me than avoiding a connection.",
+        "[schedule_agent] I am comfortable flying overnight and taking a long layover if that meaningfully lowers the price.",
+        "[family_agent] For a family trip last year, we needed two checked bags, and one relative who was recovering from surgery needed airport wheelchair assistance."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 2.3330794647336006e-06,
+      "query": "What does this user currently prefer for personal vacation flights?",
+      "retrieved_context": "[travel_agent] For personal trips, keeping the fare as low as possible matters more to me than avoiding a connection.\n[schedule_agent] I am comfortable flying overnight and taking a long layover if that meaningfully lowers the price.\n[family_agent] For a family trip last year, we needed two checked bags, and one relative who was recovering from surgery needed airport wheelchair assistance.",
+      "context_chars": 392,
+      "read_seconds": 2.2080494090914726e-06,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"The user prioritizes the lowest fare for personal trips and is comfortable with overnight flights and long layovers if it lowers the price.\"}",
+      "choice": "B",
+      "reason": "The user prioritizes the lowest fare for personal trips and is comfortable with overnight flights and long layovers if it lowers the price.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 1.4085014580050483,
+      "total_seconds": 1.4085366659564897,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-MEETING-001-A",
+      "pair_id": "PREF-C-MEETING-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_meeting",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "facilitation_agent",
+          "utterance": "For project kickoffs, I want people working together rather than listening to a long presentation.",
+          "elapsed_seconds": 3.750086762011051e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "team_agent",
+          "utterance": "Give every function a real chance to shape the plan through small-group discussion and a shared workspace.",
+          "elapsed_seconds": 1.500011421740055e-06
+        },
+        {
+          "order": 3,
+          "agent_id": "investor_agent",
+          "utterance": "For last quarter's investor update, we needed a polished formal deck with questions moderated by the CEO.",
+          "elapsed_seconds": 1.0409858077764511e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[facilitation_agent] For project kickoffs, I want people working together rather than listening to a long presentation.",
+        "[team_agent] Give every function a real chance to shape the plan through small-group discussion and a shared workspace.",
+        "[investor_agent] For last quarter's investor update, we needed a polished formal deck with questions moderated by the CEO."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 2.125045284628868e-06,
+      "query": "What format does this user currently prefer for an internal project kickoff?",
+      "retrieved_context": "[facilitation_agent] For project kickoffs, I want people working together rather than listening to a long presentation.\n[team_agent] Give every function a real chance to shape the plan through small-group discussion and a shared workspace.\n[investor_agent] For last quarter's investor update, we needed a polished formal deck with questions moderated by the CEO.",
+      "context_chars": 362,
+      "read_seconds": 2.0830193534493446e-06,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"The user's facilitation and team preferences emphasize collaborative, small-group planning over presentations or formal decks.\"}",
+      "choice": "A",
+      "reason": "The user's facilitation and team preferences emphasize collaborative, small-group planning over presentations or formal decks.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 1.3117141249822453,
+      "total_seconds": 1.311754500027746,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-MEETING-001-B",
+      "pair_id": "PREF-C-MEETING-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_meeting",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "facilitation_agent",
+          "utterance": "For internal project meetings, I prefer a short pre-read and a discussion focused only on unresolved decisions.",
+          "elapsed_seconds": 3.6249402910470963e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "team_agent",
+          "utterance": "Each decision should end with a named owner and a clear next step; open-ended workshops frustrate me.",
+          "elapsed_seconds": 1.2079253792762756e-06
+        },
+        {
+          "order": 3,
+          "agent_id": "investor_agent",
+          "utterance": "For last quarter's investor update, we needed a polished formal deck with questions moderated by the CEO.",
+          "elapsed_seconds": 1.00000761449337e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[facilitation_agent] For internal project meetings, I prefer a short pre-read and a discussion focused only on unresolved decisions.",
+        "[team_agent] Each decision should end with a named owner and a clear next step; open-ended workshops frustrate me.",
+        "[investor_agent] For last quarter's investor update, we needed a polished formal deck with questions moderated by the CEO."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.8330756574869156e-06,
+      "query": "What format does this user currently prefer for an internal project kickoff?",
+      "retrieved_context": "[facilitation_agent] For internal project meetings, I prefer a short pre-read and a discussion focused only on unresolved decisions.\n[team_agent] Each decision should end with a named owner and a clear next step; open-ended workshops frustrate me.\n[investor_agent] For last quarter's investor update, we needed a polished formal deck with questions moderated by the CEO.",
+      "context_chars": 370,
+      "read_seconds": 1.4579854905605316e-06,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"The user prefers concise decision meetings with pre-reads, unresolved questions, and clear owners/next steps, not open-ended workshops or formal presentations.\"}",
+      "choice": "B",
+      "reason": "The user prefers concise decision meetings with pre-reads, unresolved questions, and clear owners/next steps, not open-ended workshops or formal presentations.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 1.1267822500085458,
+      "total_seconds": 1.1268276670016348,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-MEAL-001-A",
+      "pair_id": "PREF-C-MEAL-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_meal",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "nutrition_agent",
+          "utterance": "For weekday meals, I prioritize a high-protein plan that includes fish, chicken, or eggs.",
+          "elapsed_seconds": 3.584078513085842e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "routine_agent",
+          "utterance": "I need meals I can reheat in under five minutes between meetings, even if the menu repeats.",
+          "elapsed_seconds": 1.4170072972774506e-06
+        },
+        {
+          "order": 3,
+          "agent_id": "event_agent",
+          "utterance": "For last month's office event, every meal had to be nut-free and carry full allergen labels.",
+          "elapsed_seconds": 7.919734343886375e-07
+        }
+      ],
+      "memory_snapshot": [
+        "[nutrition_agent] For weekday meals, I prioritize a high-protein plan that includes fish, chicken, or eggs.",
+        "[routine_agent] I need meals I can reheat in under five minutes between meetings, even if the menu repeats.",
+        "[event_agent] For last month's office event, every meal had to be nut-free and carry full allergen labels."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 2.2079329937696457e-06,
+      "query": "What does this user currently prefer for regular weekday meals?",
+      "retrieved_context": "[nutrition_agent] For weekday meals, I prioritize a high-protein plan that includes fish, chicken, or eggs.\n[routine_agent] I need meals I can reheat in under five minutes between meetings, even if the menu repeats.\n[event_agent] For last month's office event, every meal had to be nut-free and carry full allergen labels.",
+      "context_chars": 322,
+      "read_seconds": 1.4579854905605316e-06,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"Matches the current weekday priorities of high protein and quick reheating; repetition is acceptable per routine preference.\"}",
+      "choice": "A",
+      "reason": "Matches the current weekday priorities of high protein and quick reheating; repetition is acceptable per routine preference.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 1.2385085829300806,
+      "total_seconds": 1.2385430000722408,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-MEAL-001-B",
+      "pair_id": "PREF-C-MEAL-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_meal",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "nutrition_agent",
+          "utterance": "For my regular meals, I prefer plant-based dishes built around beans, grains, and vegetables.",
+          "elapsed_seconds": 3.4169061109423637e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "routine_agent",
+          "utterance": "Menu variety matters to me, and I am happy to spend around twenty minutes preparing dinner.",
+          "elapsed_seconds": 1.4170072972774506e-06
+        },
+        {
+          "order": 3,
+          "agent_id": "event_agent",
+          "utterance": "For last month's office event, every meal had to be nut-free and carry full allergen labels.",
+          "elapsed_seconds": 7.910421118140221e-07
+        }
+      ],
+      "memory_snapshot": [
+        "[nutrition_agent] For my regular meals, I prefer plant-based dishes built around beans, grains, and vegetables.",
+        "[routine_agent] Menu variety matters to me, and I am happy to spend around twenty minutes preparing dinner.",
+        "[event_agent] For last month's office event, every meal had to be nut-free and carry full allergen labels."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.6249250620603561e-06,
+      "query": "What does this user currently prefer for regular weekday meals?",
+      "retrieved_context": "[nutrition_agent] For my regular meals, I prefer plant-based dishes built around beans, grains, and vegetables.\n[routine_agent] Menu variety matters to me, and I am happy to spend around twenty minutes preparing dinner.\n[event_agent] For last month's office event, every meal had to be nut-free and carry full allergen labels.",
+      "context_chars": 326,
+      "read_seconds": 1.8329592421650887e-06,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"Matches plant-based preference, menu variety, and ~20-minute prep time.\"}",
+      "choice": "B",
+      "reason": "Matches plant-based preference, menu variety, and ~20-minute prep time.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 0.9520578329684213,
+      "total_seconds": 0.9521042089909315,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-NOTIFY-001-A",
+      "pair_id": "PREF-C-NOTIFY-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_notification",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "workspace_agent",
+          "utterance": "I used to keep all workspace notifications on in real time.",
+          "elapsed_seconds": 3.1249364838004112e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "focus_agent",
+          "utterance": "The interruptions are hurting my focus. From now on, send blockers immediately but collect routine changes into one daily digest.",
+          "elapsed_seconds": 1.4666933566331863e-05
+        },
+        {
+          "order": 3,
+          "agent_id": "leave_agent",
+          "utterance": "While I was on vacation last month, hold all noncritical notifications until I returned.",
+          "elapsed_seconds": 8.33999365568161e-07
+        }
+      ],
+      "memory_snapshot": [
+        "[workspace_agent] I used to keep all workspace notifications on in real time.",
+        "[focus_agent] The interruptions are hurting my focus. From now on, send blockers immediately but collect routine changes into one daily digest.",
+        "[leave_agent] While I was on vacation last month, hold all noncritical notifications until I returned."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.625041477382183e-06,
+      "query": "How does this user currently want daily work notifications handled?",
+      "retrieved_context": "[workspace_agent] I used to keep all workspace notifications on in real time.\n[focus_agent] The interruptions are hurting my focus. From now on, send blockers immediately but collect routine changes into one daily digest.\n[leave_agent] While I was on vacation last month, hold all noncritical notifications until I returned.",
+      "context_chars": 324,
+      "read_seconds": 1.125037670135498e-06,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"The user explicitly updated to send blockers immediately while digesting routine changes, which overrides older preferences.\"}",
+      "choice": "C",
+      "reason": "The user explicitly updated to send blockers immediately while digesting routine changes, which overrides older preferences.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 1.0870624999515712,
+      "total_seconds": 1.0871007080422714,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-NOTIFY-001-B",
+      "pair_id": "PREF-C-NOTIFY-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_notification",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "workspace_agent",
+          "utterance": "I used to prefer a daily digest for routine workspace updates.",
+          "elapsed_seconds": 1.4579854905605316e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "focus_agent",
+          "utterance": "My role now requires continuous coordination. I want every project message, status change, and blocker delivered immediately instead of waiting for a digest.",
+          "elapsed_seconds": 7.08969309926033e-07
+        },
+        {
+          "order": 3,
+          "agent_id": "leave_agent",
+          "utterance": "While I was on vacation last month, hold all noncritical notifications until I returned.",
+          "elapsed_seconds": 5.420297384262085e-07
+        }
+      ],
+      "memory_snapshot": [
+        "[workspace_agent] I used to prefer a daily digest for routine workspace updates.",
+        "[focus_agent] My role now requires continuous coordination. I want every project message, status change, and blocker delivered immediately instead of waiting for a digest.",
+        "[leave_agent] While I was on vacation last month, hold all noncritical notifications until I returned."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 9.579816833138466e-07,
+      "query": "How does this user currently want daily work notifications handled?",
+      "retrieved_context": "[workspace_agent] I used to prefer a daily digest for routine workspace updates.\n[focus_agent] My role now requires continuous coordination. I want every project message, status change, and blocker delivered immediately instead of waiting for a digest.\n[leave_agent] While I was on vacation last month, hold all noncritical notifications until I returned.",
+      "context_chars": 355,
+      "read_seconds": 9.159557521343231e-07,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"The focus_agent explicitly requires immediate delivery for every project message, status change, and blocker, overriding the older digest preference.\"}",
+      "choice": "B",
+      "reason": "The focus_agent explicitly requires immediate delivery for every project message, status change, and blocker, overriding the older digest preference.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 1.0421904999529943,
+      "total_seconds": 1.0422296670731157,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-COURSE-001-A",
+      "pair_id": "PREF-C-COURSE-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_course",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "learning_agent",
+          "utterance": "I learn professional skills best by building something real rather than only listening to lectures.",
+          "elapsed_seconds": 4.790956154465675e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "career_agent",
+          "utterance": "I want each module to contribute to a portfolio project and include feedback I can apply the next week.",
+          "elapsed_seconds": 1.625041477382183e-06
+        },
+        {
+          "order": 3,
+          "agent_id": "certification_agent",
+          "utterance": "For a certification exam last spring, I needed timed drills and test-taking shortcuts for two weeks.",
+          "elapsed_seconds": 1.0830117389559746e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[learning_agent] I learn professional skills best by building something real rather than only listening to lectures.",
+        "[career_agent] I want each module to contribute to a portfolio project and include feedback I can apply the next week.",
+        "[certification_agent] For a certification exam last spring, I needed timed drills and test-taking shortcuts for two weeks."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 2.9579969123005867e-06,
+      "query": "How does this user currently prefer to learn a durable professional skill?",
+      "retrieved_context": "[learning_agent] I learn professional skills best by building something real rather than only listening to lectures.\n[career_agent] I want each module to contribute to a portfolio project and include feedback I can apply the next week.\n[certification_agent] For a certification exam last spring, I needed timed drills and test-taking shortcuts for two weeks.",
+      "context_chars": 358,
+      "read_seconds": 1.4579854905605316e-06,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"The user prefers building real projects with weekly feedback, which matches option A.\"}",
+      "choice": "A",
+      "reason": "The user prefers building real projects with weekly feedback, which matches option A.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 1.5293797920458019,
+      "total_seconds": 1.5294188749976456,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-COURSE-001-B",
+      "pair_id": "PREF-C-COURSE-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_course",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "learning_agent",
+          "utterance": "I learn durable professional skills best when the underlying principles are taught in a clear sequence.",
+          "elapsed_seconds": 4.749977961182594e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "career_agent",
+          "utterance": "I prefer structured readings and cumulative concept exercises before applying a method in practice.",
+          "elapsed_seconds": 9.580980986356735e-07
+        },
+        {
+          "order": 3,
+          "agent_id": "certification_agent",
+          "utterance": "For a certification exam last spring, I needed timed drills and test-taking shortcuts for two weeks.",
+          "elapsed_seconds": 1.0828953236341476e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[learning_agent] I learn durable professional skills best when the underlying principles are taught in a clear sequence.",
+        "[career_agent] I prefer structured readings and cumulative concept exercises before applying a method in practice.",
+        "[certification_agent] For a certification exam last spring, I needed timed drills and test-taking shortcuts for two weeks."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.750071533024311e-06,
+      "query": "How does this user currently prefer to learn a durable professional skill?",
+      "retrieved_context": "[learning_agent] I learn durable professional skills best when the underlying principles are taught in a clear sequence.\n[career_agent] I prefer structured readings and cumulative concept exercises before applying a method in practice.\n[certification_agent] For a certification exam last spring, I needed timed drills and test-taking shortcuts for two weeks.",
+      "context_chars": 358,
+      "read_seconds": 1.0409858077764511e-06,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"The user prefers structured, sequential learning with cumulative exercises for durable skills, which matches option B.\"}",
+      "choice": "B",
+      "reason": "The user prefers structured, sequential learning with cumulative exercises for durable skills, which matches option B.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 1.04509891604539,
+      "total_seconds": 1.0451697920216247,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-FURNITURE-001-A",
+      "pair_id": "PREF-C-FURNITURE-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_furniture",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "home_agent",
+          "utterance": "For furniture I will keep for years, I prefer durable pieces that can be repaired instead of replaced.",
+          "elapsed_seconds": 4.249974153935909e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "shopping_agent",
+          "utterance": "Certified materials and a local maker matter more to me than getting the item immediately.",
+          "elapsed_seconds": 1.584063284099102e-06
+        },
+        {
+          "order": 3,
+          "agent_id": "rental_agent",
+          "utterance": "For a furnished rental last year, the table had to fold flat and be easy to move between rooms.",
+          "elapsed_seconds": 9.170034900307655e-07
+        }
+      ],
+      "memory_snapshot": [
+        "[home_agent] For furniture I will keep for years, I prefer durable pieces that can be repaired instead of replaced.",
+        "[shopping_agent] Certified materials and a local maker matter more to me than getting the item immediately.",
+        "[rental_agent] For a furnished rental last year, the table had to fold flat and be easy to move between rooms."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 5.66698145121336e-06,
+      "query": "What does this user currently prioritize when buying long-term home furniture?",
+      "retrieved_context": "[home_agent] For furniture I will keep for years, I prefer durable pieces that can be repaired instead of replaced.\n[shopping_agent] Certified materials and a local maker matter more to me than getting the item immediately.\n[rental_agent] For a furnished rental last year, the table had to fold flat and be easy to move between rooms.",
+      "context_chars": 334,
+      "read_seconds": 2.4170149117708206e-06,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"The user values durable, repairable furniture with certified materials and local makers, which option A provides.\"}",
+      "choice": "A",
+      "reason": "The user values durable, repairable furniture with certified materials and local makers, which option A provides.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 1.0983143750345334,
+      "total_seconds": 1.0983690419234335,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-FURNITURE-001-B",
+      "pair_id": "PREF-C-FURNITURE-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_furniture",
+      "system": "naive_markdown",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "home_agent",
+          "utterance": "For household furniture, my current priority is the lowest possible upfront price.",
+          "elapsed_seconds": 3.00002284348011e-06
+        },
+        {
+          "order": 2,
+          "agent_id": "shopping_agent",
+          "utterance": "I need delivery within the next two days and accept that I may replace the item after a couple of years.",
+          "elapsed_seconds": 1.334003172814846e-06
+        },
+        {
+          "order": 3,
+          "agent_id": "rental_agent",
+          "utterance": "For a furnished rental last year, the table had to fold flat and be easy to move between rooms.",
+          "elapsed_seconds": 1.0420335456728935e-06
+        }
+      ],
+      "memory_snapshot": [
+        "[home_agent] For household furniture, my current priority is the lowest possible upfront price.",
+        "[shopping_agent] I need delivery within the next two days and accept that I may replace the item after a couple of years.",
+        "[rental_agent] For a furnished rental last year, the table had to fold flat and be easy to move between rooms."
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.374981366097927e-06,
+      "query": "What does this user currently prioritize when buying long-term home furniture?",
+      "retrieved_context": "[home_agent] For household furniture, my current priority is the lowest possible upfront price.\n[shopping_agent] I need delivery within the next two days and accept that I may replace the item after a couple of years.\n[rental_agent] For a furnished rental last year, the table had to fold flat and be easy to move between rooms.",
+      "context_chars": 328,
+      "read_seconds": 1.0830117389559746e-06,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"The current priority is the lowest upfront price, and B is the lowest-priced option with fast delivery.\"}",
+      "choice": "B",
+      "reason": "The current priority is the lowest upfront price, and B is the lowest-priced option with fast delivery.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 0.998083833954297,
+      "total_seconds": 0.9981174590066075,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-MERGE-001",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "cross_agent_merge",
+      "scenario": "leisure_hotel",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "travel_agent",
+          "utterance": "When I travel for leisure, I prefer quiet hotels and try to avoid crowded, noisy places.",
+          "elapsed_seconds": 0.002775041968561709
+        },
+        {
+          "order": 2,
+          "agent_id": "hotel_agent",
+          "utterance": "I prefer small hotels with local character over standardized international chains.",
+          "elapsed_seconds": 0.0012973339762538671
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.3329554349184036e-06,
+      "query": "What accommodation preferences does Hana have for a leisure trip?",
+      "retrieved_context": "I prefer small hotels with local character over standardized international chains.\nWhen I travel for leisure, I prefer quiet hotels and try to avoid crowded, noisy places.",
+      "context_chars": 171,
+      "read_seconds": 0.005644542048685253,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"It best matches the preference for small, locally owned hotels with local character and quiet surroundings, despite the less central location.\"}",
+      "choice": "B",
+      "reason": "It best matches the preference for small, locally owned hotels with local character and quiet surroundings, despite the less central location.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 1.0199008750496432,
+      "total_seconds": 1.0296376250917092,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-MERGE-002",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "cross_agent_merge",
+      "scenario": "developer_laptop",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "travel_setup_agent",
+          "utterance": "I carry my work laptop between home and the office every day, so I want it to weigh no more than 1.3 kilograms.",
+          "elapsed_seconds": 0.0012346250005066395
+        },
+        {
+          "order": 2,
+          "agent_id": "development_agent",
+          "utterance": "I run several local containers at once, so I need at least 32 GB of memory and good sustained cooling.",
+          "elapsed_seconds": 0.0008573749801144004
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 8.33999365568161e-07,
+      "query": "What does Alex need from a laptop for commuting and local development?",
+      "retrieved_context": "I run several local containers at once, so I need at least 32 GB of memory and good sustained cooling.\nI carry my work laptop between home and the office every day, so I want it to weigh no more than 1.3 kilograms.",
+      "context_chars": 214,
+      "read_seconds": 0.0009446670301258564,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"It meets the 32 GB memory and 1.3 kg weight requirements while providing good sustained cooling.\"}",
+      "choice": "B",
+      "reason": "It meets the 32 GB memory and 1.3 kg weight requirements while providing good sustained cooling.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 1.1297839999897406,
+      "total_seconds": 1.1328433339949697,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-UPDATE-001",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_update",
+      "scenario": "work_device_purchase",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "shopping_agent",
+          "utterance": "I used to prioritize price when buying equipment for work. As long as it did the job, that was good enough for me.",
+          "elapsed_seconds": 0.0017944579012691975
+        },
+        {
+          "order": 2,
+          "agent_id": "work_agent",
+          "utterance": "Recent equipment failures have disrupted my work. From now on, reliability comes first; I am willing to pay more and no longer put price first.",
+          "elapsed_seconds": 0.0012439589481800795
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.249951310455799e-06,
+      "query": "What does Bao currently prioritize when buying equipment for work?",
+      "retrieved_context": "I used to prioritize price when buying equipment for work. As long as it did the job, that was good enough for me.\nRecent equipment failures have disrupted my work. From now on, reliability comes first; I am willing to pay more and no longer put price first.",
+      "context_chars": 258,
+      "read_seconds": 0.0013300420250743628,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"Reliability now comes first, and B offers the strongest long-term reliability with a longer warranty, despite the higher cost.\"}",
+      "choice": "B",
+      "reason": "Reliability now comes first, and B offers the strongest long-term reliability with a longer warranty, despite the higher cost.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 0.8033561250194907,
+      "total_seconds": 0.8077539160149172,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-UPDATE-002",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_update",
+      "scenario": "software_adoption",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "tool_scout_agent",
+          "utterance": "I used to prefer mature team tools with predictable releases and long-term support.",
+          "elapsed_seconds": 0.0015795420622453094
+        },
+        {
+          "order": 2,
+          "agent_id": "engineering_agent",
+          "utterance": "Several new automation features have recently improved our efficiency. I now prioritize the latest features and rapid iteration, as long as the vendor provides migration support; maturity is no longer my top concern.",
+          "elapsed_seconds": 0.0012015840038657188
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.2079253792762756e-06,
+      "query": "What does Chloe currently prefer when choosing software for her team?",
+      "retrieved_context": "I used to prefer mature team tools with predictable releases and long-term support.",
+      "context_chars": 83,
+      "read_seconds": 0.0012988749658688903,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"Matches the stated preference for mature tools with predictable releases and long-term support.\"}",
+      "choice": "C",
+      "reason": "Matches the stated preference for mature tools with predictable releases and long-term support.",
+      "expected_choice": "A",
+      "correct": false,
+      "decision_seconds": 0.8496764579322189,
+      "total_seconds": 0.8537824999075383,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-BOUNDARY-001",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_boundary",
+      "scenario": "leisure_vs_business_hotel",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "leisure_agent",
+          "utterance": "For leisure trips, I like quiet, slow-paced small hotels and do not mind staying away from busy areas.",
+          "elapsed_seconds": 0.0015698340721428394
+        },
+        {
+          "order": 2,
+          "agent_id": "business_agent",
+          "utterance": "For my one-day business trip to Shanghai last month, I needed a chain hotel near a transport hub so I could keep to the schedule.",
+          "elapsed_seconds": 0.0011508750030770898
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.08394306153059e-06,
+      "query": "Which accommodation preferences apply to Diego's new private vacation?",
+      "retrieved_context": "For my one-day business trip to Shanghai last month, I needed a chain hotel near a transport hub so I could keep to the schedule.\nFor leisure trips, I like quiet, slow-paced small hotels and do not mind staying away from busy areas.",
+      "context_chars": 232,
+      "read_seconds": 0.0012621249770745635,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"Leisure trips favor quiet, small, slow-paced hotels away from busy areas.\"}",
+      "choice": "B",
+      "reason": "Leisure trips favor quiet, small, slow-paced hotels away from busy areas.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 0.8947368330555037,
+      "total_seconds": 0.8987582500558347,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-BOUNDARY-002",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_boundary",
+      "scenario": "personal_invitation_style",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "personal_writing_agent",
+          "utterance": "For event invitations to friends, I prefer a concise, neutral style. Clear time, location, and RSVP details are enough; I do not need much emotional language.",
+          "elapsed_seconds": 0.0016264590667560697
+        },
+        {
+          "order": 2,
+          "agent_id": "board_report_agent",
+          "utterance": "For last week's board report, please use a formal tone, avoid emojis, and keep it under 300 words.",
+          "elapsed_seconds": 0.0011531250784173608
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.1670636013150215e-06,
+      "query": "What writing style does Eun prefer for a birthday invitation to friends?",
+      "retrieved_context": "For event invitations to friends, I prefer a concise, neutral style. Clear time, location, and RSVP details are enough; I do not need much emotional language.\nFor last week's board report, please use a formal tone, avoid emojis, and keep it under 300 words.",
+      "context_chars": 257,
+      "read_seconds": 0.0015798750100657344,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"The memory indicates a preference for concise, neutral event invitations with clear time, location, and RSVP details.\"}",
+      "choice": "C",
+      "reason": "The memory indicates a preference for concise, neutral event invitations with clear time, location, and RSVP details.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 0.86314129200764,
+      "total_seconds": 0.8675279580056667,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-HOTEL-001-A",
+      "pair_id": "PREF-C-HOTEL-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_hotel",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "leisure_agent",
+          "utterance": "On private vacations, quiet matters most to me, and I dislike crowded, noisy hotels.",
+          "elapsed_seconds": 0.0015587089583277702
+        },
+        {
+          "order": 2,
+          "agent_id": "hotel_agent",
+          "utterance": "I prefer small accommodations with local character; large international chains do not appeal to me.",
+          "elapsed_seconds": 0.0011933749774470925
+        },
+        {
+          "order": 3,
+          "agent_id": "family_trip_agent",
+          "utterance": "For a week-long family stay last month, the room had to include a kitchen and a washer.",
+          "elapsed_seconds": 0.0011184170143678784
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.4579854905605316e-06,
+      "query": "What accommodation preferences does this user have for a private vacation in Kyoto?",
+      "retrieved_context": "I prefer small accommodations with local character; large international chains do not appeal to me.\nFor a week-long family stay last month, the room had to include a kitchen and a washer.\nOn private vacations, quiet matters most to me, and I dislike crowded, noisy hotels.",
+      "context_chars": 272,
+      "read_seconds": 0.001841583987697959,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"A quiet, small, local-character boutique hotel best fits the user's stated preference for private vacations, quiet, and dislike of crowded hotels.\"}",
+      "choice": "C",
+      "reason": "A quiet, small, local-character boutique hotel best fits the user's stated preference for private vacations, quiet, and dislike of crowded hotels.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 1.2938106250949204,
+      "total_seconds": 1.299547915928997,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-HOTEL-001-B",
+      "pair_id": "PREF-C-HOTEL-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_hotel",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "leisure_agent",
+          "utterance": "For hotels on private vacations, convenient transport in the city center matters most to me.",
+          "elapsed_seconds": 0.0016695419326424599
+        },
+        {
+          "order": 2,
+          "agent_id": "hotel_agent",
+          "utterance": "I trust large international chains with consistent service standards and full facilities.",
+          "elapsed_seconds": 0.0011761250207200646
+        },
+        {
+          "order": 3,
+          "agent_id": "family_trip_agent",
+          "utterance": "For a week-long family stay last month, the room had to include a kitchen and a washer.",
+          "elapsed_seconds": 0.001058042049407959
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.3330718502402306e-06,
+      "query": "What accommodation preferences does this user have for a private vacation in Kyoto?",
+      "retrieved_context": "For hotels on private vacations, convenient transport in the city center matters most to me.\nFor a week-long family stay last month, the room had to include a kitchen and a washer.\nI trust large international chains with consistent service standards and full facilities.",
+      "context_chars": 270,
+      "read_seconds": 0.001356207998469472,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"The user prioritizes city-center transport and consistent large-chain service for private vacations; the kitchen/washer was only for the past family stay.\"}",
+      "choice": "A",
+      "reason": "The user prioritizes city-center transport and consistent large-chain service for private vacations; the kitchen/washer was only for the past family stay.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 0.9742160000605509,
+      "total_seconds": 0.9795042079640552,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-ANALYSIS-001-A",
+      "pair_id": "PREF-C-ANALYSIS-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_analysis_style",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "strategy_agent",
+          "utterance": "When comparing proposals, give me the recommendation first; I do not want to read a long background section before it.",
+          "elapsed_seconds": 0.0015902500599622726
+        },
+        {
+          "order": 2,
+          "agent_id": "writing_agent",
+          "utterance": "Do not open with the full derivation. Start with a few clear points on what to choose and what to do next.",
+          "elapsed_seconds": 0.001147042028605938
+        },
+        {
+          "order": 3,
+          "agent_id": "training_agent",
+          "utterance": "For last month's new-hire training, start with a real case to explain the situation and do not make the purchasing decision for them.",
+          "elapsed_seconds": 0.0011262079933658242
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 9.59029421210289e-07,
+      "query": "What presentation style does this user prefer when comparing vendor proposals?",
+      "retrieved_context": "When comparing proposals, give me the recommendation first; I do not want to read a long background section before it.\nDo not open with the full derivation. Start with a few clear points on what to choose and what to do next.",
+      "context_chars": 225,
+      "read_seconds": 0.0013907499378547072,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"Matches the user's stated preference for recommendation-first, concise summaries, and clear next actions.\"}",
+      "choice": "A",
+      "reason": "Matches the user's stated preference for recommendation-first, concise summaries, and clear next actions.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 0.9478737919125706,
+      "total_seconds": 0.9531520829768851,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-ANALYSIS-001-B",
+      "pair_id": "PREF-C-ANALYSIS-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_analysis_style",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "strategy_agent",
+          "utterance": "For important proposal comparisons, I want the complete data and evidence sources, not just a simplified conclusion.",
+          "elapsed_seconds": 0.001600624993443489
+        },
+        {
+          "order": 2,
+          "agent_id": "writing_agent",
+          "utterance": "Write out the risk assumptions and reasoning clearly so I can verify the analysis myself.",
+          "elapsed_seconds": 0.0010432919953018427
+        },
+        {
+          "order": 3,
+          "agent_id": "training_agent",
+          "utterance": "For last month's new-hire training, start with a real case to explain the situation and do not make the purchasing decision for them.",
+          "elapsed_seconds": 0.0011052079498767853
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.0830117389559746e-06,
+      "query": "What presentation style does this user prefer when comparing vendor proposals?",
+      "retrieved_context": "",
+      "context_chars": 0,
+      "read_seconds": 0.0013196250656619668,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"The user's current analysis preferences are not specified, but for an internal review comparing two proposals, a concise recommendation-first format is most efficient and actionable.\"}",
+      "choice": "A",
+      "reason": "The user's current analysis preferences are not specified, but for an internal review comparing two proposals, a concise recommendation-first format is most efficient and actionable.",
+      "expected_choice": "C",
+      "correct": false,
+      "decision_seconds": 1.0070477089611813,
+      "total_seconds": 1.0121451671002433,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-SOFTWARE-001-A",
+      "pair_id": "PREF-C-SOFTWARE-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_software_purchase",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "procurement_agent",
+          "utterance": "I used to look at price first when choosing team software. If it worked, that was enough.",
+          "elapsed_seconds": 0.00158400007057935
+        },
+        {
+          "order": 2,
+          "agent_id": "team_operations_agent",
+          "utterance": "After repeated failures with low-cost tools, I now prioritize proven, stable options with long-term support for this team's daily software; price no longer comes first.",
+          "elapsed_seconds": 0.0011276250006631017
+        },
+        {
+          "order": 3,
+          "agent_id": "demo_agent",
+          "utterance": "For a one-off innovation demo last month, it was fine to temporarily try the platform with the newest features.",
+          "elapsed_seconds": 0.0010542909149080515
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.00000761449337e-06,
+      "query": "What does this user currently prioritize when choosing daily project management software for the team?",
+      "retrieved_context": "I used to look at price first when choosing team software. If it worked, that was enough.\nFor a one-off innovation demo last month, it was fine to temporarily try the platform with the newest features.\nAfter repeated failures with low-cost tools, I now prioritize proven, stable options with long-term support for this team's daily software; price no longer comes first.",
+      "context_chars": 370,
+      "read_seconds": 0.0014114159857854247,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"The user now prioritizes proven, stable options with long-term support for daily team software, which option C provides despite higher cost and longer rollout.\"}",
+      "choice": "C",
+      "reason": "The user now prioritizes proven, stable options with long-term support for daily team software, which option C provides despite higher cost and longer rollout.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 1.0301516249310225,
+      "total_seconds": 1.0353523750090972,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-SOFTWARE-001-B",
+      "pair_id": "PREF-C-SOFTWARE-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_software_purchase",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "procurement_agent",
+          "utterance": "I used to choose mature team software with comprehensive features and strong support.",
+          "elapsed_seconds": 0.0016428750241175294
+        },
+        {
+          "order": 2,
+          "agent_id": "team_operations_agent",
+          "utterance": "This team's budget will be tight for the next year. For their daily software, I now prioritize price and fast rollout instead of paying for a full ecosystem they will not use.",
+          "elapsed_seconds": 0.001154041034169495
+        },
+        {
+          "order": 3,
+          "agent_id": "demo_agent",
+          "utterance": "For a one-off innovation demo last month, it was fine to temporarily try the platform with the newest features.",
+          "elapsed_seconds": 0.0010668750619515777
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.7920974642038345e-06,
+      "query": "What does this user currently prioritize when choosing daily project management software for the team?",
+      "retrieved_context": "This team's budget will be tight for the next year. For their daily software, I now prioritize price and fast rollout instead of paying for a full ecosystem they will not use.\nFor a one-off innovation demo last month, it was fine to temporarily try the platform with the newest features.\nI used to choose mature team software with comprehensive features and strong support.",
+      "context_chars": 373,
+      "read_seconds": 0.0014127499889582396,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"The user prioritizes price and fast rollout for daily software, which option A best matches.\"}",
+      "choice": "A",
+      "reason": "The user prioritizes price and fast rollout for daily software, which option A best matches.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 0.8509589169407263,
+      "total_seconds": 0.8562643750337884,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-MERGE-003",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "cross_agent_merge",
+      "scenario": "restaurant_choice",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "food_agent",
+          "utterance": "When choosing a restaurant for myself, I want a menu with several genuinely plant-based main dishes, not just side salads.",
+          "elapsed_seconds": 0.0016116249607875943
+        },
+        {
+          "order": 2,
+          "agent_id": "social_agent",
+          "utterance": "I prefer restaurants quiet enough for an unhurried conversation; loud, crowded dining rooms wear me out.",
+          "elapsed_seconds": 0.0011356669710949063
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.249951310455799e-06,
+      "query": "What restaurant qualities does Iris prefer for a personal dinner?",
+      "retrieved_context": "When choosing a restaurant for myself, I want a menu with several genuinely plant-based main dishes, not just side salads.\nI prefer restaurants quiet enough for an unhurried conversation; loud, crowded dining rooms wear me out.",
+      "context_chars": 227,
+      "read_seconds": 0.0012412499636411667,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"It offers several plant-based mains and a quiet, relaxed setting for conversation.\"}",
+      "choice": "C",
+      "reason": "It offers several plant-based mains and a quiet, relaxed setting for conversation.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 2.3192044170573354,
+      "total_seconds": 2.3232220000354573,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-MERGE-004",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "cross_agent_merge",
+      "scenario": "home_office_chair",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "home_agent",
+          "utterance": "My desk nook is narrow. The chair must be no more than 60 centimeters wide, and within that limit I prefer the most compact option.",
+          "elapsed_seconds": 0.003201334038749337
+        },
+        {
+          "order": 2,
+          "agent_id": "ergonomics_agent",
+          "utterance": "I sit for long work sessions and want adjustable lumbar support; the more completely I can adjust its height and depth, the better.",
+          "elapsed_seconds": 0.001997707993723452
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.0830117389559746e-06,
+      "query": "What size and back-support features does Jonah need in a home office chair?",
+      "retrieved_context": "I sit for long work sessions and want adjustable lumbar support; the more completely I can adjust its height and depth, the better.\nMy desk nook is narrow. The chair must be no more than 60 centimeters wide, and within that limit I prefer the most compact option.",
+      "context_chars": 263,
+      "read_seconds": 0.0020784171065315604,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"It fits the 60 cm width limit, offers adjustable lumbar height and depth, and is designed for long sessions.\"}",
+      "choice": "C",
+      "reason": "It fits the 60 cm width limit, offers adjustable lumbar height and depth, and is designed for long sessions.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 1.0766837080009282,
+      "total_seconds": 1.0839885829482228,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-UPDATE-003",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_update",
+      "scenario": "exercise_class",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "fitness_agent",
+          "utterance": "I used to choose intense group workouts because the competition kept me motivated.",
+          "elapsed_seconds": 0.0016937089385464787
+        },
+        {
+          "order": 2,
+          "agent_id": "routine_agent",
+          "utterance": "My routine has changed. I now stick with low-impact sessions I can do independently at a steady pace; group competition is no longer what I want.",
+          "elapsed_seconds": 0.0011566668981686234
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.0409858077764511e-06,
+      "query": "What kind of weekly exercise does Kavya currently prefer?",
+      "retrieved_context": "My routine has changed. I now stick with low-impact sessions I can do independently at a steady pace; group competition is no longer what I want.",
+      "context_chars": 145,
+      "read_seconds": 0.0012175829615443945,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"Low-impact, independent, self-paced matches her updated preference over group competition.\"}",
+      "choice": "C",
+      "reason": "Low-impact, independent, self-paced matches her updated preference over group competition.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 0.8727721669711173,
+      "total_seconds": 0.876854500034824,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-UPDATE-004",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_update",
+      "scenario": "grocery_fulfillment",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "grocery_agent",
+          "utterance": "I used to choose the fastest grocery delivery window, even when it cost more.",
+          "elapsed_seconds": 0.0010587080614641309
+        },
+        {
+          "order": 2,
+          "agent_id": "household_agent",
+          "utterance": "I work near the market now. For weekly groceries, I prefer a scheduled pickup with minimal packaging, and speed is no longer worth an extra delivery fee.",
+          "elapsed_seconds": 0.000756791909225285
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 6.658956408500671e-07,
+      "query": "How does Luis currently prefer to receive his weekly groceries?",
+      "retrieved_context": "I work near the market now. For weekly groceries, I prefer a scheduled pickup with minimal packaging, and speed is no longer worth an extra delivery fee.\nI used to choose the fastest grocery delivery window, even when it cost more.",
+      "context_chars": 231,
+      "read_seconds": 0.000785500044003129,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"Scheduled pickup with minimal packaging and no fee matches his current preference over speed.\"}",
+      "choice": "A",
+      "reason": "Scheduled pickup with minimal packaging and no fee matches his current preference over speed.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 0.7880068749655038,
+      "total_seconds": 0.7908369160722941,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-BOUNDARY-003",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_boundary",
+      "scenario": "personal_vs_client_dinner",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "food_agent",
+          "utterance": "For my own dinners, I enjoy spicy regional food and like trying dishes I have not had before.",
+          "elapsed_seconds": 0.06765633309260011
+        },
+        {
+          "order": 2,
+          "agent_id": "client_agent",
+          "utterance": "For last month's client dinner, I needed a quiet private room and a mild, familiar menu because the guests had different tastes.",
+          "elapsed_seconds": 0.0011542499996721745
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 7.910421118140221e-07,
+      "query": "What dining preferences apply to Maya's casual personal dinner?",
+      "retrieved_context": "For last month's client dinner, I needed a quiet private room and a mild, familiar menu because the guests had different tastes.\nFor my own dinners, I enjoy spicy regional food and like trying dishes I have not had before.",
+      "context_chars": 222,
+      "read_seconds": 0.0030909590423107147,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"Maya's own preference is for spicy regional food and trying unfamiliar dishes, which matches option C.\"}",
+      "choice": "C",
+      "reason": "Maya's own preference is for spicy regional food and trying unfamiliar dishes, which matches option C.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 1.023047958035022,
+      "total_seconds": 1.0949756250483915,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-BOUNDARY-004",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_boundary",
+      "scenario": "routine_project_communication",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "collaboration_agent",
+          "utterance": "For routine project work, I prefer written asynchronous updates that I can review and respond to in my own time.",
+          "elapsed_seconds": 0.0010150420712307096
+        },
+        {
+          "order": 2,
+          "agent_id": "incident_agent",
+          "utterance": "During last week's production outage, call me immediately and keep a live video room open until service is restored.",
+          "elapsed_seconds": 0.0007079999195411801
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.00000761449337e-06,
+      "query": "How does Noah prefer routine project communication when there is no incident?",
+      "retrieved_context": "For routine project work, I prefer written asynchronous updates that I can review and respond to in my own time.\nDuring last week's production outage, call me immediately and keep a live video room open until service is restored.",
+      "context_chars": 229,
+      "read_seconds": 0.0007850000401958823,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"For routine project work, written asynchronous updates are preferred; no active incident requires immediate calls or live video.\"}",
+      "choice": "C",
+      "reason": "For routine project work, written asynchronous updates are preferred; no active incident requires immediate calls or live video.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 0.8961679589701816,
+      "total_seconds": 0.8986989170080051,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-FLIGHT-001-A",
+      "pair_id": "PREF-C-FLIGHT-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_flight",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "travel_agent",
+          "utterance": "For vacation flights, I strongly prefer nonstop routes because connections make the trip tiring.",
+          "elapsed_seconds": 0.0015913749812170863
+        },
+        {
+          "order": 2,
+          "agent_id": "schedule_agent",
+          "utterance": "I prefer daytime flights that arrive with enough time to settle in before the evening.",
+          "elapsed_seconds": 0.0011116251116618514
+        },
+        {
+          "order": 3,
+          "agent_id": "family_agent",
+          "utterance": "For a family trip last year, we needed two checked bags, and one relative who was recovering from surgery needed airport wheelchair assistance.",
+          "elapsed_seconds": 0.0010722499573603272
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.1658994480967522e-06,
+      "query": "What does this user currently prefer for personal vacation flights?",
+      "retrieved_context": "For vacation flights, I strongly prefer nonstop routes because connections make the trip tiring.\nI prefer daytime flights that arrive with enough time to settle in before the evening.\nFor a family trip last year, we needed two checked bags, and one relative who was recovering from surgery needed airport wheelchair assistance.",
+      "context_chars": 327,
+      "read_seconds": 0.0016908330144360662,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"Nonstop and daytime arrival align with the user's strong preference for nonstop routes and settling in before evening.\"}",
+      "choice": "A",
+      "reason": "Nonstop and daytime arrival align with the user's strong preference for nonstop routes and settling in before evening.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 0.9036068751011044,
+      "total_seconds": 0.90909658302553,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-FLIGHT-001-B",
+      "pair_id": "PREF-C-FLIGHT-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_flight",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "travel_agent",
+          "utterance": "For personal trips, keeping the fare as low as possible matters more to me than avoiding a connection.",
+          "elapsed_seconds": 0.0016282500000670552
+        },
+        {
+          "order": 2,
+          "agent_id": "schedule_agent",
+          "utterance": "I am comfortable flying overnight and taking a long layover if that meaningfully lowers the price.",
+          "elapsed_seconds": 0.001657083979807794
+        },
+        {
+          "order": 3,
+          "agent_id": "family_agent",
+          "utterance": "For a family trip last year, we needed two checked bags, and one relative who was recovering from surgery needed airport wheelchair assistance.",
+          "elapsed_seconds": 0.0015167080564424396
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.125037670135498e-06,
+      "query": "What does this user currently prefer for personal vacation flights?",
+      "retrieved_context": "For personal trips, keeping the fare as low as possible matters more to me than avoiding a connection.\nFor a family trip last year, we needed two checked bags, and one relative who was recovering from surgery needed airport wheelchair assistance.\nI am comfortable flying overnight and taking a long layover if that meaningfully lowers the price.",
+      "context_chars": 345,
+      "read_seconds": 0.0016813329420983791,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"The user prioritizes the lowest fare for personal trips and is comfortable with overnight flights and long layovers if it meaningfully lowers the price.\"}",
+      "choice": "B",
+      "reason": "The user prioritizes the lowest fare for personal trips and is comfortable with overnight flights and long layovers if it meaningfully lowers the price.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 1.0463159170467407,
+      "total_seconds": 1.0528304170584306,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-MEETING-001-A",
+      "pair_id": "PREF-C-MEETING-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_meeting",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "facilitation_agent",
+          "utterance": "For project kickoffs, I want people working together rather than listening to a long presentation.",
+          "elapsed_seconds": 0.0019063750514760613
+        },
+        {
+          "order": 2,
+          "agent_id": "team_agent",
+          "utterance": "Give every function a real chance to shape the plan through small-group discussion and a shared workspace.",
+          "elapsed_seconds": 0.0011822920059785247
+        },
+        {
+          "order": 3,
+          "agent_id": "investor_agent",
+          "utterance": "For last quarter's investor update, we needed a polished formal deck with questions moderated by the CEO.",
+          "elapsed_seconds": 0.0014150830684229732
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.166015863418579e-06,
+      "query": "What format does this user currently prefer for an internal project kickoff?",
+      "retrieved_context": "For project kickoffs, I want people working together rather than listening to a long presentation.\nGive every function a real chance to shape the plan through small-group discussion and a shared workspace.\nFor last quarter's investor update, we needed a polished formal deck with questions moderated by the CEO.",
+      "context_chars": 311,
+      "read_seconds": 0.0015026249457150698,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"The user's stated preference for kickoffs is collaborative small-group work, not a formal presentation or decision-only meeting.\"}",
+      "choice": "A",
+      "reason": "The user's stated preference for kickoffs is collaborative small-group work, not a formal presentation or decision-only meeting.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 0.9305017919978127,
+      "total_seconds": 0.936533874948509,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-MEETING-001-B",
+      "pair_id": "PREF-C-MEETING-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_meeting",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "facilitation_agent",
+          "utterance": "For internal project meetings, I prefer a short pre-read and a discussion focused only on unresolved decisions.",
+          "elapsed_seconds": 0.0018737500067800283
+        },
+        {
+          "order": 2,
+          "agent_id": "team_agent",
+          "utterance": "Each decision should end with a named owner and a clear next step; open-ended workshops frustrate me.",
+          "elapsed_seconds": 0.0012427920009940863
+        },
+        {
+          "order": 3,
+          "agent_id": "investor_agent",
+          "utterance": "For last quarter's investor update, we needed a polished formal deck with questions moderated by the CEO.",
+          "elapsed_seconds": 0.0011342499637976289
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.1669471859931946e-06,
+      "query": "What format does this user currently prefer for an internal project kickoff?",
+      "retrieved_context": "For internal project meetings, I prefer a short pre-read and a discussion focused only on unresolved decisions.\nFor last quarter's investor update, we needed a polished formal deck with questions moderated by the CEO.\nEach decision should end with a named owner and a clear next step; open-ended workshops frustrate me.",
+      "context_chars": 319,
+      "read_seconds": 0.0012137499870732427,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"Matches preference for pre-read, unresolved decisions only, and named owners with next steps.\"}",
+      "choice": "B",
+      "reason": "Matches preference for pre-read, unresolved decisions only, and named owners with next steps.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 0.9051602079998702,
+      "total_seconds": 0.9106484999647364,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-MEAL-001-A",
+      "pair_id": "PREF-C-MEAL-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_meal",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "nutrition_agent",
+          "utterance": "For weekday meals, I prioritize a high-protein plan that includes fish, chicken, or eggs.",
+          "elapsed_seconds": 0.0015889169881120324
+        },
+        {
+          "order": 2,
+          "agent_id": "routine_agent",
+          "utterance": "I need meals I can reheat in under five minutes between meetings, even if the menu repeats.",
+          "elapsed_seconds": 0.0011339590419083834
+        },
+        {
+          "order": 3,
+          "agent_id": "event_agent",
+          "utterance": "For last month's office event, every meal had to be nut-free and carry full allergen labels.",
+          "elapsed_seconds": 0.0010787920327857137
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.208973117172718e-06,
+      "query": "What does this user currently prefer for regular weekday meals?",
+      "retrieved_context": "For weekday meals, I prioritize a high-protein plan that includes fish, chicken, or eggs.\nFor last month's office event, every meal had to be nut-free and carry full allergen labels.\nI need meals I can reheat in under five minutes between meetings, even if the menu repeats.",
+      "context_chars": 274,
+      "read_seconds": 0.0012512500397861004,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"Matches the high-protein weekday preference and quick reheating requirement, despite menu repetition.\"}",
+      "choice": "A",
+      "reason": "Matches the high-protein weekday preference and quick reheating requirement, despite menu repetition.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 0.8934491669060662,
+      "total_seconds": 0.8985328749986365,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-MEAL-001-B",
+      "pair_id": "PREF-C-MEAL-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_meal",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "nutrition_agent",
+          "utterance": "For my regular meals, I prefer plant-based dishes built around beans, grains, and vegetables.",
+          "elapsed_seconds": 0.0015965839847922325
+        },
+        {
+          "order": 2,
+          "agent_id": "routine_agent",
+          "utterance": "Menu variety matters to me, and I am happy to spend around twenty minutes preparing dinner.",
+          "elapsed_seconds": 0.001130791031755507
+        },
+        {
+          "order": 3,
+          "agent_id": "event_agent",
+          "utterance": "For last month's office event, every meal had to be nut-free and carry full allergen labels.",
+          "elapsed_seconds": 0.0010678339749574661
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.500011421740055e-06,
+      "query": "What does this user currently prefer for regular weekday meals?",
+      "retrieved_context": "For my regular meals, I prefer plant-based dishes built around beans, grains, and vegetables.\nFor last month's office event, every meal had to be nut-free and carry full allergen labels.",
+      "context_chars": 186,
+      "read_seconds": 0.0016512909205630422,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"The user prefers plant-based meals with beans, grains, and vegetables for regular use; B matches this directly.\"}",
+      "choice": "B",
+      "reason": "The user prefers plant-based meals with beans, grains, and vegetables for regular use; B matches this directly.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 0.9228446671040729,
+      "total_seconds": 0.9283172920113429,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-NOTIFY-001-A",
+      "pair_id": "PREF-C-NOTIFY-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_notification",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "workspace_agent",
+          "utterance": "I used to keep all workspace notifications on in real time.",
+          "elapsed_seconds": 0.001582958037033677
+        },
+        {
+          "order": 2,
+          "agent_id": "focus_agent",
+          "utterance": "The interruptions are hurting my focus. From now on, send blockers immediately but collect routine changes into one daily digest.",
+          "elapsed_seconds": 0.0011225419584661722
+        },
+        {
+          "order": 3,
+          "agent_id": "leave_agent",
+          "utterance": "While I was on vacation last month, hold all noncritical notifications until I returned.",
+          "elapsed_seconds": 0.0010633330093696713
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 9.580980986356735e-07,
+      "query": "How does this user currently want daily work notifications handled?",
+      "retrieved_context": "I used to keep all workspace notifications on in real time.\nWhile I was on vacation last month, hold all noncritical notifications until I returned.\nThe interruptions are hurting my focus. From now on, send blockers immediately but collect routine changes into one daily digest.",
+      "context_chars": 278,
+      "read_seconds": 0.001391374971717596,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"The user explicitly wants blockers sent immediately and routine changes collected into a daily digest.\"}",
+      "choice": "C",
+      "reason": "The user explicitly wants blockers sent immediately and routine changes collected into a daily digest.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 1.1263720829738304,
+      "total_seconds": 1.1315849999664351,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-NOTIFY-001-B",
+      "pair_id": "PREF-C-NOTIFY-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_notification",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "workspace_agent",
+          "utterance": "I used to prefer a daily digest for routine workspace updates.",
+          "elapsed_seconds": 0.001553832902573049
+        },
+        {
+          "order": 2,
+          "agent_id": "focus_agent",
+          "utterance": "My role now requires continuous coordination. I want every project message, status change, and blocker delivered immediately instead of waiting for a digest.",
+          "elapsed_seconds": 0.0012340829707682133
+        },
+        {
+          "order": 3,
+          "agent_id": "leave_agent",
+          "utterance": "While I was on vacation last month, hold all noncritical notifications until I returned.",
+          "elapsed_seconds": 0.0011992499930784106
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.08394306153059e-06,
+      "query": "How does this user currently want daily work notifications handled?",
+      "retrieved_context": "I used to prefer a daily digest for routine workspace updates.\nWhile I was on vacation last month, hold all noncritical notifications until I returned.\nMy role now requires continuous coordination. I want every project message, status change, and blocker delivered immediately instead of waiting for a digest.",
+      "context_chars": 309,
+      "read_seconds": 0.0015295420307666063,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"The user explicitly wants every project message, status change, and blocker delivered immediately, overriding the earlier digest preference.\"}",
+      "choice": "B",
+      "reason": "The user explicitly wants every project message, status change, and blocker delivered immediately, overriding the earlier digest preference.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 0.9995227500330657,
+      "total_seconds": 1.0050595410866663,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-COURSE-001-A",
+      "pair_id": "PREF-C-COURSE-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_course",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "learning_agent",
+          "utterance": "I learn professional skills best by building something real rather than only listening to lectures.",
+          "elapsed_seconds": 0.0011254160199314356
+        },
+        {
+          "order": 2,
+          "agent_id": "career_agent",
+          "utterance": "I want each module to contribute to a portfolio project and include feedback I can apply the next week.",
+          "elapsed_seconds": 0.0008099999977275729
+        },
+        {
+          "order": 3,
+          "agent_id": "certification_agent",
+          "utterance": "For a certification exam last spring, I needed timed drills and test-taking shortcuts for two weeks.",
+          "elapsed_seconds": 0.0008098330581560731
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 8.33999365568161e-07,
+      "query": "How does this user currently prefer to learn a durable professional skill?",
+      "retrieved_context": "I learn professional skills best by building something real rather than only listening to lectures.\nI want each module to contribute to a portfolio project and include feedback I can apply the next week.\nFor a certification exam last spring, I needed timed drills and test-taking shortcuts for two weeks.",
+      "context_chars": 304,
+      "read_seconds": 0.0009645000100135803,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"The user prefers building real projects with weekly feedback, which matches option A.\"}",
+      "choice": "A",
+      "reason": "The user prefers building real projects with weekly feedback, which matches option A.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 1.0318959170253947,
+      "total_seconds": 1.0356197920627892,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-COURSE-001-B",
+      "pair_id": "PREF-C-COURSE-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_course",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "learning_agent",
+          "utterance": "I learn durable professional skills best when the underlying principles are taught in a clear sequence.",
+          "elapsed_seconds": 0.0009080410236492753
+        },
+        {
+          "order": 2,
+          "agent_id": "career_agent",
+          "utterance": "I prefer structured readings and cumulative concept exercises before applying a method in practice.",
+          "elapsed_seconds": 0.0006378750549629331
+        },
+        {
+          "order": 3,
+          "agent_id": "certification_agent",
+          "utterance": "For a certification exam last spring, I needed timed drills and test-taking shortcuts for two weeks.",
+          "elapsed_seconds": 0.0005887500010430813
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 7.08969309926033e-07,
+      "query": "How does this user currently prefer to learn a durable professional skill?",
+      "retrieved_context": "I learn durable professional skills best when the underlying principles are taught in a clear sequence.\nI prefer structured readings and cumulative concept exercises before applying a method in practice.\nFor a certification exam last spring, I needed timed drills and test-taking shortcuts for two weeks.",
+      "context_chars": 304,
+      "read_seconds": 0.0007573749171569943,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"The user prefers structured, sequential principle-based learning with cumulative exercises, which matches option B.\"}",
+      "choice": "B",
+      "reason": "The user prefers structured, sequential principle-based learning with cumulative exercises, which matches option B.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 0.8884305839892477,
+      "total_seconds": 0.891341874958016,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-FURNITURE-001-A",
+      "pair_id": "PREF-C-FURNITURE-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_furniture",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "home_agent",
+          "utterance": "For furniture I will keep for years, I prefer durable pieces that can be repaired instead of replaced.",
+          "elapsed_seconds": 0.0016957090701907873
+        },
+        {
+          "order": 2,
+          "agent_id": "shopping_agent",
+          "utterance": "Certified materials and a local maker matter more to me than getting the item immediately.",
+          "elapsed_seconds": 0.0007129580480977893
+        },
+        {
+          "order": 3,
+          "agent_id": "rental_agent",
+          "utterance": "For a furnished rental last year, the table had to fold flat and be easy to move between rooms.",
+          "elapsed_seconds": 0.000724207959137857
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 7.919734343886375e-07,
+      "query": "What does this user currently prioritize when buying long-term home furniture?",
+      "retrieved_context": "For furniture I will keep for years, I prefer durable pieces that can be repaired instead of replaced.",
+      "context_chars": 102,
+      "read_seconds": 0.0008452499751001596,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"The user values durable, repairable furniture for long-term use, which matches the solid-wood repairable table.\"}",
+      "choice": "A",
+      "reason": "The user values durable, repairable furniture for long-term use, which matches the solid-wood repairable table.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 0.7401145410258323,
+      "total_seconds": 0.7441094579407945,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-FURNITURE-001-B",
+      "pair_id": "PREF-C-FURNITURE-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_furniture",
+      "system": "amh",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "home_agent",
+          "utterance": "For household furniture, my current priority is the lowest possible upfront price.",
+          "elapsed_seconds": 0.0014003750402480364
+        },
+        {
+          "order": 2,
+          "agent_id": "shopping_agent",
+          "utterance": "I need delivery within the next two days and accept that I may replace the item after a couple of years.",
+          "elapsed_seconds": 0.0009564589709043503
+        },
+        {
+          "order": 3,
+          "agent_id": "rental_agent",
+          "utterance": "For a furnished rental last year, the table had to fold flat and be easy to move between rooms.",
+          "elapsed_seconds": 0.0008912089979276061
+        }
+      ],
+      "memory_snapshot": null,
+      "memory_snapshot_error": null,
+      "native_write_results": null,
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 1.1670636013150215e-06,
+      "query": "What does this user currently prioritize when buying long-term home furniture?",
+      "retrieved_context": "For household furniture, my current priority is the lowest possible upfront price.",
+      "context_chars": 82,
+      "read_seconds": 0.0011456250213086605,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"The user's current priority is the lowest possible upfront price, and B is the lowest-priced option.\"}",
+      "choice": "B",
+      "reason": "The user's current priority is the lowest possible upfront price, and B is the lowest-priced option.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 0.7967684579780325,
+      "total_seconds": 0.8011838339734823,
+      "error": null
+    }
+  ]
+}

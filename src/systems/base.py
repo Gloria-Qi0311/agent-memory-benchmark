@@ -18,3 +18,15 @@ class MemorySystem(ABC):
 
     @abstractmethod
     def read(self, agent_id: str, query: str) -> str: ...
+
+    def debug_snapshot(self):
+        """Return inspectable stored state when the adapter supports it."""
+        return None
+
+    def debug_write_results(self):
+        """Return adapter-native write outcomes when available."""
+        return None
+
+    def close(self) -> None:
+        """Release per-case resources. Adapters may override this."""
+        return None

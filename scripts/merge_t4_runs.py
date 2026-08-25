@@ -7,9 +7,9 @@ ranges when generating cases).
 
 Usage:
     python scripts/merge_t4_runs.py \
-        --inputs data/results/t4-prod-n100-5sys.json \
-                 data/results/t4-prod-n200-s200-5sys.json \
-        --out data/results/t4-prod-n300-merged.json
+        --inputs data/results/t4-repro-n100-5sys.json \
+                 data/results/t4-repro-n200-s200-5sys.json \
+        --out /tmp/t4-repro-n300-merged.json
 """
 import argparse
 import json

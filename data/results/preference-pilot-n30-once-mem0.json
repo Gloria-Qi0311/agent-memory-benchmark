@@ -1,0 +1,3042 @@
+{
+  "metadata": {
+    "task": "preference",
+    "created_at": "2026-08-21T09:59:24.855593+00:00",
+    "cases_path": "data/cases/preference_pilot_n30.json",
+    "case_set": "preference_pilot_n30",
+    "case_count": 30,
+    "systems": [
+      "mem0"
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.0,
+    "runs": 1
+  },
+  "summary": {
+    "mem0": {
+      "n_total": 30,
+      "n_scored": 30,
+      "n_errors": 0,
+      "decision_accuracy": 1.0,
+      "diagnostic_accuracy": 1.0,
+      "composite_accuracy": 1.0,
+      "counterfactual_pair_success_rate": 1.0,
+      "accuracy_by_primary_capability": {
+        "composite_journey": 1.0,
+        "cross_agent_merge": 1.0,
+        "preference_boundary": 1.0,
+        "preference_update": 1.0
+      },
+      "mean_context_chars": 275.7,
+      "mean_total_seconds": 4.374901554298898
+    }
+  },
+  "rows": [
+    {
+      "case_id": "PREF-D-MERGE-001",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "cross_agent_merge",
+      "scenario": "leisure_hotel",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "travel_agent",
+          "utterance": "When I travel for leisure, I prefer quiet hotels and try to avoid crowded, noisy places.",
+          "elapsed_seconds": 2.210155750042759
+        },
+        {
+          "order": 2,
+          "agent_id": "hotel_agent",
+          "utterance": "I prefer small hotels with local character over standardized international chains.",
+          "elapsed_seconds": 1.2088620840804651
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "1fd94050-db82-4f1f-b9d3-4d0359836c8f",
+          "memory": "User prefers small hotels with local character over standardized international chains when traveling.",
+          "hash": "c93ada2163d2f9ef0dc6efcc482dfe7e",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:08.876146+00:00",
+          "updated_at": "2026-08-21T09:57:08.876146+00:00",
+          "user_id": "bench-user",
+          "agent_id": "hotel_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "6e405d6e-ac7d-4ed5-a58b-d1b63e65a1a9",
+          "memory": "User prefers quiet hotels when traveling for leisure and tries to avoid crowded, noisy places.",
+          "hash": "b090ca53f1f684566f15996ac7471840",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:07.488762+00:00",
+          "updated_at": "2026-08-21T09:57:07.488762+00:00",
+          "user_id": "bench-user",
+          "agent_id": "travel_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "travel_agent",
+          "text": "When I travel for leisure, I prefer quiet hotels and try to avoid crowded, noisy places.",
+          "result": {
+            "results": [
+              {
+                "id": "6e405d6e-ac7d-4ed5-a58b-d1b63e65a1a9",
+                "memory": "User prefers quiet hotels when traveling for leisure and tries to avoid crowded, noisy places.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "hotel_agent",
+          "text": "I prefer small hotels with local character over standardized international chains.",
+          "result": {
+            "results": [
+              {
+                "id": "1fd94050-db82-4f1f-b9d3-4d0359836c8f",
+                "memory": "User prefers small hotels with local character over standardized international chains when traveling.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.00046445801854133606,
+      "query": "What accommodation preferences does Hana have for a leisure trip?",
+      "retrieved_context": "User prefers quiet hotels when traveling for leisure and tries to avoid crowded, noisy places.\nUser prefers small hotels with local character over standardized international chains when traveling.",
+      "context_chars": 196,
+      "read_seconds": 0.06530254194512963,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"It is quiet and locally owned with character, matching her top preferences despite the less central location.\"}",
+      "choice": "B",
+      "reason": "It is quiet and locally owned with character, matching her top preferences despite the less central location.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 0.9438207909697667,
+      "total_seconds": 4.4286667089909315,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-MERGE-002",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "cross_agent_merge",
+      "scenario": "developer_laptop",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "travel_setup_agent",
+          "utterance": "I carry my work laptop between home and the office every day, so I want it to weigh no more than 1.3 kilograms.",
+          "elapsed_seconds": 1.4950399169465527
+        },
+        {
+          "order": 2,
+          "agent_id": "development_agent",
+          "utterance": "I run several local containers at once, so I need at least 32 GB of memory and good sustained cooling.",
+          "elapsed_seconds": 1.2176078329794109
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "6ba41f0a-8e11-42d2-bd2e-641e54df4512",
+          "memory": "User runs several local containers at once and needs at least 32 GB of memory and good sustained cooling in their laptop.",
+          "hash": "7a2dabf0788c7b113ef9c5de9498a46c",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:12.815921+00:00",
+          "updated_at": "2026-08-21T09:57:12.815921+00:00",
+          "user_id": "bench-user",
+          "agent_id": "development_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "ea0f4416-be3e-4419-a1c3-912acc108fb0",
+          "memory": "User carries their work laptop between home and the office every day and requires it to weigh no more than 1.3 kilograms.",
+          "hash": "e6862389e9de12b75dccfed1af76a46a",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:11.420710+00:00",
+          "updated_at": "2026-08-21T09:57:11.420710+00:00",
+          "user_id": "bench-user",
+          "agent_id": "travel_setup_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "travel_setup_agent",
+          "text": "I carry my work laptop between home and the office every day, so I want it to weigh no more than 1.3 kilograms.",
+          "result": {
+            "results": [
+              {
+                "id": "ea0f4416-be3e-4419-a1c3-912acc108fb0",
+                "memory": "User carries their work laptop between home and the office every day and requires it to weigh no more than 1.3 kilograms.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "development_agent",
+          "text": "I run several local containers at once, so I need at least 32 GB of memory and good sustained cooling.",
+          "result": {
+            "results": [
+              {
+                "id": "6ba41f0a-8e11-42d2-bd2e-641e54df4512",
+                "memory": "User runs several local containers at once and needs at least 32 GB of memory and good sustained cooling in their laptop.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.00019391695968806744,
+      "query": "What does Alex need from a laptop for commuting and local development?",
+      "retrieved_context": "User runs several local containers at once and needs at least 32 GB of memory and good sustained cooling in their laptop.\nUser carries their work laptop between home and the office every day and requires it to weigh no more than 1.3 kilograms.",
+      "context_chars": 243,
+      "read_seconds": 0.045274000032804906,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"Meets the 32 GB memory and 1.3 kg weight limits while providing good sustained cooling.\"}",
+      "choice": "B",
+      "reason": "Meets the 32 GB memory and 1.3 kg weight limits while providing good sustained cooling.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 0.9145886669866741,
+      "total_seconds": 3.6727477919775993,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-UPDATE-001",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_update",
+      "scenario": "work_device_purchase",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "shopping_agent",
+          "utterance": "I used to prioritize price when buying equipment for work. As long as it did the job, that was good enough for me.",
+          "elapsed_seconds": 1.2961219999706373
+        },
+        {
+          "order": 2,
+          "agent_id": "work_agent",
+          "utterance": "Recent equipment failures have disrupted my work. From now on, reliability comes first; I am willing to pay more and no longer put price first.",
+          "elapsed_seconds": 1.2473940829513595
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "1a35fe8a-0fae-4ad3-928f-dcd009e6e710",
+          "memory": "User changed their equipment purchasing priority from price to reliability after recent equipment failures disrupted their work, and is now willing to pay more.",
+          "hash": "cb2d0032c2b7c3812da5efca29ea0d84",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:16.491946+00:00",
+          "updated_at": "2026-08-21T09:57:16.491946+00:00",
+          "user_id": "bench-user",
+          "agent_id": "work_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "2bed59b7-26e2-4b93-acdd-48733b888d0b",
+          "memory": "User used to prioritize price when buying equipment for work, valuing functionality over other factors.",
+          "hash": "068b83fea41adf0d9f32b2d2b662ad91",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:15.068101+00:00",
+          "updated_at": "2026-08-21T09:57:15.068101+00:00",
+          "user_id": "bench-user",
+          "agent_id": "shopping_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "shopping_agent",
+          "text": "I used to prioritize price when buying equipment for work. As long as it did the job, that was good enough for me.",
+          "result": {
+            "results": [
+              {
+                "id": "2bed59b7-26e2-4b93-acdd-48733b888d0b",
+                "memory": "User used to prioritize price when buying equipment for work, valuing functionality over other factors.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "work_agent",
+          "text": "Recent equipment failures have disrupted my work. From now on, reliability comes first; I am willing to pay more and no longer put price first.",
+          "result": {
+            "results": [
+              {
+                "id": "1a35fe8a-0fae-4ad3-928f-dcd009e6e710",
+                "memory": "User changed their equipment purchasing priority from price to reliability after recent equipment failures disrupted their work, and is now willing to pay more.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.00020062492694705725,
+      "query": "What does Bao currently prioritize when buying equipment for work?",
+      "retrieved_context": "User used to prioritize price when buying equipment for work, valuing functionality over other factors.\nUser changed their equipment purchasing priority from price to reliability after recent equipment failures disrupted their work, and is now willing to pay more.",
+      "context_chars": 264,
+      "read_seconds": 0.05116058292333037,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"Bao now prioritizes reliability over price, and this option offers the strongest reliability and longest warranty.\"}",
+      "choice": "B",
+      "reason": "Bao now prioritizes reliability over price, and this option offers the strongest reliability and longest warranty.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 1.0285682079847902,
+      "total_seconds": 3.6234825409483165,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-UPDATE-002",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_update",
+      "scenario": "software_adoption",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "tool_scout_agent",
+          "utterance": "I used to prefer mature team tools with predictable releases and long-term support.",
+          "elapsed_seconds": 1.5447305829729885
+        },
+        {
+          "order": 2,
+          "agent_id": "engineering_agent",
+          "utterance": "Several new automation features have recently improved our efficiency. I now prioritize the latest features and rapid iteration, as long as the vendor provides migration support; maturity is no longer my top concern.",
+          "elapsed_seconds": 1.6095052909804508
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "18975e92-6b4e-4b0e-baa1-017d3eb5349b",
+          "memory": "User used to prefer mature team tools with predictable releases and long-term support.",
+          "hash": "b23c0a086c7cb2ae41fd173c30c8dba1",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:19.117429+00:00",
+          "updated_at": "2026-08-21T09:57:19.117429+00:00",
+          "user_id": "bench-user",
+          "agent_id": "tool_scout_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "3b2acee9-ea4f-40fa-a39f-c20714fc3b56",
+          "memory": "User's preference for team tools shifted from mature tools with predictable releases and long-term support to prioritizing the latest features and rapid iteration, provided the vendor offers migration support, as of around August 2026.",
+          "hash": "d6c0b0e05c6ae52d64064ede127a76b8",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:20.904526+00:00",
+          "updated_at": "2026-08-21T09:57:20.904526+00:00",
+          "user_id": "bench-user",
+          "agent_id": "engineering_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "tool_scout_agent",
+          "text": "I used to prefer mature team tools with predictable releases and long-term support.",
+          "result": {
+            "results": [
+              {
+                "id": "18975e92-6b4e-4b0e-baa1-017d3eb5349b",
+                "memory": "User used to prefer mature team tools with predictable releases and long-term support.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "engineering_agent",
+          "text": "Several new automation features have recently improved our efficiency. I now prioritize the latest features and rapid iteration, as long as the vendor provides migration support; maturity is no longer my top concern.",
+          "result": {
+            "results": [
+              {
+                "id": "3b2acee9-ea4f-40fa-a39f-c20714fc3b56",
+                "memory": "User's preference for team tools shifted from mature tools with predictable releases and long-term support to prioritizing the latest features and rapid iteration, provided the vendor offers migration support, as of around August 2026.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.00018049997743219137,
+      "query": "What does Chloe currently prefer when choosing software for her team?",
+      "retrieved_context": "User used to prefer mature team tools with predictable releases and long-term support.\nUser's preference for team tools shifted from mature tools with predictable releases and long-term support to prioritizing the latest features and rapid iteration, provided the vendor offers migration support, as of around August 2026.",
+      "context_chars": 322,
+      "read_seconds": 0.05225195805542171,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"Her preference shifted to latest features and rapid iteration with vendor migration support, which A provides.\"}",
+      "choice": "A",
+      "reason": "Her preference shifted to latest features and rapid iteration with vendor migration support, which A provides.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 0.8329688330413774,
+      "total_seconds": 4.03966470900923,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-BOUNDARY-001",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_boundary",
+      "scenario": "leisure_vs_business_hotel",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "leisure_agent",
+          "utterance": "For leisure trips, I like quiet, slow-paced small hotels and do not mind staying away from busy areas.",
+          "elapsed_seconds": 1.3716352080227807
+        },
+        {
+          "order": 2,
+          "agent_id": "business_agent",
+          "utterance": "For my one-day business trip to Shanghai last month, I needed a chain hotel near a transport hub so I could keep to the schedule.",
+          "elapsed_seconds": 1.17759350000415
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "18f905ea-a8e2-497e-81dc-d3c929c72bd1",
+          "memory": "User took a one-day business trip to Shanghai in July 2026 and needed a chain hotel near a transport hub to keep to the schedule.",
+          "hash": "f6389cc8c831e1dc3311d50753797fab",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:24.729381+00:00",
+          "updated_at": "2026-08-21T09:57:24.729381+00:00",
+          "user_id": "bench-user",
+          "agent_id": "business_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "b69bfe97-bcb4-4eb1-813d-80429e19db9b",
+          "memory": "User prefers quiet, slow-paced small hotels for leisure trips and is comfortable staying away from busy areas.",
+          "hash": "589dcfe17ccbd45636583b66f622310f",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:23.370187+00:00",
+          "updated_at": "2026-08-21T09:57:23.370187+00:00",
+          "user_id": "bench-user",
+          "agent_id": "leisure_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "leisure_agent",
+          "text": "For leisure trips, I like quiet, slow-paced small hotels and do not mind staying away from busy areas.",
+          "result": {
+            "results": [
+              {
+                "id": "b69bfe97-bcb4-4eb1-813d-80429e19db9b",
+                "memory": "User prefers quiet, slow-paced small hotels for leisure trips and is comfortable staying away from busy areas.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "business_agent",
+          "text": "For my one-day business trip to Shanghai last month, I needed a chain hotel near a transport hub so I could keep to the schedule.",
+          "result": {
+            "results": [
+              {
+                "id": "18f905ea-a8e2-497e-81dc-d3c929c72bd1",
+                "memory": "User took a one-day business trip to Shanghai in July 2026 and needed a chain hotel near a transport hub to keep to the schedule.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.0001932498998939991,
+      "query": "Which accommodation preferences apply to Diego's new private vacation?",
+      "retrieved_context": "User prefers quiet, slow-paced small hotels for leisure trips and is comfortable staying away from busy areas.\nUser took a one-day business trip to Shanghai in July 2026 and needed a chain hotel near a transport hub to keep to the schedule.",
+      "context_chars": 240,
+      "read_seconds": 0.01312795898411423,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"The user prefers quiet, slow-paced small hotels for leisure trips, which matches the small seaside guesthouse away from busy areas.\"}",
+      "choice": "B",
+      "reason": "The user prefers quiet, slow-paced small hotels for leisure trips, which matches the small seaside guesthouse away from busy areas.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 1.1375839590327814,
+      "total_seconds": 3.700162542052567,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-BOUNDARY-002",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_boundary",
+      "scenario": "personal_invitation_style",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "personal_writing_agent",
+          "utterance": "For event invitations to friends, I prefer a concise, neutral style. Clear time, location, and RSVP details are enough; I do not need much emotional language.",
+          "elapsed_seconds": 1.4246183750219643
+        },
+        {
+          "order": 2,
+          "agent_id": "board_report_agent",
+          "utterance": "For last week's board report, please use a formal tone, avoid emojis, and keep it under 300 words.",
+          "elapsed_seconds": 1.1666392920305952
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "515029b9-dc77-42fb-881b-2ebb52b274c1",
+          "memory": "User requested a formal tone, no emojis, and under 300 words for last week's board report.",
+          "hash": "fda9763635831bf3fae136fd6862e121",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:28.650873+00:00",
+          "updated_at": "2026-08-21T09:57:28.650873+00:00",
+          "user_id": "bench-user",
+          "agent_id": "board_report_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "bc3d63ce-3d13-4aea-aded-e23355ab3113",
+          "memory": "User prefers a concise, neutral style for event invitations to friends, with clear time, location, and RSVP details, and minimal emotional language.",
+          "hash": "31f3994f26adcfb256f85b94125a773f",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:27.312582+00:00",
+          "updated_at": "2026-08-21T09:57:27.312582+00:00",
+          "user_id": "bench-user",
+          "agent_id": "personal_writing_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "personal_writing_agent",
+          "text": "For event invitations to friends, I prefer a concise, neutral style. Clear time, location, and RSVP details are enough; I do not need much emotional language.",
+          "result": {
+            "results": [
+              {
+                "id": "bc3d63ce-3d13-4aea-aded-e23355ab3113",
+                "memory": "User prefers a concise, neutral style for event invitations to friends, with clear time, location, and RSVP details, and minimal emotional language.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "board_report_agent",
+          "text": "For last week's board report, please use a formal tone, avoid emojis, and keep it under 300 words.",
+          "result": {
+            "results": [
+              {
+                "id": "515029b9-dc77-42fb-881b-2ebb52b274c1",
+                "memory": "User requested a formal tone, no emojis, and under 300 words for last week's board report.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.00030508299823850393,
+      "query": "What writing style does Eun prefer for a birthday invitation to friends?",
+      "retrieved_context": "User prefers a concise, neutral style for event invitations to friends, with clear time, location, and RSVP details, and minimal emotional language.\nUser requested a formal tone, no emojis, and under 300 words for last week's board report.",
+      "context_chars": 239,
+      "read_seconds": 0.016563916113227606,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"Matches her stated preference for concise, neutral invitations with clear time, location, and RSVP details.\"}",
+      "choice": "C",
+      "reason": "Matches her stated preference for concise, neutral invitations with clear time, location, and RSVP details.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 0.9163716250332072,
+      "total_seconds": 3.52461229194887,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-HOTEL-001-A",
+      "pair_id": "PREF-C-HOTEL-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_hotel",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "leisure_agent",
+          "utterance": "On private vacations, quiet matters most to me, and I dislike crowded, noisy hotels.",
+          "elapsed_seconds": 1.572775459033437
+        },
+        {
+          "order": 2,
+          "agent_id": "hotel_agent",
+          "utterance": "I prefer small accommodations with local character; large international chains do not appeal to me.",
+          "elapsed_seconds": 1.144292083918117
+        },
+        {
+          "order": 3,
+          "agent_id": "family_trip_agent",
+          "utterance": "For a week-long family stay last month, the room had to include a kitchen and a washer.",
+          "elapsed_seconds": 1.1253819999983534
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "784a83a0-23b2-4dea-86f3-a3bd8ccbe0f2",
+          "memory": "User values quiet above all on private vacations and dislikes crowded, noisy hotels.",
+          "hash": "eaf055f8089f1b7d4f0a1d032a1cfe72",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:31.140041+00:00",
+          "updated_at": "2026-08-21T09:57:31.140041+00:00",
+          "user_id": "bench-user",
+          "agent_id": "leisure_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "b11fe1bc-6a56-45b7-89f4-780281f42cb6",
+          "memory": "User had a week-long family stay last month (around July 2026) and required the room to include a kitchen and a washer.",
+          "hash": "e030716c61feb16e0d793f6120a43ead",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:33.580796+00:00",
+          "updated_at": "2026-08-21T09:57:33.580796+00:00",
+          "user_id": "bench-user",
+          "agent_id": "family_trip_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "c92504f2-e8cb-4de8-9041-94eb4da19394",
+          "memory": "User prefers small accommodations with local character over large international chains on vacations.",
+          "hash": "65e2c925aacbec4340f899d2b9ef2203",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:32.456127+00:00",
+          "updated_at": "2026-08-21T09:57:32.456127+00:00",
+          "user_id": "bench-user",
+          "agent_id": "hotel_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "leisure_agent",
+          "text": "On private vacations, quiet matters most to me, and I dislike crowded, noisy hotels.",
+          "result": {
+            "results": [
+              {
+                "id": "784a83a0-23b2-4dea-86f3-a3bd8ccbe0f2",
+                "memory": "User values quiet above all on private vacations and dislikes crowded, noisy hotels.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "hotel_agent",
+          "text": "I prefer small accommodations with local character; large international chains do not appeal to me.",
+          "result": {
+            "results": [
+              {
+                "id": "c92504f2-e8cb-4de8-9041-94eb4da19394",
+                "memory": "User prefers small accommodations with local character over large international chains on vacations.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "family_trip_agent",
+          "text": "For a week-long family stay last month, the room had to include a kitchen and a washer.",
+          "result": {
+            "results": [
+              {
+                "id": "b11fe1bc-6a56-45b7-89f4-780281f42cb6",
+                "memory": "User had a week-long family stay last month (around July 2026) and required the room to include a kitchen and a washer.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.00030145805794745684,
+      "query": "What accommodation preferences does this user have for a private vacation in Kyoto?",
+      "retrieved_context": "User prefers small accommodations with local character over large international chains on vacations.\nUser values quiet above all on private vacations and dislikes crowded, noisy hotels.\nUser had a week-long family stay last month (around July 2026) and required the room to include a kitchen and a washer.",
+      "context_chars": 305,
+      "read_seconds": 0.018854707945138216,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"The user prefers small, local, quiet accommodations for private vacations, which matches the machiya boutique hotel.\"}",
+      "choice": "C",
+      "reason": "The user prefers small, local, quiet accommodations for private vacations, which matches the machiya boutique hotel.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 0.9677727499511093,
+      "total_seconds": 4.829411083017476,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-HOTEL-001-B",
+      "pair_id": "PREF-C-HOTEL-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_hotel",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "leisure_agent",
+          "utterance": "For hotels on private vacations, convenient transport in the city center matters most to me.",
+          "elapsed_seconds": 1.2793135840911418
+        },
+        {
+          "order": 2,
+          "agent_id": "hotel_agent",
+          "utterance": "I trust large international chains with consistent service standards and full facilities.",
+          "elapsed_seconds": 0.8254485831130296
+        },
+        {
+          "order": 3,
+          "agent_id": "family_trip_agent",
+          "utterance": "For a week-long family stay last month, the room had to include a kitchen and a washer.",
+          "elapsed_seconds": 1.192849999992177
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "51ed3432-8163-4888-b421-76d20927d2e4",
+          "memory": "User prioritizes convenient transport in the city center when choosing hotels for private vacations.",
+          "hash": "0876c250611e8ecd8cf6e85c43dd8e52",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:35.832627+00:00",
+          "updated_at": "2026-08-21T09:57:35.832627+00:00",
+          "user_id": "bench-user",
+          "agent_id": "leisure_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "74c4449d-58d6-46d3-9393-cc2a99bde333",
+          "memory": "For a week-long family stay in July 2026, User required a hotel room with a kitchen and a washer.",
+          "hash": "158d049c7796f361a2b9ef3e59c08e66",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:38.037619+00:00",
+          "updated_at": "2026-08-21T09:57:38.037619+00:00",
+          "user_id": "bench-user",
+          "agent_id": "family_trip_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "leisure_agent",
+          "text": "For hotels on private vacations, convenient transport in the city center matters most to me.",
+          "result": {
+            "results": [
+              {
+                "id": "51ed3432-8163-4888-b421-76d20927d2e4",
+                "memory": "User prioritizes convenient transport in the city center when choosing hotels for private vacations.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "hotel_agent",
+          "text": "I trust large international chains with consistent service standards and full facilities.",
+          "result": {
+            "results": []
+          }
+        },
+        {
+          "agent_id": "family_trip_agent",
+          "text": "For a week-long family stay last month, the room had to include a kitchen and a washer.",
+          "result": {
+            "results": [
+              {
+                "id": "74c4449d-58d6-46d3-9393-cc2a99bde333",
+                "memory": "For a week-long family stay in July 2026, User required a hotel room with a kitchen and a washer.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.00017329200636595488,
+      "query": "What accommodation preferences does this user have for a private vacation in Kyoto?",
+      "retrieved_context": "User prioritizes convenient transport in the city center when choosing hotels for private vacations.\nFor a week-long family stay in July 2026, User required a hotel room with a kitchen and a washer.",
+      "context_chars": 198,
+      "read_seconds": 0.011689916020259261,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"The user prioritizes convenient transport in the city center for private vacations, which A best satisfies.\"}",
+      "choice": "A",
+      "reason": "The user prioritizes convenient transport in the city center for private vacations, which A best satisfies.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 0.9041779999388382,
+      "total_seconds": 4.213687583105639,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-ANALYSIS-001-A",
+      "pair_id": "PREF-C-ANALYSIS-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_analysis_style",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "strategy_agent",
+          "utterance": "When comparing proposals, give me the recommendation first; I do not want to read a long background section before it.",
+          "elapsed_seconds": 1.3264292500680313
+        },
+        {
+          "order": 2,
+          "agent_id": "writing_agent",
+          "utterance": "Do not open with the full derivation. Start with a few clear points on what to choose and what to do next.",
+          "elapsed_seconds": 0.9206466249888763
+        },
+        {
+          "order": 3,
+          "agent_id": "training_agent",
+          "utterance": "For last month's new-hire training, start with a real case to explain the situation and do not make the purchasing decision for them.",
+          "elapsed_seconds": 1.3352482499321923
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "aee1f763-8ece-4bf8-b571-9ce6e080d429",
+          "memory": "User wants new-hire training for last month (July 2026) to start with a real case to explain the situation, and not to make the purchasing decision for the trainees.",
+          "hash": "7d98eead8c21267ea024cda078b8e00e",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:42.702666+00:00",
+          "updated_at": "2026-08-21T09:57:42.702666+00:00",
+          "user_id": "bench-user",
+          "agent_id": "training_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "b6233b57-1d0c-4822-b92a-63fd45932e5a",
+          "memory": "User prefers recommendations to be presented first when comparing proposals, without a long background section before it.",
+          "hash": "840f9e94b8813c719c45cc18c21e4ffe",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:40.268772+00:00",
+          "updated_at": "2026-08-21T09:57:40.268772+00:00",
+          "user_id": "bench-user",
+          "agent_id": "strategy_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "strategy_agent",
+          "text": "When comparing proposals, give me the recommendation first; I do not want to read a long background section before it.",
+          "result": {
+            "results": [
+              {
+                "id": "b6233b57-1d0c-4822-b92a-63fd45932e5a",
+                "memory": "User prefers recommendations to be presented first when comparing proposals, without a long background section before it.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "writing_agent",
+          "text": "Do not open with the full derivation. Start with a few clear points on what to choose and what to do next.",
+          "result": {
+            "results": []
+          }
+        },
+        {
+          "agent_id": "training_agent",
+          "text": "For last month's new-hire training, start with a real case to explain the situation and do not make the purchasing decision for them.",
+          "result": {
+            "results": [
+              {
+                "id": "aee1f763-8ece-4bf8-b571-9ce6e080d429",
+                "memory": "User wants new-hire training for last month (July 2026) to start with a real case to explain the situation, and not to make the purchasing decision for the trainees.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.00016791699454188347,
+      "query": "What presentation style does this user prefer when comparing vendor proposals?",
+      "retrieved_context": "User prefers recommendations to be presented first when comparing proposals, without a long background section before it.\nUser wants new-hire training for last month (July 2026) to start with a real case to explain the situation, and not to make the purchasing decision for the trainees.",
+      "context_chars": 287,
+      "read_seconds": 0.015064000035636127,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"The user prefers recommendations first in comparisons, and this is a review, not training, so the case-based non-recommending format is not applicable.\"}",
+      "choice": "A",
+      "reason": "The user prefers recommendations first in comparisons, and this is a review, not training, so the case-based non-recommending format is not applicable.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 1.044809249928221,
+      "total_seconds": 4.642389334039763,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-ANALYSIS-001-B",
+      "pair_id": "PREF-C-ANALYSIS-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_analysis_style",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "strategy_agent",
+          "utterance": "For important proposal comparisons, I want the complete data and evidence sources, not just a simplified conclusion.",
+          "elapsed_seconds": 1.319798499927856
+        },
+        {
+          "order": 2,
+          "agent_id": "writing_agent",
+          "utterance": "Write out the risk assumptions and reasoning clearly so I can verify the analysis myself.",
+          "elapsed_seconds": 0.7433539578923956
+        },
+        {
+          "order": 3,
+          "agent_id": "training_agent",
+          "utterance": "For last month's new-hire training, start with a real case to explain the situation and do not make the purchasing decision for them.",
+          "elapsed_seconds": 1.1544846249744296
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "41afe962-15d8-49fd-80d8-a7598151c1ec",
+          "memory": "User prefers complete data and evidence sources for important proposal comparisons, rather than simplified conclusions.",
+          "hash": "3c93593ed728a878f56dab0271bba17b",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:45.069854+00:00",
+          "updated_at": "2026-08-21T09:57:45.069854+00:00",
+          "user_id": "bench-user",
+          "agent_id": "strategy_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "8c7f4206-f420-4416-807b-59cb0075aab4",
+          "memory": "User wants last month's new-hire training to start with a real case to explain the situation and not make the purchasing decision for them.",
+          "hash": "7ac049608a6e8d2808f7697d89c90cea",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:47.152609+00:00",
+          "updated_at": "2026-08-21T09:57:47.152609+00:00",
+          "user_id": "bench-user",
+          "agent_id": "training_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "strategy_agent",
+          "text": "For important proposal comparisons, I want the complete data and evidence sources, not just a simplified conclusion.",
+          "result": {
+            "results": [
+              {
+                "id": "41afe962-15d8-49fd-80d8-a7598151c1ec",
+                "memory": "User prefers complete data and evidence sources for important proposal comparisons, rather than simplified conclusions.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "writing_agent",
+          "text": "Write out the risk assumptions and reasoning clearly so I can verify the analysis myself.",
+          "result": {
+            "results": []
+          }
+        },
+        {
+          "agent_id": "training_agent",
+          "text": "For last month's new-hire training, start with a real case to explain the situation and do not make the purchasing decision for them.",
+          "result": {
+            "results": [
+              {
+                "id": "8c7f4206-f420-4416-807b-59cb0075aab4",
+                "memory": "User wants last month's new-hire training to start with a real case to explain the situation and not make the purchasing decision for them.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.00032470806036144495,
+      "query": "What presentation style does this user prefer when comparing vendor proposals?",
+      "retrieved_context": "User prefers complete data and evidence sources for important proposal comparisons, rather than simplified conclusions.\nUser wants last month's new-hire training to start with a real case to explain the situation and not make the purchasing decision for them.",
+      "context_chars": 259,
+      "read_seconds": 0.016216375050134957,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"The user prefers complete data and evidence sources for important proposal comparisons, and this is a current analysis task, not training.\"}",
+      "choice": "C",
+      "reason": "The user prefers complete data and evidence sources for important proposal comparisons, and this is a current analysis task, not training.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 1.0017086670268327,
+      "total_seconds": 4.235925792017952,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-SOFTWARE-001-A",
+      "pair_id": "PREF-C-SOFTWARE-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_software_purchase",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "procurement_agent",
+          "utterance": "I used to look at price first when choosing team software. If it worked, that was enough.",
+          "elapsed_seconds": 1.4402179169701412
+        },
+        {
+          "order": 2,
+          "agent_id": "team_operations_agent",
+          "utterance": "After repeated failures with low-cost tools, I now prioritize proven, stable options with long-term support for this team's daily software; price no longer comes first.",
+          "elapsed_seconds": 1.2841593750054017
+        },
+        {
+          "order": 3,
+          "agent_id": "demo_agent",
+          "utterance": "For a one-off innovation demo last month, it was fine to temporarily try the platform with the newest features.",
+          "elapsed_seconds": 1.2043388750171289
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "2d6072c5-d083-4fa4-9ba4-77db8f276222",
+          "memory": "User used to prioritize price when choosing team software, considering it sufficient if the software worked.",
+          "hash": "f147bd10fd9d7559b674d4ae81606da1",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:49.661572+00:00",
+          "updated_at": "2026-08-21T09:57:49.661572+00:00",
+          "user_id": "bench-user",
+          "agent_id": "procurement_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "579a2a62-1436-498b-8735-5e07f6392731",
+          "memory": "For a one-off innovation demo in July 2026, User found it acceptable to temporarily try a platform with the newest features, despite their general preference for proven, stable software.",
+          "hash": "e65c1fab21a0895dd8b96afde7d7b762",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:52.328079+00:00",
+          "updated_at": "2026-08-21T09:57:52.328079+00:00",
+          "user_id": "bench-user",
+          "agent_id": "demo_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "d2173f69-383a-41e4-b8bc-a622dfb55d8e",
+          "memory": "User changed their software selection criteria from prioritizing price to prioritizing proven, stable options with long-term support, after repeated failures with low-cost tools.",
+          "hash": "b23f1b3db318f6a02ed938e42b616d8c",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:51.124621+00:00",
+          "updated_at": "2026-08-21T09:57:51.124621+00:00",
+          "user_id": "bench-user",
+          "agent_id": "team_operations_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "procurement_agent",
+          "text": "I used to look at price first when choosing team software. If it worked, that was enough.",
+          "result": {
+            "results": [
+              {
+                "id": "2d6072c5-d083-4fa4-9ba4-77db8f276222",
+                "memory": "User used to prioritize price when choosing team software, considering it sufficient if the software worked.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "team_operations_agent",
+          "text": "After repeated failures with low-cost tools, I now prioritize proven, stable options with long-term support for this team's daily software; price no longer comes first.",
+          "result": {
+            "results": [
+              {
+                "id": "d2173f69-383a-41e4-b8bc-a622dfb55d8e",
+                "memory": "User changed their software selection criteria from prioritizing price to prioritizing proven, stable options with long-term support, after repeated failures with low-cost tools.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "demo_agent",
+          "text": "For a one-off innovation demo last month, it was fine to temporarily try the platform with the newest features.",
+          "result": {
+            "results": [
+              {
+                "id": "579a2a62-1436-498b-8735-5e07f6392731",
+                "memory": "For a one-off innovation demo in July 2026, User found it acceptable to temporarily try a platform with the newest features, despite their general preference for proven, stable software.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.0002030839677900076,
+      "query": "What does this user currently prioritize when choosing daily project management software for the team?",
+      "retrieved_context": "User used to prioritize price when choosing team software, considering it sufficient if the software worked.\nUser changed their software selection criteria from prioritizing price to prioritizing proven, stable options with long-term support, after repeated failures with low-cost tools.\nFor a one-off innovation demo in July 2026, User found it acceptable to temporarily try a platform with the newest features, despite their general preference for proven, stable software.",
+      "context_chars": 474,
+      "read_seconds": 0.012408375041559339,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"User now prioritizes proven, stable options with long-term support over price, and this is a daily long-term use case, not a one-off demo.\"}",
+      "choice": "C",
+      "reason": "User now prioritizes proven, stable options with long-term support over price, and this is a daily long-term use case, not a one-off demo.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 1.0442015419248492,
+      "total_seconds": 4.985557500040159,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-SOFTWARE-001-B",
+      "pair_id": "PREF-C-SOFTWARE-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_software_purchase",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "procurement_agent",
+          "utterance": "I used to choose mature team software with comprehensive features and strong support.",
+          "elapsed_seconds": 1.3868339580949396
+        },
+        {
+          "order": 2,
+          "agent_id": "team_operations_agent",
+          "utterance": "This team's budget will be tight for the next year. For their daily software, I now prioritize price and fast rollout instead of paying for a full ecosystem they will not use.",
+          "elapsed_seconds": 1.406055707950145
+        },
+        {
+          "order": 3,
+          "agent_id": "demo_agent",
+          "utterance": "For a one-off innovation demo last month, it was fine to temporarily try the platform with the newest features.",
+          "elapsed_seconds": 0.9630795000120997
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "07d060d4-2f81-4ebf-bb2e-c4affe7557c7",
+          "memory": "User's team has a tight budget for the next year, so for their daily software, they now prioritize price and fast rollout over paying for a full ecosystem they won't use.",
+          "hash": "b23c828cd206f9998d18cc40724e97c6",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:56.362274+00:00",
+          "updated_at": "2026-08-21T09:57:56.362274+00:00",
+          "user_id": "bench-user",
+          "agent_id": "team_operations_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "5d8e2b99-b8ff-463a-8641-454ca6a04526",
+          "memory": "User used to prefer mature team software with comprehensive features and strong support.",
+          "hash": "f5d1b5acccb4d1ec1d93a071866597be",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:54.768325+00:00",
+          "updated_at": "2026-08-21T09:57:54.768325+00:00",
+          "user_id": "bench-user",
+          "agent_id": "procurement_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "procurement_agent",
+          "text": "I used to choose mature team software with comprehensive features and strong support.",
+          "result": {
+            "results": [
+              {
+                "id": "5d8e2b99-b8ff-463a-8641-454ca6a04526",
+                "memory": "User used to prefer mature team software with comprehensive features and strong support.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "team_operations_agent",
+          "text": "This team's budget will be tight for the next year. For their daily software, I now prioritize price and fast rollout instead of paying for a full ecosystem they will not use.",
+          "result": {
+            "results": [
+              {
+                "id": "07d060d4-2f81-4ebf-bb2e-c4affe7557c7",
+                "memory": "User's team has a tight budget for the next year, so for their daily software, they now prioritize price and fast rollout over paying for a full ecosystem they won't use.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "demo_agent",
+          "text": "For a one-off innovation demo last month, it was fine to temporarily try the platform with the newest features.",
+          "result": {
+            "results": []
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.0004958329955115914,
+      "query": "What does this user currently prioritize when choosing daily project management software for the team?",
+      "retrieved_context": "User's team has a tight budget for the next year, so for their daily software, they now prioritize price and fast rollout over paying for a full ecosystem they won't use.\nUser used to prefer mature team software with comprehensive features and strong support.",
+      "context_chars": 259,
+      "read_seconds": 0.02108750003390014,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"The user now prioritizes price and fast rollout, which option A best satisfies.\"}",
+      "choice": "A",
+      "reason": "The user now prioritizes price and fast rollout, which option A best satisfies.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 0.8453274170169607,
+      "total_seconds": 4.622905500000343,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-MERGE-003",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "cross_agent_merge",
+      "scenario": "restaurant_choice",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "food_agent",
+          "utterance": "When choosing a restaurant for myself, I want a menu with several genuinely plant-based main dishes, not just side salads.",
+          "elapsed_seconds": 1.4142790420446545
+        },
+        {
+          "order": 2,
+          "agent_id": "social_agent",
+          "utterance": "I prefer restaurants quiet enough for an unhurried conversation; loud, crowded dining rooms wear me out.",
+          "elapsed_seconds": 1.074672874994576
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "33eb37cc-0436-4d33-939d-4f0ed01c7923",
+          "memory": "User prefers restaurants that are quiet enough for unhurried conversation, as loud and crowded dining rooms are tiring.",
+          "hash": "95ebf84c6237c0828f0f5d203e538c6f",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:00.863209+00:00",
+          "updated_at": "2026-08-21T09:58:00.863209+00:00",
+          "user_id": "bench-user",
+          "agent_id": "social_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "3eed17dc-8947-41ca-bbe7-289c9ec79023",
+          "memory": "User prefers restaurants that offer several genuinely plant-based main dishes on the menu, not just side salads.",
+          "hash": "b07557d433cc7a966af5ba90f0fb6ce9",
+          "metadata": null,
+          "created_at": "2026-08-21T09:57:59.605979+00:00",
+          "updated_at": "2026-08-21T09:57:59.605979+00:00",
+          "user_id": "bench-user",
+          "agent_id": "food_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "food_agent",
+          "text": "When choosing a restaurant for myself, I want a menu with several genuinely plant-based main dishes, not just side salads.",
+          "result": {
+            "results": [
+              {
+                "id": "3eed17dc-8947-41ca-bbe7-289c9ec79023",
+                "memory": "User prefers restaurants that offer several genuinely plant-based main dishes on the menu, not just side salads.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "social_agent",
+          "text": "I prefer restaurants quiet enough for an unhurried conversation; loud, crowded dining rooms wear me out.",
+          "result": {
+            "results": [
+              {
+                "id": "33eb37cc-0436-4d33-939d-4f0ed01c7923",
+                "memory": "User prefers restaurants that are quiet enough for unhurried conversation, as loud and crowded dining rooms are tiring.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.0005491659976541996,
+      "query": "What restaurant qualities does Iris prefer for a personal dinner?",
+      "retrieved_context": "User prefers restaurants that are quiet enough for unhurried conversation, as loud and crowded dining rooms are tiring.\nUser prefers restaurants that offer several genuinely plant-based main dishes on the menu, not just side salads.",
+      "context_chars": 232,
+      "read_seconds": 0.02322520804591477,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"It is quiet with spaced tables and offers several plant-based mains, matching both preferences.\"}",
+      "choice": "C",
+      "reason": "It is quiet with spaced tables and offers several plant-based mains, matching both preferences.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 0.9285631250822917,
+      "total_seconds": 3.4413536249194294,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-MERGE-004",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "cross_agent_merge",
+      "scenario": "home_office_chair",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "home_agent",
+          "utterance": "My desk nook is narrow. The chair must be no more than 60 centimeters wide, and within that limit I prefer the most compact option.",
+          "elapsed_seconds": 1.3314369999570772
+        },
+        {
+          "order": 2,
+          "agent_id": "ergonomics_agent",
+          "utterance": "I sit for long work sessions and want adjustable lumbar support; the more completely I can adjust its height and depth, the better.",
+          "elapsed_seconds": 1.160875333007425
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "b6bb7e81-11df-4fa3-9e23-d5d9e618a1f8",
+          "memory": "User sits for long work sessions and wants a chair with adjustable lumbar support, preferring the ability to adjust both height and depth as completely as possible.",
+          "hash": "583d7b35ccd6d586df5e19d489bff72d",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:04.479191+00:00",
+          "updated_at": "2026-08-21T09:58:04.479191+00:00",
+          "user_id": "bench-user",
+          "agent_id": "ergonomics_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "e61c7efa-5067-46f1-8f1b-9720a47ff7c4",
+          "memory": "User's desk nook is narrow, requiring a chair no more than 60 centimeters wide, and prefers the most compact option within that limit.",
+          "hash": "c1fcef1e48f63ce566e6abf447ac1af3",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:03.142319+00:00",
+          "updated_at": "2026-08-21T09:58:03.142319+00:00",
+          "user_id": "bench-user",
+          "agent_id": "home_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "home_agent",
+          "text": "My desk nook is narrow. The chair must be no more than 60 centimeters wide, and within that limit I prefer the most compact option.",
+          "result": {
+            "results": [
+              {
+                "id": "e61c7efa-5067-46f1-8f1b-9720a47ff7c4",
+                "memory": "User's desk nook is narrow, requiring a chair no more than 60 centimeters wide, and prefers the most compact option within that limit.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "ergonomics_agent",
+          "text": "I sit for long work sessions and want adjustable lumbar support; the more completely I can adjust its height and depth, the better.",
+          "result": {
+            "results": [
+              {
+                "id": "b6bb7e81-11df-4fa3-9e23-d5d9e618a1f8",
+                "memory": "User sits for long work sessions and wants a chair with adjustable lumbar support, preferring the ability to adjust both height and depth as completely as possible.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.00025041704066097736,
+      "query": "What size and back-support features does Jonah need in a home office chair?",
+      "retrieved_context": "User sits for long work sessions and wants a chair with adjustable lumbar support, preferring the ability to adjust both height and depth as completely as possible.\nUser's desk nook is narrow, requiring a chair no more than 60 centimeters wide, and prefers the most compact option within that limit.",
+      "context_chars": 299,
+      "read_seconds": 0.016509999986737967,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"It fits the 60 cm width limit, offers adjustable lumbar height and depth, and is designed for long sessions.\"}",
+      "choice": "C",
+      "reason": "It fits the 60 cm width limit, offers adjustable lumbar height and depth, and is designed for long sessions.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 0.869089916930534,
+      "total_seconds": 3.3781986669637263,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-UPDATE-003",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_update",
+      "scenario": "exercise_class",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "fitness_agent",
+          "utterance": "I used to choose intense group workouts because the competition kept me motivated.",
+          "elapsed_seconds": 1.406961707980372
+        },
+        {
+          "order": 2,
+          "agent_id": "routine_agent",
+          "utterance": "My routine has changed. I now stick with low-impact sessions I can do independently at a steady pace; group competition is no longer what I want.",
+          "elapsed_seconds": 1.4520679159322754
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "8e2419a5-065a-4e78-a327-665b6304120a",
+          "memory": "User used to prefer intense group workouts because the competition kept them motivated.",
+          "hash": "7a6e74e3dc3fc6c1bc14212e5cb460d9",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:06.763959+00:00",
+          "updated_at": "2026-08-21T09:58:06.763959+00:00",
+          "user_id": "bench-user",
+          "agent_id": "fitness_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "c50ebf0a-d004-47f9-83bd-e430455012b4",
+          "memory": "User's workout preference changed from intense group workouts to low-impact sessions done independently at a steady pace, as of around August 21, 2026, because they no longer want group competition.",
+          "hash": "31f93639416ae3343be7bffcd64512f5",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:08.402571+00:00",
+          "updated_at": "2026-08-21T09:58:08.402571+00:00",
+          "user_id": "bench-user",
+          "agent_id": "routine_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "fitness_agent",
+          "text": "I used to choose intense group workouts because the competition kept me motivated.",
+          "result": {
+            "results": [
+              {
+                "id": "8e2419a5-065a-4e78-a327-665b6304120a",
+                "memory": "User used to prefer intense group workouts because the competition kept them motivated.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "routine_agent",
+          "text": "My routine has changed. I now stick with low-impact sessions I can do independently at a steady pace; group competition is no longer what I want.",
+          "result": {
+            "results": [
+              {
+                "id": "c50ebf0a-d004-47f9-83bd-e430455012b4",
+                "memory": "User's workout preference changed from intense group workouts to low-impact sessions done independently at a steady pace, as of around August 21, 2026, because they no longer want group competition.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.00017675000708550215,
+      "query": "What kind of weekly exercise does Kavya currently prefer?",
+      "retrieved_context": "User used to prefer intense group workouts because the competition kept them motivated.\nUser's workout preference changed from intense group workouts to low-impact sessions done independently at a steady pace, as of around August 21, 2026, because they no longer want group competition.",
+      "context_chars": 286,
+      "read_seconds": 0.019579957937821746,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"Matches her current preference for low-impact, independent, self-paced exercise without group competition.\"}",
+      "choice": "C",
+      "reason": "Matches her current preference for low-impact, independent, self-paced exercise without group competition.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 0.809522790950723,
+      "total_seconds": 3.688325250055641,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-UPDATE-004",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_update",
+      "scenario": "grocery_fulfillment",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "grocery_agent",
+          "utterance": "I used to choose the fastest grocery delivery window, even when it cost more.",
+          "elapsed_seconds": 1.7988199579995126
+        },
+        {
+          "order": 2,
+          "agent_id": "household_agent",
+          "utterance": "I work near the market now. For weekly groceries, I prefer a scheduled pickup with minimal packaging, and speed is no longer worth an extra delivery fee.",
+          "elapsed_seconds": 1.449686040985398
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "096a9b2f-88fe-40ab-94d6-f4c3fda4f53e",
+          "memory": "User used to choose the fastest grocery delivery window even when it cost more, indicating a past preference for speed over cost in grocery delivery.",
+          "hash": "009ae23d03cef74df0d7ae1cc84535e7",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:10.696652+00:00",
+          "updated_at": "2026-08-21T09:58:10.696652+00:00",
+          "user_id": "bench-user",
+          "agent_id": "grocery_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "4463a7b0-2bcc-436b-aa57-a1fd886004fe",
+          "memory": "User now works near the market and for weekly groceries prefers a scheduled pickup with minimal packaging, no longer valuing speed enough to pay extra delivery fees, a shift from their previous preference for the fastest delivery window.",
+          "hash": "0d505555231c3932c51312d3bdab4c5a",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:12.653038+00:00",
+          "updated_at": "2026-08-21T09:58:12.653038+00:00",
+          "user_id": "bench-user",
+          "agent_id": "household_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "grocery_agent",
+          "text": "I used to choose the fastest grocery delivery window, even when it cost more.",
+          "result": {
+            "results": [
+              {
+                "id": "096a9b2f-88fe-40ab-94d6-f4c3fda4f53e",
+                "memory": "User used to choose the fastest grocery delivery window even when it cost more, indicating a past preference for speed over cost in grocery delivery.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "household_agent",
+          "text": "I work near the market now. For weekly groceries, I prefer a scheduled pickup with minimal packaging, and speed is no longer worth an extra delivery fee.",
+          "result": {
+            "results": [
+              {
+                "id": "4463a7b0-2bcc-436b-aa57-a1fd886004fe",
+                "memory": "User now works near the market and for weekly groceries prefers a scheduled pickup with minimal packaging, no longer valuing speed enough to pay extra delivery fees, a shift from their previous preference for the fastest delivery window.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.00018016702961176634,
+      "query": "How does Luis currently prefer to receive his weekly groceries?",
+      "retrieved_context": "User now works near the market and for weekly groceries prefers a scheduled pickup with minimal packaging, no longer valuing speed enough to pay extra delivery fees, a shift from their previous preference for the fastest delivery window.\nUser used to choose the fastest grocery delivery window even when it cost more, indicating a past preference for speed over cost in grocery delivery.",
+      "context_chars": 387,
+      "read_seconds": 0.013124832999892533,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"Scheduled pickup near work with minimal packaging and no fee matches his current preference for cost-saving, low-waste pickup over paid fast delivery.\"}",
+      "choice": "A",
+      "reason": "Scheduled pickup near work with minimal packaging and no fee matches his current preference for cost-saving, low-waste pickup over paid fast delivery.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 0.9005777089623734,
+      "total_seconds": 4.162410124903545,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-BOUNDARY-003",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_boundary",
+      "scenario": "personal_vs_client_dinner",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "food_agent",
+          "utterance": "For my own dinners, I enjoy spicy regional food and like trying dishes I have not had before.",
+          "elapsed_seconds": 1.4489051250275224
+        },
+        {
+          "order": 2,
+          "agent_id": "client_agent",
+          "utterance": "For last month's client dinner, I needed a quiet private room and a mild, familiar menu because the guests had different tastes.",
+          "elapsed_seconds": 1.0223920829594135
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "4ff6a827-25a9-4a1b-8b97-0f6f135d398a",
+          "memory": "User enjoys spicy regional food for their own dinners and likes trying dishes they have not had before.",
+          "hash": "bfcf162c3e2db7914008c7f347753f86",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:15.007571+00:00",
+          "updated_at": "2026-08-21T09:58:15.007571+00:00",
+          "user_id": "bench-user",
+          "agent_id": "food_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "e9ac9a00-5611-4eeb-97b5-8c18e57c952f",
+          "memory": "For a client dinner in July 2026, User needed a quiet private room and a mild, familiar menu because the guests had different tastes.",
+          "hash": "19e828be7538d70ae1aa7af1eb4b78f8",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:16.208998+00:00",
+          "updated_at": "2026-08-21T09:58:16.208998+00:00",
+          "user_id": "bench-user",
+          "agent_id": "client_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "food_agent",
+          "text": "For my own dinners, I enjoy spicy regional food and like trying dishes I have not had before.",
+          "result": {
+            "results": [
+              {
+                "id": "4ff6a827-25a9-4a1b-8b97-0f6f135d398a",
+                "memory": "User enjoys spicy regional food for their own dinners and likes trying dishes they have not had before.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "client_agent",
+          "text": "For last month's client dinner, I needed a quiet private room and a mild, familiar menu because the guests had different tastes.",
+          "result": {
+            "results": [
+              {
+                "id": "e9ac9a00-5611-4eeb-97b5-8c18e57c952f",
+                "memory": "For a client dinner in July 2026, User needed a quiet private room and a mild, familiar menu because the guests had different tastes.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.00016537506598979235,
+      "query": "What dining preferences apply to Maya's casual personal dinner?",
+      "retrieved_context": "For a client dinner in July 2026, User needed a quiet private room and a mild, familiar menu because the guests had different tastes.\nUser enjoys spicy regional food for their own dinners and likes trying dishes they have not had before.",
+      "context_chars": 237,
+      "read_seconds": 0.014238042058423162,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"Maya's own preference is for spicy regional food and trying unfamiliar dishes, and this casual dinner has no need for a quiet private room.\"}",
+      "choice": "C",
+      "reason": "Maya's own preference is for spicy regional food and trying unfamiliar dishes, and this casual dinner has no need for a quiet private room.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 1.1998319579288363,
+      "total_seconds": 3.6855580419069156,
+      "error": null
+    },
+    {
+      "case_id": "PREF-D-BOUNDARY-004",
+      "pair_id": null,
+      "layer": "diagnostic",
+      "primary_capability": "preference_boundary",
+      "scenario": "routine_project_communication",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "collaboration_agent",
+          "utterance": "For routine project work, I prefer written asynchronous updates that I can review and respond to in my own time.",
+          "elapsed_seconds": 1.4028725000098348
+        },
+        {
+          "order": 2,
+          "agent_id": "incident_agent",
+          "utterance": "During last week's production outage, call me immediately and keep a live video room open until service is restored.",
+          "elapsed_seconds": 1.2552278329385445
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "4673e71f-1611-4966-a7ef-e04c073ef95b",
+          "memory": "User prefers written asynchronous updates for routine project work, allowing them to review and respond at their own pace.",
+          "hash": "01857134dcf4f3f7556dfd786a08d73b",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:18.845471+00:00",
+          "updated_at": "2026-08-21T09:58:18.845471+00:00",
+          "user_id": "bench-user",
+          "agent_id": "collaboration_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "c851de9a-4585-4452-8744-00d7352aff37",
+          "memory": "During the production outage in the week of August 17-21, 2026, User wants to be called immediately and have a live video room kept open until service is restored.",
+          "hash": "45bc7c9d33b6a016ef21858c35b94a1a",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:20.271504+00:00",
+          "updated_at": "2026-08-21T09:58:20.271504+00:00",
+          "user_id": "bench-user",
+          "agent_id": "incident_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "collaboration_agent",
+          "text": "For routine project work, I prefer written asynchronous updates that I can review and respond to in my own time.",
+          "result": {
+            "results": [
+              {
+                "id": "4673e71f-1611-4966-a7ef-e04c073ef95b",
+                "memory": "User prefers written asynchronous updates for routine project work, allowing them to review and respond at their own pace.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "incident_agent",
+          "text": "During last week's production outage, call me immediately and keep a live video room open until service is restored.",
+          "result": {
+            "results": [
+              {
+                "id": "c851de9a-4585-4452-8744-00d7352aff37",
+                "memory": "During the production outage in the week of August 17-21, 2026, User wants to be called immediately and have a live video room kept open until service is restored.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.0012659579515457153,
+      "query": "How does Noah prefer routine project communication when there is no incident?",
+      "retrieved_context": "User prefers written asynchronous updates for routine project work, allowing them to review and respond at their own pace.\nDuring the production outage in the week of August 17-21, 2026, User wants to be called immediately and have a live video room kept open until service is restored.",
+      "context_chars": 286,
+      "read_seconds": 0.036063750041648746,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"The user prefers written asynchronous updates for routine project work, and there is no active incident requiring immediate calls or live video.\"}",
+      "choice": "C",
+      "reason": "The user prefers written asynchronous updates for routine project work, and there is no active incident requiring immediate calls or live video.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 0.7822261250112206,
+      "total_seconds": 3.478267709026113,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-FLIGHT-001-A",
+      "pair_id": "PREF-C-FLIGHT-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_flight",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "travel_agent",
+          "utterance": "For vacation flights, I strongly prefer nonstop routes because connections make the trip tiring.",
+          "elapsed_seconds": 2.089910832932219
+        },
+        {
+          "order": 2,
+          "agent_id": "schedule_agent",
+          "utterance": "I prefer daytime flights that arrive with enough time to settle in before the evening.",
+          "elapsed_seconds": 1.2100407080724835
+        },
+        {
+          "order": 3,
+          "agent_id": "family_agent",
+          "utterance": "For a family trip last year, we needed two checked bags, and one relative who was recovering from surgery needed airport wheelchair assistance.",
+          "elapsed_seconds": 1.8069407499860972
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "5e73f4c0-fcf0-47a6-979f-f5e995fc1658",
+          "memory": "User strongly prefers nonstop flights for vacation travel because connections make the trip tiring.",
+          "hash": "51c1a5dbe50757b2cbd18fd493426afd",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:24.894883+00:00",
+          "updated_at": "2026-08-21T09:58:24.894883+00:00",
+          "user_id": "bench-user",
+          "agent_id": "travel_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "c29aa960-e776-4f53-9e05-8edb07c48da1",
+          "memory": "For a family trip last year (around 2025), the user needed two checked bags and one relative recovering from surgery required airport wheelchair assistance.",
+          "hash": "e86525b4f687275d9bd57cf1f5d001f8",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:28.457363+00:00",
+          "updated_at": "2026-08-21T09:58:28.457363+00:00",
+          "user_id": "bench-user",
+          "agent_id": "family_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "travel_agent",
+          "text": "For vacation flights, I strongly prefer nonstop routes because connections make the trip tiring.",
+          "result": {
+            "results": [
+              {
+                "id": "5e73f4c0-fcf0-47a6-979f-f5e995fc1658",
+                "memory": "User strongly prefers nonstop flights for vacation travel because connections make the trip tiring.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "schedule_agent",
+          "text": "I prefer daytime flights that arrive with enough time to settle in before the evening.",
+          "result": {
+            "results": []
+          }
+        },
+        {
+          "agent_id": "family_agent",
+          "text": "For a family trip last year, we needed two checked bags, and one relative who was recovering from surgery needed airport wheelchair assistance.",
+          "result": {
+            "results": [
+              {
+                "id": "c29aa960-e776-4f53-9e05-8edb07c48da1",
+                "memory": "For a family trip last year (around 2025), the user needed two checked bags and one relative recovering from surgery required airport wheelchair assistance.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.00045104103628546,
+      "query": "What does this user currently prefer for personal vacation flights?",
+      "retrieved_context": "User strongly prefers nonstop flights for vacation travel because connections make the trip tiring.\nFor a family trip last year (around 2025), the user needed two checked bags and one relative recovering from surgery required airport wheelchair assistance.",
+      "context_chars": 256,
+      "read_seconds": 0.14432891691103578,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"User prefers nonstop flights for vacation travel; A is nonstop and arrives before dinner, despite higher cost.\"}",
+      "choice": "A",
+      "reason": "User prefers nonstop flights for vacation travel; A is nonstop and arrives before dinner, despite higher cost.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 1.2850873339921236,
+      "total_seconds": 6.536812708014622,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-FLIGHT-001-B",
+      "pair_id": "PREF-C-FLIGHT-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_flight",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "travel_agent",
+          "utterance": "For personal trips, keeping the fare as low as possible matters more to me than avoiding a connection.",
+          "elapsed_seconds": 1.67122549994383
+        },
+        {
+          "order": 2,
+          "agent_id": "schedule_agent",
+          "utterance": "I am comfortable flying overnight and taking a long layover if that meaningfully lowers the price.",
+          "elapsed_seconds": 1.0487618329934776
+        },
+        {
+          "order": 3,
+          "agent_id": "family_agent",
+          "utterance": "For a family trip last year, we needed two checked bags, and one relative who was recovering from surgery needed airport wheelchair assistance.",
+          "elapsed_seconds": 1.2055444580037147
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "66c42b34-a94f-46ee-a64b-4a2703008609",
+          "memory": "For a family trip last year (around 2025), User needed two checked bags and one relative recovering from surgery required airport wheelchair assistance.",
+          "hash": "4c21aa3859e651b3feef7771d674340e",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:34.012645+00:00",
+          "updated_at": "2026-08-21T09:58:34.012645+00:00",
+          "user_id": "bench-user",
+          "agent_id": "family_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "c60c5828-822a-4297-aded-4eae4bef7d72",
+          "memory": "For personal trips, User prioritizes keeping the fare as low as possible over avoiding a connection.",
+          "hash": "3d690e0ecbad7e678c9c0652e22a7be7",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:31.542922+00:00",
+          "updated_at": "2026-08-21T09:58:31.542922+00:00",
+          "user_id": "bench-user",
+          "agent_id": "travel_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "travel_agent",
+          "text": "For personal trips, keeping the fare as low as possible matters more to me than avoiding a connection.",
+          "result": {
+            "results": [
+              {
+                "id": "c60c5828-822a-4297-aded-4eae4bef7d72",
+                "memory": "For personal trips, User prioritizes keeping the fare as low as possible over avoiding a connection.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "schedule_agent",
+          "text": "I am comfortable flying overnight and taking a long layover if that meaningfully lowers the price.",
+          "result": {
+            "results": []
+          }
+        },
+        {
+          "agent_id": "family_agent",
+          "text": "For a family trip last year, we needed two checked bags, and one relative who was recovering from surgery needed airport wheelchair assistance.",
+          "result": {
+            "results": [
+              {
+                "id": "66c42b34-a94f-46ee-a64b-4a2703008609",
+                "memory": "For a family trip last year (around 2025), User needed two checked bags and one relative recovering from surgery required airport wheelchair assistance.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.0001800419995561242,
+      "query": "What does this user currently prefer for personal vacation flights?",
+      "retrieved_context": "For personal trips, User prioritizes keeping the fare as low as possible over avoiding a connection.\nFor a family trip last year (around 2025), User needed two checked bags and one relative recovering from surgery required airport wheelchair assistance.",
+      "context_chars": 253,
+      "read_seconds": 0.013339249999262393,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"User prioritizes lowest fare over avoiding connections for personal trips.\"}",
+      "choice": "B",
+      "reason": "User prioritizes lowest fare over avoiding connections for personal trips.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 0.7894734999863431,
+      "total_seconds": 4.728541417047381,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-MEETING-001-A",
+      "pair_id": "PREF-C-MEETING-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_meeting",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "facilitation_agent",
+          "utterance": "For project kickoffs, I want people working together rather than listening to a long presentation.",
+          "elapsed_seconds": 1.4415177919436246
+        },
+        {
+          "order": 2,
+          "agent_id": "team_agent",
+          "utterance": "Give every function a real chance to shape the plan through small-group discussion and a shared workspace.",
+          "elapsed_seconds": 0.8439319590106606
+        },
+        {
+          "order": 3,
+          "agent_id": "investor_agent",
+          "utterance": "For last quarter's investor update, we needed a polished formal deck with questions moderated by the CEO.",
+          "elapsed_seconds": 1.0819543750258163
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "a7ce7dd2-7c1d-4f6e-b488-c91db68d8017",
+          "memory": "User's investor update for last quarter required a polished formal deck with questions moderated by the CEO.",
+          "hash": "113848b1bebf597042aa59b88f5b4d21",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:38.328167+00:00",
+          "updated_at": "2026-08-21T09:58:38.328167+00:00",
+          "user_id": "bench-user",
+          "agent_id": "investor_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "e04288aa-918f-4365-88e4-823a34e58b54",
+          "memory": "User prefers collaborative, hands-on project kickoffs where people work together rather than sitting through a long presentation.",
+          "hash": "031d9ca33c9883b59947f9b6953b9258",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:36.221825+00:00",
+          "updated_at": "2026-08-21T09:58:36.221825+00:00",
+          "user_id": "bench-user",
+          "agent_id": "facilitation_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "facilitation_agent",
+          "text": "For project kickoffs, I want people working together rather than listening to a long presentation.",
+          "result": {
+            "results": [
+              {
+                "id": "e04288aa-918f-4365-88e4-823a34e58b54",
+                "memory": "User prefers collaborative, hands-on project kickoffs where people work together rather than sitting through a long presentation.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "team_agent",
+          "text": "Give every function a real chance to shape the plan through small-group discussion and a shared workspace.",
+          "result": {
+            "results": []
+          }
+        },
+        {
+          "agent_id": "investor_agent",
+          "text": "For last quarter's investor update, we needed a polished formal deck with questions moderated by the CEO.",
+          "result": {
+            "results": [
+              {
+                "id": "a7ce7dd2-7c1d-4f6e-b488-c91db68d8017",
+                "memory": "User's investor update for last quarter required a polished formal deck with questions moderated by the CEO.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.00018754205666482449,
+      "query": "What format does this user currently prefer for an internal project kickoff?",
+      "retrieved_context": "User prefers collaborative, hands-on project kickoffs where people work together rather than sitting through a long presentation.\nUser's investor update for last quarter required a polished formal deck with questions moderated by the CEO.",
+      "context_chars": 238,
+      "read_seconds": 0.014195875031873584,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"The user prefers collaborative, hands-on kickoffs, which matches a facilitated workshop over formal or decision-only formats.\"}",
+      "choice": "A",
+      "reason": "The user prefers collaborative, hands-on kickoffs, which matches a facilitated workshop over formal or decision-only formats.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 0.9517613749485463,
+      "total_seconds": 4.3336338750086725,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-MEETING-001-B",
+      "pair_id": "PREF-C-MEETING-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_meeting",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "facilitation_agent",
+          "utterance": "For internal project meetings, I prefer a short pre-read and a discussion focused only on unresolved decisions.",
+          "elapsed_seconds": 2.036108125001192
+        },
+        {
+          "order": 2,
+          "agent_id": "team_agent",
+          "utterance": "Each decision should end with a named owner and a clear next step; open-ended workshops frustrate me.",
+          "elapsed_seconds": 1.059195875073783
+        },
+        {
+          "order": 3,
+          "agent_id": "investor_agent",
+          "utterance": "For last quarter's investor update, we needed a polished formal deck with questions moderated by the CEO.",
+          "elapsed_seconds": 1.1386430420679972
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "3c46f6b5-8907-4a9d-882c-032f2d56aace",
+          "memory": "User prefers internal project meetings to have a short pre-read and a discussion focused only on unresolved decisions.",
+          "hash": "de5ea411b6a809435792217d4e64d0a8",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:41.385730+00:00",
+          "updated_at": "2026-08-21T09:58:41.385730+00:00",
+          "user_id": "bench-user",
+          "agent_id": "facilitation_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "cc331b0a-1cbc-417d-9b31-2b78d61556e2",
+          "memory": "User wants each decision in internal project meetings to end with a named owner and a clear next step, and finds open-ended workshops frustrating.",
+          "hash": "f16fcd115d81aef1f34dab944078c28d",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:42.644902+00:00",
+          "updated_at": "2026-08-21T09:58:42.644902+00:00",
+          "user_id": "bench-user",
+          "agent_id": "team_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "f6425165-1496-4fc4-84e4-2789664c76e7",
+          "memory": "For last quarter's investor update, the user needed a polished formal deck with questions moderated by the CEO.",
+          "hash": "56542c358d087b31f083c6843caee100",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:43.784203+00:00",
+          "updated_at": "2026-08-21T09:58:43.784203+00:00",
+          "user_id": "bench-user",
+          "agent_id": "investor_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "facilitation_agent",
+          "text": "For internal project meetings, I prefer a short pre-read and a discussion focused only on unresolved decisions.",
+          "result": {
+            "results": [
+              {
+                "id": "3c46f6b5-8907-4a9d-882c-032f2d56aace",
+                "memory": "User prefers internal project meetings to have a short pre-read and a discussion focused only on unresolved decisions.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "team_agent",
+          "text": "Each decision should end with a named owner and a clear next step; open-ended workshops frustrate me.",
+          "result": {
+            "results": [
+              {
+                "id": "cc331b0a-1cbc-417d-9b31-2b78d61556e2",
+                "memory": "User wants each decision in internal project meetings to end with a named owner and a clear next step, and finds open-ended workshops frustrating.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "investor_agent",
+          "text": "For last quarter's investor update, we needed a polished formal deck with questions moderated by the CEO.",
+          "result": {
+            "results": [
+              {
+                "id": "f6425165-1496-4fc4-84e4-2789664c76e7",
+                "memory": "For last quarter's investor update, the user needed a polished formal deck with questions moderated by the CEO.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.0004492079606279731,
+      "query": "What format does this user currently prefer for an internal project kickoff?",
+      "retrieved_context": "User prefers internal project meetings to have a short pre-read and a discussion focused only on unresolved decisions.\nUser wants each decision in internal project meetings to end with a named owner and a clear next step, and finds open-ended workshops frustrating.\nFor last quarter's investor update, the user needed a polished formal deck with questions moderated by the CEO.",
+      "context_chars": 377,
+      "read_seconds": 0.017113665933720767,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"The user prefers concise, decision-focused internal meetings with pre-reads and clear owners, not open-ended workshops or formal presentations.\"}",
+      "choice": "B",
+      "reason": "The user prefers concise, decision-focused internal meetings with pre-reads and clear owners, not open-ended workshops or formal presentations.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 1.0694460000377148,
+      "total_seconds": 5.321008957922459,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-MEAL-001-A",
+      "pair_id": "PREF-C-MEAL-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_meal",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "nutrition_agent",
+          "utterance": "For weekday meals, I prioritize a high-protein plan that includes fish, chicken, or eggs.",
+          "elapsed_seconds": 1.969034833018668
+        },
+        {
+          "order": 2,
+          "agent_id": "routine_agent",
+          "utterance": "I need meals I can reheat in under five minutes between meetings, even if the menu repeats.",
+          "elapsed_seconds": 1.3932040419895202
+        },
+        {
+          "order": 3,
+          "agent_id": "event_agent",
+          "utterance": "For last month's office event, every meal had to be nut-free and carry full allergen labels.",
+          "elapsed_seconds": 1.5333603749750182
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "19997afb-c0fc-48c3-92f9-8f299a198e51",
+          "memory": "User needs weekday meals that can be reheated in under five minutes between meetings, and is okay with menu repetition.",
+          "hash": "ad80c6832f4cd7c40275945b311d5b3a",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:48.760492+00:00",
+          "updated_at": "2026-08-21T09:58:48.760492+00:00",
+          "user_id": "bench-user",
+          "agent_id": "routine_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "3490d64e-b355-4bd0-99c5-4518f3a40dbf",
+          "memory": "User prioritizes a high-protein meal plan for weekday meals, including fish, chicken, or eggs.",
+          "hash": "d88c0ff7ee738bf819f8c0e249f5c582",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:46.767400+00:00",
+          "updated_at": "2026-08-21T09:58:46.767400+00:00",
+          "user_id": "bench-user",
+          "agent_id": "nutrition_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "824541ef-3001-4818-a1d2-f938d5a2972a",
+          "memory": "For an office event in July 2026, all meals had to be nut-free and carry full allergen labels.",
+          "hash": "a98527d7e25f8aad0d4a966eddd1583f",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:50.282721+00:00",
+          "updated_at": "2026-08-21T09:58:50.282721+00:00",
+          "user_id": "bench-user",
+          "agent_id": "event_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "nutrition_agent",
+          "text": "For weekday meals, I prioritize a high-protein plan that includes fish, chicken, or eggs.",
+          "result": {
+            "results": [
+              {
+                "id": "3490d64e-b355-4bd0-99c5-4518f3a40dbf",
+                "memory": "User prioritizes a high-protein meal plan for weekday meals, including fish, chicken, or eggs.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "routine_agent",
+          "text": "I need meals I can reheat in under five minutes between meetings, even if the menu repeats.",
+          "result": {
+            "results": [
+              {
+                "id": "19997afb-c0fc-48c3-92f9-8f299a198e51",
+                "memory": "User needs weekday meals that can be reheated in under five minutes between meetings, and is okay with menu repetition.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "event_agent",
+          "text": "For last month's office event, every meal had to be nut-free and carry full allergen labels.",
+          "result": {
+            "results": [
+              {
+                "id": "824541ef-3001-4818-a1d2-f938d5a2972a",
+                "memory": "For an office event in July 2026, all meals had to be nut-free and carry full allergen labels.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.006036292063072324,
+      "query": "What does this user currently prefer for regular weekday meals?",
+      "retrieved_context": "User needs weekday meals that can be reheated in under five minutes between meetings, and is okay with menu repetition.\nUser prioritizes a high-protein meal plan for weekday meals, including fish, chicken, or eggs.\nFor an office event in July 2026, all meals had to be nut-free and carry full allergen labels.",
+      "context_chars": 309,
+      "read_seconds": 0.10018029203638434,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"It matches the user's high-protein preference and quick-reheat requirement, and repetition is acceptable.\"}",
+      "choice": "A",
+      "reason": "It matches the user's high-protein preference and quick-reheat requirement, and repetition is acceptable.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 1.115256999968551,
+      "total_seconds": 6.117163375020027,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-MEAL-001-B",
+      "pair_id": "PREF-C-MEAL-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_meal",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "nutrition_agent",
+          "utterance": "For my regular meals, I prefer plant-based dishes built around beans, grains, and vegetables.",
+          "elapsed_seconds": 1.7888120000716299
+        },
+        {
+          "order": 2,
+          "agent_id": "routine_agent",
+          "utterance": "Menu variety matters to me, and I am happy to spend around twenty minutes preparing dinner.",
+          "elapsed_seconds": 1.3566002079751343
+        },
+        {
+          "order": 3,
+          "agent_id": "event_agent",
+          "utterance": "For last month's office event, every meal had to be nut-free and carry full allergen labels.",
+          "elapsed_seconds": 1.1099142080638558
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "0a451836-8cf7-43a7-ba42-8bd78938f356",
+          "memory": "User values menu variety and is willing to spend about 20 minutes preparing dinner.",
+          "hash": "c5fa1480c58ddbb3043d19eb1db7d237",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:55.144061+00:00",
+          "updated_at": "2026-08-21T09:58:55.144061+00:00",
+          "user_id": "bench-user",
+          "agent_id": "routine_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "5d64b3f1-c57f-4e92-88fa-c88f1d1eea3a",
+          "memory": "User prefers plant-based meals built around beans, grains, and vegetables for their regular meals.",
+          "hash": "4aa7486373414615cb63e5889ea9a1e0",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:53.519036+00:00",
+          "updated_at": "2026-08-21T09:58:53.519036+00:00",
+          "user_id": "bench-user",
+          "agent_id": "nutrition_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "a7be4728-63bf-4560-a451-6a8ac8eebfb6",
+          "memory": "For an office event in July 2026, all meals had to be nut-free and carry full allergen labels.",
+          "hash": "a98527d7e25f8aad0d4a966eddd1583f",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:56.256701+00:00",
+          "updated_at": "2026-08-21T09:58:56.256701+00:00",
+          "user_id": "bench-user",
+          "agent_id": "event_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "nutrition_agent",
+          "text": "For my regular meals, I prefer plant-based dishes built around beans, grains, and vegetables.",
+          "result": {
+            "results": [
+              {
+                "id": "5d64b3f1-c57f-4e92-88fa-c88f1d1eea3a",
+                "memory": "User prefers plant-based meals built around beans, grains, and vegetables for their regular meals.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "routine_agent",
+          "text": "Menu variety matters to me, and I am happy to spend around twenty minutes preparing dinner.",
+          "result": {
+            "results": [
+              {
+                "id": "0a451836-8cf7-43a7-ba42-8bd78938f356",
+                "memory": "User values menu variety and is willing to spend about 20 minutes preparing dinner.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "event_agent",
+          "text": "For last month's office event, every meal had to be nut-free and carry full allergen labels.",
+          "result": {
+            "results": [
+              {
+                "id": "a7be4728-63bf-4560-a451-6a8ac8eebfb6",
+                "memory": "For an office event in July 2026, all meals had to be nut-free and carry full allergen labels.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.0003942920593544841,
+      "query": "What does this user currently prefer for regular weekday meals?",
+      "retrieved_context": "User prefers plant-based meals built around beans, grains, and vegetables for their regular meals.\nUser values menu variety and is willing to spend about 20 minutes preparing dinner.\nFor an office event in July 2026, all meals had to be nut-free and carry full allergen labels.",
+      "context_chars": 277,
+      "read_seconds": 0.01794854097533971,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"It matches the user's plant-based preference, 20-minute prep time, and desire for menu variety.\"}",
+      "choice": "B",
+      "reason": "It matches the user's plant-based preference, 20-minute prep time, and desire for menu variety.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 0.8761183340102434,
+      "total_seconds": 5.149824541993439,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-NOTIFY-001-A",
+      "pair_id": "PREF-C-NOTIFY-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_notification",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "workspace_agent",
+          "utterance": "I used to keep all workspace notifications on in real time.",
+          "elapsed_seconds": 1.6627034170087427
+        },
+        {
+          "order": 2,
+          "agent_id": "focus_agent",
+          "utterance": "The interruptions are hurting my focus. From now on, send blockers immediately but collect routine changes into one daily digest.",
+          "elapsed_seconds": 1.299114124965854
+        },
+        {
+          "order": 3,
+          "agent_id": "leave_agent",
+          "utterance": "While I was on vacation last month, hold all noncritical notifications until I returned.",
+          "elapsed_seconds": 0.961276457994245
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "3e13e9f6-16cc-48a4-9397-ede72b423607",
+          "memory": "User used to keep all workspace notifications on in real time, but this is a past behavior that has since changed.",
+          "hash": "d6f08a194301717834f9148360a7a3a4",
+          "metadata": null,
+          "created_at": "2026-08-21T09:58:58.711886+00:00",
+          "updated_at": "2026-08-21T09:58:58.711886+00:00",
+          "user_id": "bench-user",
+          "agent_id": "workspace_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "ff814ef6-d3b1-465a-a024-932d00d01039",
+          "memory": "User changed their notification preferences: blockers should be sent immediately, but routine changes should be collected into one daily digest, due to interruptions hurting their focus.",
+          "hash": "23dbabca4309c1d65e10ff1ee4b7611f",
+          "metadata": null,
+          "created_at": "2026-08-21T09:59:00.307214+00:00",
+          "updated_at": "2026-08-21T09:59:00.307214+00:00",
+          "user_id": "bench-user",
+          "agent_id": "focus_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "workspace_agent",
+          "text": "I used to keep all workspace notifications on in real time.",
+          "result": {
+            "results": [
+              {
+                "id": "3e13e9f6-16cc-48a4-9397-ede72b423607",
+                "memory": "User used to keep all workspace notifications on in real time, but this is a past behavior that has since changed.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "focus_agent",
+          "text": "The interruptions are hurting my focus. From now on, send blockers immediately but collect routine changes into one daily digest.",
+          "result": {
+            "results": [
+              {
+                "id": "ff814ef6-d3b1-465a-a024-932d00d01039",
+                "memory": "User changed their notification preferences: blockers should be sent immediately, but routine changes should be collected into one daily digest, due to interruptions hurting their focus.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "leave_agent",
+          "text": "While I was on vacation last month, hold all noncritical notifications until I returned.",
+          "result": {
+            "results": []
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.0005647919606417418,
+      "query": "How does this user currently want daily work notifications handled?",
+      "retrieved_context": "User used to keep all workspace notifications on in real time, but this is a past behavior that has since changed.\nUser changed their notification preferences: blockers should be sent immediately, but routine changes should be collected into one daily digest, due to interruptions hurting their focus.",
+      "context_chars": 301,
+      "read_seconds": 0.027956417063251138,
+      "decision_raw_output": "{\"choice\":\"C\",\"reason\":\"Matches the user's stated preference: blockers immediate, routine changes in a daily digest.\"}",
+      "choice": "C",
+      "reason": "Matches the user's stated preference: blockers immediate, routine changes in a daily digest.",
+      "expected_choice": "C",
+      "correct": true,
+      "decision_seconds": 0.8390544999856502,
+      "total_seconds": 4.790704292012379,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-NOTIFY-001-B",
+      "pair_id": "PREF-C-NOTIFY-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_notification",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "workspace_agent",
+          "utterance": "I used to prefer a daily digest for routine workspace updates.",
+          "elapsed_seconds": 1.296189708984457
+        },
+        {
+          "order": 2,
+          "agent_id": "focus_agent",
+          "utterance": "My role now requires continuous coordination. I want every project message, status change, and blocker delivered immediately instead of waiting for a digest.",
+          "elapsed_seconds": 1.0395794159267098
+        },
+        {
+          "order": 3,
+          "agent_id": "leave_agent",
+          "utterance": "While I was on vacation last month, hold all noncritical notifications until I returned.",
+          "elapsed_seconds": 1.1080692500108853
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "26598bac-4197-4fbf-933c-e320f03055ce",
+          "memory": "User was on vacation last month (around July 2026) and requested that all noncritical notifications be held until they returned.",
+          "hash": "0d7027f69cf194c73d3579292ab918ec",
+          "metadata": null,
+          "created_at": "2026-08-21T09:59:05.736342+00:00",
+          "updated_at": "2026-08-21T09:59:05.736342+00:00",
+          "user_id": "bench-user",
+          "agent_id": "leave_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "37fd4cd1-dd59-4d98-a9a2-23fd33de23a8",
+          "memory": "User's role now requires continuous coordination, so they switched from preferring a daily digest to wanting every project message, status change, and blocker delivered immediately.",
+          "hash": "83804268145e6b47515d6efcaf26ba7c",
+          "metadata": null,
+          "created_at": "2026-08-21T09:59:04.628230+00:00",
+          "updated_at": "2026-08-21T09:59:04.628230+00:00",
+          "user_id": "bench-user",
+          "agent_id": "focus_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "8d38eae8-bf3d-4f9c-a4b0-df36c8f18ddc",
+          "memory": "User used to prefer a daily digest for routine workspace updates.",
+          "hash": "8ec3ec240921b86bb402973a458a057c",
+          "metadata": null,
+          "created_at": "2026-08-21T09:59:03.405052+00:00",
+          "updated_at": "2026-08-21T09:59:03.405052+00:00",
+          "user_id": "bench-user",
+          "agent_id": "workspace_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "workspace_agent",
+          "text": "I used to prefer a daily digest for routine workspace updates.",
+          "result": {
+            "results": [
+              {
+                "id": "8d38eae8-bf3d-4f9c-a4b0-df36c8f18ddc",
+                "memory": "User used to prefer a daily digest for routine workspace updates.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "focus_agent",
+          "text": "My role now requires continuous coordination. I want every project message, status change, and blocker delivered immediately instead of waiting for a digest.",
+          "result": {
+            "results": [
+              {
+                "id": "37fd4cd1-dd59-4d98-a9a2-23fd33de23a8",
+                "memory": "User's role now requires continuous coordination, so they switched from preferring a daily digest to wanting every project message, status change, and blocker delivered immediately.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "leave_agent",
+          "text": "While I was on vacation last month, hold all noncritical notifications until I returned.",
+          "result": {
+            "results": [
+              {
+                "id": "26598bac-4197-4fbf-933c-e320f03055ce",
+                "memory": "User was on vacation last month (around July 2026) and requested that all noncritical notifications be held until they returned.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.0002788329729810357,
+      "query": "How does this user currently want daily work notifications handled?",
+      "retrieved_context": "User's role now requires continuous coordination, so they switched from preferring a daily digest to wanting every project message, status change, and blocker delivered immediately.\nUser was on vacation last month (around July 2026) and requested that all noncritical notifications be held until they returned.\nUser used to prefer a daily digest for routine workspace updates.",
+      "context_chars": 376,
+      "read_seconds": 0.016309082973748446,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"The user now wants every project message, status change, and blocker delivered immediately, so option B matches that current preference.\"}",
+      "choice": "B",
+      "reason": "The user now wants every project message, status change, and blocker delivered immediately, so option B matches that current preference.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 0.9610487079480663,
+      "total_seconds": 4.421526167076081,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-COURSE-001-A",
+      "pair_id": "PREF-C-COURSE-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_course",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "learning_agent",
+          "utterance": "I learn professional skills best by building something real rather than only listening to lectures.",
+          "elapsed_seconds": 1.4401635420508683
+        },
+        {
+          "order": 2,
+          "agent_id": "career_agent",
+          "utterance": "I want each module to contribute to a portfolio project and include feedback I can apply the next week.",
+          "elapsed_seconds": 0.9104303749045357
+        },
+        {
+          "order": 3,
+          "agent_id": "certification_agent",
+          "utterance": "For a certification exam last spring, I needed timed drills and test-taking shortcuts for two weeks.",
+          "elapsed_seconds": 1.1927390000782907
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "1cd6802c-340b-47de-b76a-f5aa96f8c926",
+          "memory": "User prepared for a certification exam in spring 2026 using timed drills and test-taking shortcuts for two weeks.",
+          "hash": "3f9896027215de2de6a0f1ea34741ff2",
+          "metadata": null,
+          "created_at": "2026-08-21T09:59:10.408836+00:00",
+          "updated_at": "2026-08-21T09:59:10.408836+00:00",
+          "user_id": "bench-user",
+          "agent_id": "certification_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "5e0f5025-637f-464b-b7f5-dc72822da4c5",
+          "memory": "User learns professional skills best by building something real rather than only listening to lectures.",
+          "hash": "539a6fa2606482a27a8179a409c1307f",
+          "metadata": null,
+          "created_at": "2026-08-21T09:59:08.118959+00:00",
+          "updated_at": "2026-08-21T09:59:08.118959+00:00",
+          "user_id": "bench-user",
+          "agent_id": "learning_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "learning_agent",
+          "text": "I learn professional skills best by building something real rather than only listening to lectures.",
+          "result": {
+            "results": [
+              {
+                "id": "5e0f5025-637f-464b-b7f5-dc72822da4c5",
+                "memory": "User learns professional skills best by building something real rather than only listening to lectures.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "career_agent",
+          "text": "I want each module to contribute to a portfolio project and include feedback I can apply the next week.",
+          "result": {
+            "results": []
+          }
+        },
+        {
+          "agent_id": "certification_agent",
+          "text": "For a certification exam last spring, I needed timed drills and test-taking shortcuts for two weeks.",
+          "result": {
+            "results": [
+              {
+                "id": "1cd6802c-340b-47de-b76a-f5aa96f8c926",
+                "memory": "User prepared for a certification exam in spring 2026 using timed drills and test-taking shortcuts for two weeks.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.00017841695807874203,
+      "query": "How does this user currently prefer to learn a durable professional skill?",
+      "retrieved_context": "User learns professional skills best by building something real rather than only listening to lectures.\nUser prepared for a certification exam in spring 2026 using timed drills and test-taking shortcuts for two weeks.",
+      "context_chars": 217,
+      "read_seconds": 0.012769333086907864,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"The user learns best by building something real, and this course is project-based with portfolio work and feedback.\"}",
+      "choice": "A",
+      "reason": "The user learns best by building something real, and this course is project-based with portfolio work and feedback.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 1.120850958977826,
+      "total_seconds": 4.677167291985825,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-COURSE-001-B",
+      "pair_id": "PREF-C-COURSE-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_course",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "learning_agent",
+          "utterance": "I learn durable professional skills best when the underlying principles are taught in a clear sequence.",
+          "elapsed_seconds": 1.3863320000236854
+        },
+        {
+          "order": 2,
+          "agent_id": "career_agent",
+          "utterance": "I prefer structured readings and cumulative concept exercises before applying a method in practice.",
+          "elapsed_seconds": 0.8908255830174312
+        },
+        {
+          "order": 3,
+          "agent_id": "certification_agent",
+          "utterance": "For a certification exam last spring, I needed timed drills and test-taking shortcuts for two weeks.",
+          "elapsed_seconds": 1.124993707984686
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "04c0d804-9209-4db8-96a5-7e260e40a648",
+          "memory": "User used timed drills and test-taking shortcuts for two weeks to prepare for a certification exam in spring 2026.",
+          "hash": "bf29135d3320a99edf3b57e786722801",
+          "metadata": null,
+          "created_at": "2026-08-21T09:59:15.129730+00:00",
+          "updated_at": "2026-08-21T09:59:15.129730+00:00",
+          "user_id": "bench-user",
+          "agent_id": "certification_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "9a418a2a-d004-4818-b5c8-8d0868f35b78",
+          "memory": "User learns durable professional skills best when the underlying principles are taught in a clear sequence.",
+          "hash": "78766c0a77d7f35632ad3f4d08003014",
+          "metadata": null,
+          "created_at": "2026-08-21T09:59:12.935936+00:00",
+          "updated_at": "2026-08-21T09:59:12.935936+00:00",
+          "user_id": "bench-user",
+          "agent_id": "learning_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "learning_agent",
+          "text": "I learn durable professional skills best when the underlying principles are taught in a clear sequence.",
+          "result": {
+            "results": [
+              {
+                "id": "9a418a2a-d004-4818-b5c8-8d0868f35b78",
+                "memory": "User learns durable professional skills best when the underlying principles are taught in a clear sequence.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "career_agent",
+          "text": "I prefer structured readings and cumulative concept exercises before applying a method in practice.",
+          "result": {
+            "results": []
+          }
+        },
+        {
+          "agent_id": "certification_agent",
+          "text": "For a certification exam last spring, I needed timed drills and test-taking shortcuts for two weeks.",
+          "result": {
+            "results": [
+              {
+                "id": "04c0d804-9209-4db8-96a5-7e260e40a648",
+                "memory": "User used timed drills and test-taking shortcuts for two weeks to prepare for a certification exam in spring 2026.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.00016770802903920412,
+      "query": "How does this user currently prefer to learn a durable professional skill?",
+      "retrieved_context": "User learns durable professional skills best when the underlying principles are taught in a clear sequence.\nUser used timed drills and test-taking shortcuts for two weeks to prepare for a certification exam in spring 2026.",
+      "context_chars": 222,
+      "read_seconds": 0.01850716699846089,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"The user prefers durable skills built on clear sequential principles, which option B directly provides.\"}",
+      "choice": "B",
+      "reason": "The user prefers durable skills built on clear sequential principles, which option B directly provides.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 0.8408094589831308,
+      "total_seconds": 4.261659707990475,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-FURNITURE-001-A",
+      "pair_id": "PREF-C-FURNITURE-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_furniture",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "home_agent",
+          "utterance": "For furniture I will keep for years, I prefer durable pieces that can be repaired instead of replaced.",
+          "elapsed_seconds": 1.3087265000212938
+        },
+        {
+          "order": 2,
+          "agent_id": "shopping_agent",
+          "utterance": "Certified materials and a local maker matter more to me than getting the item immediately.",
+          "elapsed_seconds": 0.9828385419677943
+        },
+        {
+          "order": 3,
+          "agent_id": "rental_agent",
+          "utterance": "For a furnished rental last year, the table had to fold flat and be easy to move between rooms.",
+          "elapsed_seconds": 1.2313123340718448
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "d1f93daa-4eae-4030-826a-f7ea9dd4ee58",
+          "memory": "User prefers durable furniture pieces that can be repaired rather than replaced, for items they intend to keep for years.",
+          "hash": "33847ec7b400bf7bf809fcd563182033",
+          "metadata": null,
+          "created_at": "2026-08-21T09:59:17.260009+00:00",
+          "updated_at": "2026-08-21T09:59:17.260009+00:00",
+          "user_id": "bench-user",
+          "agent_id": "home_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "d877a841-0776-4ca0-9a03-991df40c4da7",
+          "memory": "For a furnished rental in 2025, the user needed a table that could fold flat and be easy to move between rooms.",
+          "hash": "25e1de49bdaeca77cc3dc4804be5957c",
+          "metadata": null,
+          "created_at": "2026-08-21T09:59:19.663656+00:00",
+          "updated_at": "2026-08-21T09:59:19.663656+00:00",
+          "user_id": "bench-user",
+          "agent_id": "rental_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "home_agent",
+          "text": "For furniture I will keep for years, I prefer durable pieces that can be repaired instead of replaced.",
+          "result": {
+            "results": [
+              {
+                "id": "d1f93daa-4eae-4030-826a-f7ea9dd4ee58",
+                "memory": "User prefers durable furniture pieces that can be repaired rather than replaced, for items they intend to keep for years.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "shopping_agent",
+          "text": "Certified materials and a local maker matter more to me than getting the item immediately.",
+          "result": {
+            "results": []
+          }
+        },
+        {
+          "agent_id": "rental_agent",
+          "text": "For a furnished rental last year, the table had to fold flat and be easy to move between rooms.",
+          "result": {
+            "results": [
+              {
+                "id": "d877a841-0776-4ca0-9a03-991df40c4da7",
+                "memory": "For a furnished rental in 2025, the user needed a table that could fold flat and be easy to move between rooms.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.00016904203221201897,
+      "query": "What does this user currently prioritize when buying long-term home furniture?",
+      "retrieved_context": "User prefers durable furniture pieces that can be repaired rather than replaced, for items they intend to keep for years.\nFor a furnished rental in 2025, the user needed a table that could fold flat and be easy to move between rooms.",
+      "context_chars": 233,
+      "read_seconds": 0.01729333307594061,
+      "decision_raw_output": "{\"choice\":\"A\",\"reason\":\"The user values durable, repairable furniture for long-term use, which matches the solid-wood table with warranty.\"}",
+      "choice": "A",
+      "reason": "The user values durable, repairable furniture for long-term use, which matches the solid-wood table with warranty.",
+      "expected_choice": "A",
+      "correct": true,
+      "decision_seconds": 0.8614432499743998,
+      "total_seconds": 4.401817874982953,
+      "error": null
+    },
+    {
+      "case_id": "PREF-C-FURNITURE-001-B",
+      "pair_id": "PREF-C-FURNITURE-001",
+      "layer": "composite",
+      "primary_capability": "composite_journey",
+      "scenario": "counterfactual_furniture",
+      "system": "mem0",
+      "writes": [
+        {
+          "order": 1,
+          "agent_id": "home_agent",
+          "utterance": "For household furniture, my current priority is the lowest possible upfront price.",
+          "elapsed_seconds": 1.2791562089696527
+        },
+        {
+          "order": 2,
+          "agent_id": "shopping_agent",
+          "utterance": "I need delivery within the next two days and accept that I may replace the item after a couple of years.",
+          "elapsed_seconds": 0.8002185000805184
+        },
+        {
+          "order": 3,
+          "agent_id": "rental_agent",
+          "utterance": "For a furnished rental last year, the table had to fold flat and be easy to move between rooms.",
+          "elapsed_seconds": 1.0573893330292776
+        }
+      ],
+      "memory_snapshot": [
+        {
+          "id": "cbc906b0-2182-4475-9305-a4e3ae89494e",
+          "memory": "User prioritizes the lowest possible upfront price when purchasing household furniture.",
+          "hash": "d38b7c5aa0ab3d26dea8c6f13072b9fe",
+          "metadata": null,
+          "created_at": "2026-08-21T09:59:21.787767+00:00",
+          "updated_at": "2026-08-21T09:59:21.787767+00:00",
+          "user_id": "bench-user",
+          "agent_id": "home_agent",
+          "attributed_to": "user"
+        },
+        {
+          "id": "e340e636-d702-487e-abc9-db0908bf37e2",
+          "memory": "For a furnished rental in 2025, the user needed a table that could fold flat and be easy to move between rooms.",
+          "hash": "25e1de49bdaeca77cc3dc4804be5957c",
+          "metadata": null,
+          "created_at": "2026-08-21T09:59:23.830837+00:00",
+          "updated_at": "2026-08-21T09:59:23.830837+00:00",
+          "user_id": "bench-user",
+          "agent_id": "rental_agent",
+          "attributed_to": "user"
+        }
+      ],
+      "memory_snapshot_error": null,
+      "native_write_results": [
+        {
+          "agent_id": "home_agent",
+          "text": "For household furniture, my current priority is the lowest possible upfront price.",
+          "result": {
+            "results": [
+              {
+                "id": "cbc906b0-2182-4475-9305-a4e3ae89494e",
+                "memory": "User prioritizes the lowest possible upfront price when purchasing household furniture.",
+                "event": "ADD"
+              }
+            ]
+          }
+        },
+        {
+          "agent_id": "shopping_agent",
+          "text": "I need delivery within the next two days and accept that I may replace the item after a couple of years.",
+          "result": {
+            "results": []
+          }
+        },
+        {
+          "agent_id": "rental_agent",
+          "text": "For a furnished rental last year, the table had to fold flat and be easy to move between rooms.",
+          "result": {
+            "results": [
+              {
+                "id": "e340e636-d702-487e-abc9-db0908bf37e2",
+                "memory": "For a furnished rental in 2025, the user needed a table that could fold flat and be easy to move between rooms.",
+                "event": "ADD"
+              }
+            ]
+          }
+        }
+      ],
+      "write_pipeline_warning": null,
+      "memory_snapshot_seconds": 0.00029445800464600325,
+      "query": "What does this user currently prioritize when buying long-term home furniture?",
+      "retrieved_context": "User prioritizes the lowest possible upfront price when purchasing household furniture.\nFor a furnished rental in 2025, the user needed a table that could fold flat and be easy to move between rooms.",
+      "context_chars": 199,
+      "read_seconds": 0.015211082994937897,
+      "decision_raw_output": "{\"choice\":\"B\",\"reason\":\"The user prioritizes the lowest possible upfront price for household furniture, and B is the lowest-priced option.\"}",
+      "choice": "B",
+      "reason": "The user prioritizes the lowest possible upfront price for household furniture, and B is the lowest-priced option.",
+      "expected_choice": "B",
+      "correct": true,
+      "decision_seconds": 1.001515334006399,
+      "total_seconds": 4.1538596249883994,
+      "error": null
+    }
+  ]
+}
