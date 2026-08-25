@@ -1,4 +1,14 @@
 {
+  "metadata": {
+    "task": "split_intake",
+    "case_set": [
+      "data/cases/split_intake_n100_s100.json",
+      "data/cases/split_intake_n200_s200.json"
+    ],
+    "case_count": 300,
+    "systems": ["no_memory", "naive_markdown", "pure_vector", "amh", "mem0"],
+    "merge_policy": "dedupe by (system, case_id); latest row wins"
+  },
   "summary": {
     "no_memory": {
       "n_total": 300,

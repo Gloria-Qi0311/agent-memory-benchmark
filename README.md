@@ -62,7 +62,7 @@ cd agent-memory-benchmark
 python3.11 -m venv .venv && source .venv/bin/activate
 
 # 3. Dependencies
-pip install -r requirements.txt sentence-transformers
+pip install -r requirements.txt
 
 # 4. API key
 cp .env.example .env

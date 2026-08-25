@@ -128,44 +128,41 @@ The defensible conclusion is:
 
 ## Reproducing the corrected scoring
 
+The committed artifact is the final merged result. The commands below show
+how to reproduce it from the committed case files; batch outputs are local
+temporary files and are intentionally not committed.
+
 ```bash
-# Clean mem0 replacement runs (the runner excludes the two invalid cases)
+# Run clean, per-case-isolated mem0 batches (the runner excludes the two
+# invalid cases). Use temporary output names if reproducing locally.
 python scripts/run_compound_update.py \
   --cases data/cases/compound_update_n100_s100.json \
-  --systems mem0 --tag t2-prod-n100-mem0-isolated
+  --systems mem0 --tag t2-repro-n100-mem0-isolated
 
 python scripts/run_compound_update.py \
   --cases data/cases/compound_update_n200_s200.json \
-  --systems mem0 --tag t2-prod-n200-mem0-isolated
+  --systems mem0 --tag t2-repro-n200-mem0-isolated
 
-# Replace the historical mem0 rows, then rescore all stored answers
-python scripts/replace_t2_system_run.py \
-  --base data/results/t2-prod-n100-5sys.json \
-  --replacement data/results/t2-prod-n100-mem0-isolated.json \
-  --system mem0 --out data/results/t2-prod-n100-5sys.json
-
-python scripts/replace_t2_system_run.py \
-  --base data/results/t2-prod-n200-s200-4sys.json \
-  --replacement data/results/t2-prod-n200-mem0-isolated.json \
-  --system mem0 --out data/results/t2-prod-n200-s200-4sys.json
-
-python scripts/rescore_t2.py \
-  --results data/results/t2-prod-n100-5sys.json \
+# Run the complete five-system batches, then merge the temporary outputs.
+python scripts/run_compound_update.py \
   --cases data/cases/compound_update_n100_s100.json \
-  --out data/results/t2-prod-n100-5sys.json
+  --systems no_memory naive_markdown pure_vector amh mem0 \
+  --tag t2-repro-n100-5sys
 
-python scripts/rescore_t2.py \
-  --results data/results/t2-prod-n200-s200-4sys.json \
+python scripts/run_compound_update.py \
   --cases data/cases/compound_update_n200_s200.json \
-  --out data/results/t2-prod-n200-s200-4sys.json
+  --systems no_memory naive_markdown pure_vector amh mem0 \
+  --tag t2-repro-n200-s200-5sys
 
 python scripts/merge_t2_runs.py \
-  --inputs data/results/t2-prod-n100-5sys.json \
-           data/results/t2-prod-n200-s200-4sys.json \
-  --out data/results/t2-prod-n300-merged.json
+  --inputs data/results/t2-repro-n100-5sys.json \
+           data/results/t2-repro-n200-s200-5sys.json \
+  --out /tmp/t2-prod-n300-merged.json
 
-python scripts/analyze_t2.py --results data/results/t2-prod-n300-merged.json
+python scripts/analyze_t2.py --results /tmp/t2-prod-n300-merged.json
 ```
 
-Result metadata records the judge version, excluded cases, changed probe
-judgments, the isolated mem0 source files, and full per-case reset provenance.
+The committed result metadata records the judge version, case set, excluded
+cases, and full per-case reset provenance. The maintenance scripts used for
+the historical correction remain in `scripts/`, but their intermediate input
+files are not part of the published artifact set.

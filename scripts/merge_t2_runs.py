@@ -9,9 +9,9 @@ Systems that appear in one input but not the other are kept as-is
 
 Usage:
     python scripts/merge_t2_runs.py \
-        --inputs data/results/t2-prod-n100-5sys.json \
-                 data/results/t2-prod-n200-s200-4sys.json \
-        --out data/results/t2-prod-n300-merged.json
+        --inputs data/results/t2-repro-n100-5sys.json \
+                 data/results/t2-repro-n200-s200-5sys.json \
+        --out /tmp/t2-repro-n300-merged.json
 """
 import argparse
 import json

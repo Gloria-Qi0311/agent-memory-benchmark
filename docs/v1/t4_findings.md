@@ -129,29 +129,31 @@ python scripts/generate_cases.py --task split_intake --n 200 --seed 200
 python scripts/run_split_intake.py \
     --cases data/cases/split_intake_n100_s100.json \
     --systems no_memory naive_markdown pure_vector amh mem0 \
-    --tag t4-prod-n100-5sys
+    --tag t4-repro-n100-5sys
 python scripts/run_split_intake.py \
     --cases data/cases/split_intake_n200_s200.json \
     --systems no_memory naive_markdown pure_vector amh mem0 \
-    --tag t4-prod-n200-s200-5sys
+    --tag t4-repro-n200-5sys
 
 # Merge the two runs into a single n=300 view
 python scripts/merge_t4_runs.py \
-    --inputs data/results/t4-prod-n100-5sys.json \
-             data/results/t4-prod-n200-s200-5sys.json \
-    --out data/results/t4-prod-n300-merged.json
+    --inputs data/results/t4-repro-n100-5sys.json \
+             data/results/t4-repro-n200-5sys.json \
+    --out /tmp/t4-repro-n300-merged.json
 
 # Failure-mode + per-scenario breakdown
-python scripts/analyze_t4.py --results data/results/t4-prod-n300-merged.json
+python scripts/analyze_t4.py --results /tmp/t4-repro-n300-merged.json
 
 # Case-study picker
 python scripts/pick_case_study.py \
-    --results data/results/t4-prod-n300-merged.json \
+    --results /tmp/t4-repro-n300-merged.json \
     --cases data/cases/split_intake_n100_s100.json \
             data/cases/split_intake_n200_s200.json
 
 # Re-render the plot
-python scripts/plot_t4.py --results data/results/t4-prod-n300-merged.json
+python scripts/plot_t4.py --results /tmp/t4-repro-n300-merged.json
 ```
 
-Full raw per-case results are committed in `data/results/t4-prod-n300-merged.json` (as well as the two source runs).
+The final merged raw per-case result is committed in
+`data/results/t4-prod-n300-merged.json`. The two batch files used during the
+original run are temporary reproduction artifacts and are not committed.

@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "merged_from": [
-      "data/results/t2-prod-n100-5sys.json",
-      "data/results/t2-prod-n200-s200-4sys.json"
+    "case_set": [
+      "data/cases/compound_update_n100_s100.json",
+      "data/cases/compound_update_n200_s200.json"
     ],
     "judge": "t2-exact-v4-token-boundary-plus-authored-aliases",
     "llm_calls_for_rescore": 0,
@@ -13,12 +13,7 @@
     "changed_probe_judgments": 157,
     "known_invalid_systems": [],
     "invalid_system_reason": null,
-    "replaced_system_runs": {
-      "mem0": [
-        "data/results/t2-prod-n100-mem0-isolated.json",
-        "data/results/t2-prod-n200-mem0-isolated.json"
-      ]
-    },
+    "mem0_isolated_rerun": true,
     "per_case_full_reset": {
       "mem0": true
     }

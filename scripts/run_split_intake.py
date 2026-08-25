@@ -4,7 +4,7 @@ Usage:
     python scripts/run_split_intake.py \\
         --cases data/cases/split_intake_n100_s100.json \\
         --systems no_memory naive_markdown pure_vector amh mem0 \\
-        --tag t4-prod-n100-5sys
+        --tag t4-repro-n100-5sys
 """
 import argparse
 import json

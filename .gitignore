@@ -7,18 +7,12 @@ venv/
 *.egg-info/
 .DS_Store
 
-# experiment outputs — keep generators in repo, not raw data,
-# EXCEPT for published v1 production runs (committed for reproducibility).
+# Experiment outputs are ignored by default. Only the four published final
+# benchmark artifacts below are committed for reproducibility.
 data/results/*
 !data/results/.gitkeep
-!data/results/t4-prod-n100-5sys.json
-!data/results/t4-prod-n200-s200-5sys.json
 !data/results/t4-prod-n300-merged.json
-!data/results/t2-prod-n100-5sys.json
-!data/results/t2-prod-n200-s200-4sys.json
 !data/results/t2-prod-n300-merged.json
-!data/results/t2-prod-n100-mem0-isolated.json
-!data/results/t2-prod-n200-mem0-isolated.json
 !data/results/preference-pilot-n30-once-naive-amh.json
 !data/results/preference-pilot-n30-once-mem0.json
 data/cases/private/

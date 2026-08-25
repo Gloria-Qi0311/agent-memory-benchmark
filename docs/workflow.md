@@ -54,7 +54,8 @@ Until then, `main` is just continuously moving forward.
 
 ## Hooks (not enforced, but recommended)
 
-- Don't commit `data/results/` files (git-ignored already).
+- Don't commit smoke, temporary, failed, or local intermediate results.
+  Published final result files may be committed for reproducibility.
 - Don't commit anything in `models/` (git-ignored already).
 - Don't commit `.env` (git-ignored already).
 - Don't commit experiment-API keys to history. If one slips in: rotate the key, then `git filter-repo` to remove from history before next push.

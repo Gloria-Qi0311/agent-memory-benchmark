@@ -2,8 +2,8 @@ openai>=1.0.0
 python-dotenv
 pydantic>=2.0
 mem0ai
+agent-memory-hub
+sentence-transformers
 fastembed
-streamlit
-pandas
 matplotlib
 pytest

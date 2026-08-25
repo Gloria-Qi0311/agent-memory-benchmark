@@ -4,7 +4,7 @@ Usage:
     python scripts/run_compound_update.py \\
         --cases data/cases/compound_update_n10_s0.json \\
         --systems no_memory naive_markdown pure_vector amh mem0 \\
-        --tag t2-smoke-n10
+        --tag t2-repro-n10
 """
 import argparse
 import json
