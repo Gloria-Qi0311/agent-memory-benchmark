@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="An interactive story about shared memory in multi-agent systems." />
+  <title>MemBench — Shared memory, handed off</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./interactions.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="MemBench home"><span class="brand-mark"><i></i><i></i><i></i></span><span>MEMBENCH</span></a>
+    <div class="header-meta"><span>AI MEMORY BENCHMARK</span><span class="header-dot"></span><span>SCROLL TO EXPLORE</span></div>
+    <nav aria-label="Main navigation"><a class="active" href="#story">Story</a><a href="#results">Results</a><a href="#method">Method</a><a href="https://github.com/Gloria-Qi0311/agent-memory-benchmark" target="_blank" rel="noreferrer">GitHub ↗</a></nav>
+  </header>
+
+  <main id="top">
+    <section class="hero section-pad" id="story">
+      <div class="hero-copy reveal">
+        <p class="kicker">A shared-memory handoff / one benchmark story</p>
+        <h1>Maya left the details behind.<br /><em>Can Noah recover the right version?</em></h1>
+        <p class="lede">A small story about a big systems question: when one agent knows something and another agent needs it later, what actually survives?</p>
+        <a class="scroll-cue" href="#leave-note"><span class="pixel-arrow">↓</span> Follow the handoff</a>
+      </div>
+      <div class="hero-index" aria-hidden="true"><span>01</span><span>/</span><span>05</span></div>
+    </section>
+
+    <section class="story-stage section-pad" id="leave-note">
+      <div class="story-copy reveal"><p class="chapter">01 / Leave a note</p><h2>Before the handoff, Maya writes down what matters.</h2><p>Not a database schema. Not a perfect summary. Just the details someone else will need to pick up the work.</p><div class="annotation">A single message<br />→ six durable details</div></div>
+      <div class="memory-sticky"><div class="sticky-label">MAYA'S LAUNCH SETUP <span>MON 09:14</span></div><div class="fact-grid" id="facts-initial"></div><div class="sticky-foot">left in shared memory <span>6 / 6</span></div></div>
+    </section>
+
+    <section class="story-stage update-stage section-pad" id="change">
+      <div class="story-copy reveal"><p class="chapter">02 / Things change</p><h2>The launch moves fast. Four details change. Six should not.</h2><p>Later, Maya updates the setup in one breath. The memory system has to replace the right values without disturbing the rest.</p><div class="change-note"><span class="swatch coral"></span>updated value <span class="swatch graphite"></span>preserved value</div></div>
+      <div class="memory-sticky update-sticky"><div class="sticky-label">MAYA'S UPDATE <span>THU 16:42</span></div><div class="fact-grid" id="facts-update"></div><div class="sticky-foot">four changes entered <span>4 / 4</span></div></div>
+    </section>
+
+    <section class="handoff section-pad" id="handoff">
+      <div class="handoff-intro reveal"><p class="chapter">03 / Someone new takes over</p><h2>Noah does not see the old conversation.</h2><p>He only sees what the shared memory returns. That is the handoff.</p></div>
+      <div class="handoff-line" aria-hidden="true"><div class="line-node done"><span class="node-icon">✦</span><b>MAYA</b><small>leaves details</small></div><div class="line-connector"></div><div class="line-node current"><span class="node-icon">▦</span><b>MEMORY</b><small>stores a version</small></div><div class="line-connector"></div><div class="line-node"><span class="node-icon">◌</span><b>NOAH</b><small>asks what changed</small></div></div>
+      <div class="question-card"><span class="question-mark">?</span><div><p class="question-label">NOAH ASKS</p><p>“How is the launch setup configured now?”</p></div><span class="pixel-caret">▮</span></div>
+    </section>
+
+    <section class="systems section-pad" id="results">
+      <div class="systems-head reveal"><p class="chapter">04 / Three versions of the handoff</p><h2>Same story in.<br /><em>Different memory out.</em></h2><p>Switch the system to see what Noah receives from the same shared history.</p></div>
+      <div class="system-tabs" role="tablist" aria-label="Memory systems"><button class="system-tab active" data-system="naive" role="tab" aria-selected="true">naive_markdown</button><button class="system-tab" data-system="amh" role="tab" aria-selected="false">AMH</button><button class="system-tab" data-system="mem0" role="tab" aria-selected="false">mem0</button></div>
+      <div class="system-view"><div class="context-panel"><div class="panel-top"><span>RETURNED CONTEXT</span><span id="context-size">FULL NOTE</span></div><div class="context-paper" id="context-paper"></div></div><div class="answer-panel"><div class="panel-top"><span>NOAH'S ANSWER</span><span id="answer-status" class="status pass">PASS</span></div><p class="answer" id="answer-text"></p><div class="checks" id="checks"></div><div class="score-lockup"><span id="score-label">T2 UPDATE RECALL</span><strong id="score">0.999</strong></div></div></div>
+      <p class="system-caption" id="system-caption"></p>
+    </section>
+
+    <section class="judge section-pad">
+      <div class="judge-copy reveal"><p class="chapter">05 / The check</p><h2>Memory is not just remembering the past.<br /><em>It is handing the right version to the next person.</em></h2><p>The benchmark checks every intended update, every old value that should disappear, and every unrelated fact that should stay put.</p></div>
+      <div class="judge-stamp"><div class="stamp-ring"><span>GROUND TRUTH</span><strong>PASS</strong><span>CASE T2 / 0142</span></div><div class="stamp-foot">one case · one handoff · one shared memory</div></div>
+    </section>
+
+    <section class="method section-pad" id="method"><div class="method-head"><p class="chapter">The benchmark behind the story</p><h2>One case runs like this.</h2></div><div class="method-flow"><div><span>01</span><b>Write</b><small>Maya leaves facts</small></div><i>→</i><div><span>02</span><b>Update</b><small>The setup changes</small></div><i>→</i><div><span>03</span><b>Retrieve</b><small>Noah asks</small></div><i>→</i><div><span>04</span><b>Judge</b><small>Ground truth checks</small></div></div><div class="method-foot"><span>Reader: DeepSeek-chat</span><span>Programmatic judge where possible</span><span>Memory reset: per case</span><a href="https://github.com/Gloria-Qi0311/agent-memory-benchmark#readme" target="_blank" rel="noreferrer">Read the benchmark →</a></div></section>
+  </main>
+  <div class="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js"></script>
+</body>
+</html>

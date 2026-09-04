@@ -6,6 +6,7 @@ __pycache__/
 venv/
 *.egg-info/
 .DS_Store
+.playwright-cli/
 
 # Experiment outputs are ignored by default. Only the four published final
 # benchmark artifacts below are committed for reproducibility.

@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Memory Benchmark — UI direction studies</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+    :root { --paper:#f5f2ea; --ink:#171a1f; --muted:#6c706f; --line:#d8d3c8; --accent:#ef6a5b; --blue:#3b82f6; --cyan:#06b6d4; --violet:#8b5cf6; --green:#157a6e; --panel:#fffdf8; --shadow:0 18px 50px rgba(30,28,23,.08); }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family:'DM Sans',system-ui,sans-serif; }
+    .app { max-width:1450px; margin:0 auto; min-height:100vh; padding:28px 38px 50px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); padding-bottom:18px; }
+    .brand { display:flex; gap:12px; align-items:center; font-family:'Space Grotesk',sans-serif; font-weight:700; letter-spacing:-.03em; }
+    .mark { width:30px; height:30px; border:2px solid var(--ink); border-radius:50%; position:relative; }
+    .mark:after { content:''; position:absolute; width:8px; height:8px; background:var(--accent); border-radius:50%; right:-3px; top:8px; box-shadow:-11px 9px 0 var(--blue), 10px 12px 0 var(--violet); }
+    nav { display:flex; gap:26px; color:var(--muted); font-size:13px; }
+    nav span:first-child { color:var(--ink); font-weight:700; }
+    .eyebrow { font-family:'DM Mono',monospace; color:var(--accent); font-size:11px; letter-spacing:.12em; text-transform:uppercase; }
+    .hero { padding:70px 0 48px; display:grid; grid-template-columns:1.1fr .9fr; gap:70px; align-items:end; }
+    h1 { font-family:'Space Grotesk',sans-serif; font-size:clamp(48px,6vw,82px); line-height:.94; letter-spacing:-.075em; margin:15px 0 24px; max-width:760px; }
+    .hero p { font-size:18px; line-height:1.5; color:var(--muted); max-width:570px; margin:0; }
+    .trace { background:var(--ink); color:#f8f3e9; padding:25px; box-shadow:var(--shadow); position:relative; overflow:hidden; }
+    .trace:before { content:'MEMORY TRACE / ONE CASE'; display:block; color:#9aa19c; font:11px 'DM Mono',monospace; letter-spacing:.1em; margin-bottom:25px; }
+    .trace-row { display:flex; align-items:center; gap:9px; font:12px 'DM Mono',monospace; white-space:nowrap; }
+    .node { border:1px solid #626a66; padding:11px 12px; background:#20262a; }
+    .node.hot { border-color:var(--accent); color:#ffc9c0; }
+    .arrow { color:#9aa19c; }
+    .stats { display:flex; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+    .stat { flex:1; padding:20px 18px; border-right:1px solid var(--line); }
+    .stat:last-child { border-right:0; }
+    .stat strong { display:block; font:600 30px 'Space Grotesk',sans-serif; letter-spacing:-.06em; }
+    .stat span { color:var(--muted); font-size:12px; }
+    .section-head { display:flex; align-items:baseline; justify-content:space-between; margin:54px 0 18px; }
+    h2 { margin:0; font:600 24px 'Space Grotesk',sans-serif; letter-spacing:-.045em; }
+    .section-head small { color:var(--muted); font:11px 'DM Mono',monospace; }
+    .tracks { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .card { background:var(--panel); border:1px solid var(--line); padding:22px; min-height:225px; position:relative; }
+    .card:hover { border-color:var(--accent); }
+    .card .tag { color:var(--muted); font:11px 'DM Mono',monospace; letter-spacing:.08em; }
+    .card h3 { font:600 26px 'Space Grotesk',sans-serif; margin:28px 0 8px; letter-spacing:-.055em; }
+    .card p { color:var(--muted); font-size:13px; line-height:1.45; margin:0 0 22px; max-width:320px; }
+    .card .result { display:flex; justify-content:space-between; align-items:end; border-top:1px solid var(--line); padding-top:14px; }
+    .result strong { font:600 23px 'Space Grotesk',sans-serif; letter-spacing:-.05em; }
+    .result span { font:11px 'DM Mono',monospace; color:var(--muted); }
+    .results { display:grid; grid-template-columns:1fr 1.15fr; gap:16px; }
+    .panel { background:var(--panel); border:1px solid var(--line); padding:24px; }
+    .panel h3 { font:600 17px 'Space Grotesk',sans-serif; margin:0 0 22px; }
+    table { width:100%; border-collapse:collapse; font-size:12px; }
+    th { text-align:right; color:var(--muted); font:10px 'DM Mono',monospace; text-transform:uppercase; padding:0 0 10px; }
+    th:first-child, td:first-child { text-align:left; }
+    td { border-top:1px solid var(--line); padding:11px 0; text-align:right; font-family:'DM Mono',monospace; }
+    td:first-child { font-family:'DM Sans',sans-serif; font-weight:600; }
+    .barline { display:flex; align-items:center; gap:10px; margin:15px 0; }
+    .barline label { width:112px; font:11px 'DM Mono',monospace; color:var(--muted); }
+    .bar { height:12px; flex:1; background:#ebe6da; }
+    .bar i { display:block; height:100%; background:var(--accent); }
+    .barline b { width:40px; font:12px 'DM Mono',monospace; text-align:right; }
+    .footnote { margin-top:35px; color:var(--muted); font-size:12px; line-height:1.5; display:flex; justify-content:space-between; border-top:1px solid var(--line); padding-top:16px; }
+    /* Distinct visual directions. */
+    body.editorial { --paper:#efe9dd; --panel:#f7f2e8; --ink:#1c1b19; --line:#bdb5a6; --accent:#b54b34; }
+    body.editorial .app { max-width:1500px; }
+    body.editorial h1 { font-family:Georgia,serif; font-weight:400; letter-spacing:-.07em; }
+    body.editorial .card, body.editorial .panel { border-radius:0; }
+    body.console { --paper:#0b1012; --panel:#131a1d; --ink:#e6eee9; --muted:#899995; --line:#293535; --accent:#ff765f; --blue:#5e9bff; --violet:#af8cff; }
+    body.console .app { max-width:1500px; }
+    body.console .mark { border-color:#d4e5de; }
+    body.console .card, body.console .panel { box-shadow:inset 0 1px 0 rgba(255,255,255,.035); }
+    body.console .trace { background:#050808; border:1px solid #293535; }
+    body.console .bar { background:#263131; }
+    body.archive { --paper:#fbfbf8; --panel:#fff; --ink:#111; --muted:#777; --line:#deded8; --accent:#111; }
+    body.archive .app { max-width:1180px; }
+    body.archive .mark { border-radius:3px; }
+    body.archive .mark:after { border-radius:1px; background:#111; box-shadow:-11px 9px 0 #777, 10px 12px 0 #bbb; }
+    body.archive h1 { font-family:'DM Sans',sans-serif; font-size:66px; letter-spacing:-.08em; }
+    body.archive .trace { background:#f4f4ef; color:#222; border:1px solid var(--line); box-shadow:none; }
+    body.archive .node { background:#fff; color:#222; border-color:#bbb; }
+    body.research { --paper:#e7e7e3; --panel:#f2f2ef; --ink:#111315; --muted:#626764; --line:#aeb3af; --accent:#ef644f; --blue:#477fd8; --violet:#7860c8; --green:#287d70; }
+    body.research .app { max-width:1500px; padding-top:24px; }
+    body.research .topbar { border-bottom:2px solid var(--ink); }
+    body.research .brand { font-family:'DM Mono',monospace; letter-spacing:-.06em; }
+    body.research .mark { border-radius:3px; width:28px; height:28px; }
+    body.research .mark:after { border-radius:0; }
+    body.research h1 { font-family:'Space Grotesk',sans-serif; font-weight:700; text-transform:uppercase; font-size:clamp(48px,6.7vw,92px); line-height:.86; letter-spacing:-.09em; max-width:700px; }
+    body.research .hero { grid-template-columns:.95fr 1.05fr; padding-top:58px; gap:55px; }
+    body.research .hero p { max-width:420px; font-family:'DM Mono',monospace; font-size:13px; line-height:1.6; }
+    body.research .trace { background:#d7d9d5; color:var(--ink); border:2px solid var(--ink); box-shadow:none; padding:28px; }
+    body.research .trace:before { color:var(--muted); }
+    body.research .node { background:#f2f2ef; color:var(--ink); border:2px solid var(--ink); font-weight:500; }
+    body.research .node.hot { background:var(--accent); border-color:var(--accent); color:#fff; }
+    body.research .arrow { color:var(--ink); }
+    body.research .stats { border-top:2px solid var(--ink); border-bottom:2px solid var(--ink); }
+    body.research .stat { border-right:1px solid var(--line); }
+    body.research .card, body.research .panel { border:2px solid var(--ink); border-radius:0; box-shadow:none; background:var(--panel); }
+    body.research .card h3 { text-transform:uppercase; font-size:24px; }
+    body.research .card .tag, body.research .section-head small, body.research td, body.research th { font-family:'DM Mono',monospace; }
+    body.research .bar { background:#cdd0cb; }
+    body.research .bar i { background:var(--accent)!important; }
+    body.research .footnote { border-top:2px solid var(--ink); font-family:'DM Mono',monospace; font-size:10px; }
+    body.paper { --paper:#f4eddf; --panel:#fffaf0; --ink:#252321; --muted:#766f65; --line:#c9bda9; --accent:#d85b45; --blue:#4d86c6; --violet:#8b6db7; --green:#4c8b78; }
+    body.paper { background-color:var(--paper); background-image:radial-gradient(rgba(70,55,35,.07) .7px,transparent .7px); background-size:7px 7px; }
+    body.paper .app { max-width:1320px; padding-top:30px; }
+    body.paper .topbar { border-bottom:1px solid #8e806d; }
+    body.paper .brand { font-family:'DM Sans',sans-serif; font-weight:700; letter-spacing:-.06em; }
+    body.paper .mark { border:2px solid #484039; transform:rotate(-5deg); }
+    body.paper .mark:after { border-radius:2px; background:var(--accent); box-shadow:-11px 9px 0 var(--blue), 10px 12px 0 var(--violet); }
+    body.paper h1 { font-family:Georgia,serif; font-weight:400; font-style:italic; font-size:clamp(46px,6vw,78px); line-height:.95; letter-spacing:-.07em; }
+    body.paper .eyebrow, body.paper .card .tag, body.paper .section-head small { font-family:'DM Mono',monospace; color:#8d5d4e; }
+    body.paper .hero { padding-top:58px; }
+    body.paper .hero p { font-family:Georgia,serif; font-size:17px; color:#625b52; }
+    body.paper .trace { background:#e7ddcc; color:var(--ink); border:1px solid #978874; box-shadow:4px 5px 0 rgba(92,70,42,.12); transform:rotate(1deg); }
+    body.paper .trace:before { color:#8d806e; }
+    body.paper .node { background:#fff9ed; color:var(--ink); border:1px solid #756754; }
+    body.paper .node.hot { background:#f2b0a1; border-color:#b84c3b; color:#56291f; }
+    body.paper .arrow { color:#6c5e4c; }
+    body.paper .stats { border-top:1px solid #8e806d; border-bottom:1px solid #8e806d; }
+    body.paper .stat { border-right:1px dashed #c0b29e; }
+    body.paper .stat strong { font-family:Georgia,serif; font-style:italic; font-weight:400; }
+    body.paper .card, body.paper .panel { border:1px solid #ab9d89; border-radius:2px; background:rgba(255,250,240,.8); box-shadow:2px 3px 0 rgba(92,70,42,.08); }
+    body.paper .card:nth-child(2) { transform:rotate(.35deg); }
+    body.paper .card:nth-child(3) { transform:rotate(-.3deg); }
+    body.paper .card h3, body.paper .panel h3 { font-family:Georgia,serif; font-weight:700; letter-spacing:-.04em; }
+    body.paper .card p { font-family:Georgia,serif; color:#655d53; }
+    body.paper .card .result { border-top:1px dashed #b7a992; }
+    body.paper .result strong { font-family:Georgia,serif; font-style:italic; font-weight:400; }
+    body.paper table, body.paper .barline label, body.paper .barline b { font-family:'DM Mono',monospace; }
+    body.paper .bar { background:#e3d7c4; }
+    body.paper .bar i { background:var(--accent)!important; }
+    body.paper .footnote { border-top:1px solid #8e806d; font-family:'DM Mono',monospace; }
+    body.pixel { --paper:#edf0ed; --panel:#f7f9f6; --ink:#11181a; --muted:#657174; --line:#aeb9b7; --accent:#ef654f; --blue:#4b86d4; --violet:#8064c7; --green:#2d8378; }
+    body.pixel { background-image:linear-gradient(rgba(24,38,40,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(24,38,40,.035) 1px,transparent 1px); background-size:8px 8px; }
+    body.pixel .app { max-width:1450px; padding-top:24px; }
+    body.pixel .topbar { border-bottom:2px solid var(--ink); }
+    body.pixel .brand, body.pixel .eyebrow, body.pixel .trace:before, body.pixel .card .tag, body.pixel .section-head small, body.pixel .footnote { font-family:'DM Mono',monospace; }
+    body.pixel .brand { letter-spacing:-.08em; }
+    body.pixel .mark { border-radius:0; border:2px solid var(--ink); box-shadow:4px 4px 0 var(--accent); }
+    body.pixel .mark:after { border-radius:0; }
+    body.pixel h1 { font-family:'Space Grotesk',sans-serif; font-weight:700; text-transform:uppercase; font-size:clamp(50px,6.5vw,88px); line-height:.88; letter-spacing:-.1em; }
+    body.pixel .hero { grid-template-columns:1fr 1fr; gap:48px; padding-top:56px; }
+    body.pixel .hero p { font-family:'DM Mono',monospace; font-size:12px; line-height:1.7; max-width:500px; }
+    body.pixel .trace { background:#dce3e0; color:var(--ink); border:2px solid var(--ink); box-shadow:6px 6px 0 rgba(17,24,26,.18); }
+    body.pixel .node { background:var(--panel); color:var(--ink); border:2px solid var(--ink); border-radius:0; box-shadow:3px 3px 0 rgba(17,24,26,.15); }
+    body.pixel .node.hot { background:var(--accent); color:#fff; border-color:var(--ink); }
+    body.pixel .arrow { color:var(--ink); }
+    body.pixel .stats { border-top:2px solid var(--ink); border-bottom:2px solid var(--ink); }
+    body.pixel .stat { border-right:1px solid var(--line); }
+    body.pixel .stat strong { font-family:'DM Mono',monospace; font-weight:500; letter-spacing:-.1em; }
+    body.pixel .card, body.pixel .panel { border:2px solid var(--ink); border-radius:0; box-shadow:4px 4px 0 rgba(17,24,26,.12); background:var(--panel); }
+    body.pixel .card h3 { font-family:'Space Grotesk',sans-serif; text-transform:uppercase; letter-spacing:-.08em; }
+    body.pixel .card .result { border-top:2px solid var(--ink); }
+    body.pixel .result strong { font-family:'DM Mono',monospace; letter-spacing:-.1em; }
+    body.pixel .bar { background:#d5ddda; border:1px solid var(--ink); padding:1px; }
+    body.pixel .bar i { background:var(--accent)!important; }
+    body.pixel td { border-top:1px solid var(--line); }
+    body.pixel .footnote { border-top:2px solid var(--ink); }
+    @media(max-width:850px) { .app{padding:20px}.hero,.results{grid-template-columns:1fr;gap:28px}.tracks{grid-template-columns:1fr}.hero{padding-top:45px}.stats{flex-wrap:wrap}.stat{min-width:50%}nav{display:none} }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar"><div class="brand"><span class="mark"></span><span>AGENT MEMORY BENCHMARK</span></div><nav><span>Overview</span><span>Tracks</span><span>Case explorer</span><span>Method</span></nav></header>
+    <section class="hero"><div><div class="eyebrow">Shared memory / v1 published results</div><h1>How well do shared memories survive across agents?</h1><p>A benchmark for factual updates, split intake, and user preference memory in multi-agent systems. Same reader model. Programmatic scoring where possible. Per-case isolation.</p></div><div class="trace"><div class="trace-row"><span class="node">AGENT A</span><span class="arrow">— write →</span><span class="node hot">MEMORY</span></div><div class="trace-row" style="margin:14px 0 14px 58px"><span class="arrow">↳ AGENT B updates</span></div><div class="trace-row"><span class="node">AGENT C</span><span class="arrow">— retrieve →</span><span class="node">JUDGE</span></div></div></section>
+    <section class="stats"><div class="stat"><strong>3</strong><span>published evaluations</span></div><div class="stat"><strong>5</strong><span>factual-memory systems</span></div><div class="stat"><strong>48</strong><span>regression tests passing</span></div><div class="stat"><strong>0</strong><span>overall leaderboard scores</span></div></section>
+    <div class="section-head"><h2>Published evaluations</h2><small>Different questions. Separate scores.</small></div>
+    <section class="tracks"><article class="card"><div class="tag">FACTUAL MEMORY / T4</div><h3>Split intake</h3><p>Can a system retain many independent details written in one long statement?</p><div class="result"><strong>0.969</strong><span>best aggregate recall · n=300</span></div></article><article class="card"><div class="tag">FACTUAL MEMORY / T2</div><h3>Compound update</h3><p>Can it apply several updates without changing facts the user did not mention?</p><div class="result"><strong>0.976</strong><span>mem0 update recall · n=298</span></div></article><article class="card"><div class="tag">USER PREFERENCE / PILOT</div><h3>Preference memory</h3><p>Can durable preferences survive alongside temporary requests and decisions?</p><div class="result"><strong>30/30</strong><span>naive + mem0 · n=30 pilot</span></div></article></section>
+    <div class="section-head"><h2>Results at a glance</h2><small>Higher is better · no single overall score</small></div>
+    <section class="results"><div class="panel"><h3>Capability profile</h3><div class="barline"><label>T4 retention</label><div class="bar"><i style="width:97%;background:var(--blue)"></i></div><b>.969</b></div><div class="barline"><label>T2 update</label><div class="bar"><i style="width:98%;background:var(--accent)"></i></div><b>.976</b></div><div class="barline"><label>Preference</label><div class="bar"><i style="width:100%;background:var(--green)"></i></div><b>30/30</b></div><p style="color:var(--muted);font-size:12px;line-height:1.5;margin-top:28px">The benchmark is a capability profile, not a single leaderboard. Each task stresses a different part of shared memory behavior.</p></div><div class="panel"><h3>System comparison</h3><table><thead><tr><th>System</th><th>T4 detail</th><th>T2 update</th><th>T2 collateral</th></tr></thead><tbody><tr><td>naive_markdown</td><td><b>.951</b></td><td><b>.999</b></td><td>.978</td></tr><tr><td>pure_vector</td><td><b>.951</b></td><td>.886</td><td><b>.983</b></td></tr><tr><td>AMH</td><td>.950</td><td>.893</td><td>.978</td></tr><tr><td>mem0</td><td>.432</td><td><b>.976</b></td><td>.961</td></tr></tbody></table></div></section>
+    <div class="footnote"><span>Reader: DeepSeek-chat · Judge: programmatic where possible · Memory reset: per case</span><span>Published v1 · 2026</span></div>
+  </main>
+  <script>const theme=new URLSearchParams(location.search).get('theme'); if(theme) document.body.className=theme;</script>
+</body>
+</html>
